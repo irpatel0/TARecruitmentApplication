@@ -43,6 +43,22 @@ Prepared by:
 
 Provide a short description of the software being specified. Describe its purpose, including relevant benefits, objectives, and goals.
 
+The software being developed is a web application for Computer Science department to recruit undergraduate student assistants (SAs) for the
+introductory level courses and lab sections. This product aims to eliminate the manual process of applying and processing for an SA position.
+In this web application students who are interested in SA positions will create accounts and enter their contact
+information as well as their course preferences for student assistantships. In addition, instructors will be able to choose their student assistants among the students who are
+interested in their courses. The web application can be accessed from anywhere at anytime using any device. The application's benefits include:  
+- Secured login system
+- Look at open SA positions
+- Students can apply for open SA positions
+- Display information for each SA position
+- Identify students that match the position
+- Recommend SA positions to students
+- View application status
+- Withdraw pending applications if necessary for students
+
+The application can simplify the process for students and professors.
+
 ----
 # 2. Requirements Specification
 
@@ -57,9 +73,20 @@ A brief description of the customer, stakeholders, and users of your software.
 This section will include the user stories you identified for your project. Make sure to write your user stories in the form : 
 "As a **[Role]**, I want **[Feature]** so that **[Reason/Benefit]** "
 
-1. User story 1
-2. User story 2
-3. User story 3
+1. As a Student, I want to be able to login to the site so that I can use the site
+2. As a Professor, I want to be able to login to the site so that I can use the site
+3. As a Student, I want to be able to create my profile so that I can be recommended best courses and the professor can see if my profile matches the requirement
+4. As a Professor, I want to be able to create my profile so that the student can see my information
+5. As a Student, I want to view all open SA positions so that I decide which ones I am interested in
+6. As a Student, I want to view all the details of every open SA position so that I know if I can meet the qualifications
+7. As a Student, I want to be recommended SA positions that match my profile 
+8. As a Student, I want to apply for the open SA positions
+9. As a Professor, I want to create course sections so that students can view the course information
+10. As a Professor, I want to create SA positions for a particular course so that students can apply for a particular course
+11. As a Professor, I want to view all students applied for a SA position so that I know if the student took the course and if he/she got an A, to determine if good fit
+12. As a Professor, I want to add a student to the SA position so that I can register students who haven't applied for the position
+13. As a Student, I want to check status of my applications so that I know which applications are approved, rejected or still pending
+14. As a Student, I want to withdraw my pending applications so that I'm not in the system for positions as I'm no longer interested in
 
 ----
 ## 2.3 Use Cases
