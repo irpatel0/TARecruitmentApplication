@@ -90,7 +90,7 @@ This section will include the user stories you identified for your project. Make
 9. Create Course: As a Professor, I want to create course sections so that students can view the course information
 10. Create SA Positions: As a Professor, I want to create SA positions for a particular course so that students can apply for a particular course
 11. View Student Applications: As a Professor, I want to view all students applied for a SA position so that I know if the student took the course and if he/she got an A, to determine if good fit
-12. Add Student To A Position Manually: As a Professor, I want to add a student to the SA position so that I can register students who haven't applied for the position
+12. Add Student To A Position Manually: As a Professor, I want to add a student to the SA position so that I can register students who haven't been assigned a position
 13. Check Application Status: As a Student, I want to check status of my applications so that I know which applications are approved, rejected or still pending
 14. Withdraw Application: As a Student, I want to withdraw my pending applications so that I'm not in the system for positions as I'm no longer interested in
 
@@ -116,14 +116,34 @@ Each use case should also have a field called "Iteration" where you specify in w
 
 You may use the following table template for your use cases. Copy-paste this table for each use case you will include in your document.
 
-| Use case # 1      |                  |
+| Use case # 12      |                  |
 | ------------------ |------------------|
-| Name              |                  |
-| Participating actor  | "enter your reponse here" |
-| Entry condition(s)     | "enter your reponse here" |
-| Exit condition(s)           | "enter your reponse here" |
-| Flow of events | "enter your reponse here" |
-| Alternative flow of events    | "enter your reponse here" |
+| Name              | Add Student To A Position Manually |
+| Participating actor  | "Professor" |
+| Entry condition(s)     | Faculty user logged in and is on the page listing students that applied. |
+| Exit condition(s)           | Prompt the screen that student was successfully added to course  |
+| Flow of events | 1. Faculty user views list of students that applied for SA positions. 2. Faculty user views qualifications of candidate. 3. Faculty user clicks on a student to add to a course|
+| Alternative flow of events    | 1. Faculty reverts to the previous page |
+| Iteration #         | TBD |
+
+| Use case # 13      |                  |
+| ------------------ |------------------|
+| Name              | Check Application Status |
+| Participating actor  | "Student" |
+| Entry condition(s)     | User logs in with username and password and then selects application page|
+| Exit condition(s)           | User clicks on another page (such as withdraw application) |
+| Flow of events | 1. User scrolls down to each application |
+| Alternative flow of events 2. Each application displays individual status   | 2. User submits new application, which will newly show as pending application |
+| Iteration #         | "enter your reponse here" |
+
+| Use case # 14      |                  |
+| ------------------ |------------------|
+| Name              |  Withdraw Application |
+| Participating actor  | "Student" |
+| Entry condition(s)     | User logs in with username and password and clicks on applications page |
+| Exit condition(s)           | User is redirected to applications page showing remaining applications status |
+| Flow of events | 1. User is on the application page 2. User scrolls down to part of the page displaying submitted pending applications 3. User selects option to withdraw 4. System prompts to confirm withdrawal 4. User selects confirm option 5. User is prompted successful withdrawal of application |
+| Alternative flow of events    | 4. User selects cancel on withdrawal confirmation prompt 5. User is prompted application withdrawal cancelled  |
 | Iteration #         | "enter your reponse here" |
 
 ----
