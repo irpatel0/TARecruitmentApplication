@@ -154,29 +154,29 @@ You may use the following table template for your use cases. Copy-paste this tab
 | Participating actor  | "Professor"                                                                                                                                                                  |
 | Entry condition(s)     | Faculty user logged in and is on the page listing students that applied.                                                                                                     |
 | Exit condition(s)           | Prompt the screen that student was successfully added to course                                                                                                              |
-| Flow of events | 1. Faculty user views list of students that applied for SA positions. 2. Faculty user views qualifications of candidate. 3. Faculty user clicks on a student to add to a course |
+| Flow of events | 1. Faculty user views list of students that applied for SA positions.<br/> 2. Faculty user views qualifications of candidate.<br/> 3. Faculty user clicks on a student to add to a course |
 | Alternative flow of events    | 1. Faculty reverts to the previous page<br/> 2. The user can only choose the student who has not been yet assigned to any SAship position for any course.                    |
 | Iteration #         | TBD                                                                                                                                                                          |
 
-| Use case # 13      |                                                                               |
-| ------------------ |-------------------------------------------------------------------------------|
-| Name              | Check Application Status                                                      |
-| Participating actor  | "Student"                                                                     |
-| Entry condition(s)     | User logs in with username and password and then selects application page     |
-| Exit condition(s)           | User clicks on another page (such as withdraw application)                    |
-| Flow of events | 1. User scrolls down to each application                                      |
-| Alternative flow of events 2. Each application displays individual status   | 2. User submits new application, which will newly show as pending application |
-| Iteration #         | TBD                                                                           |
+| Use case # 13      |                                                                                                                                   |
+| ------------------ |-----------------------------------------------------------------------------------------------------------------------------------|
+| Name              | Check Application Status                                                                                                          |
+| Participating actor  | "Student"                                                                                                                         |
+| Entry condition(s)     | User logs in with username and password and then selects application page                                                         |
+| Exit condition(s)           | User clicks on another page (such as withdraw application)                                                                        |
+| Flow of events | 1. User scrolls down to each application                                                                                          |
+| Alternative flow of events   | 1. Each application displays individual status<br/> 2. User submits new application, which will newly show as pending application |
+| Iteration #         | TBD                                                                                                                               |
 
-| Use case # 14      |                                                                                                                                                                                                                                                                                          |
-| ------------------ |------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Name              | Withdraw Application                                                                                                                                                                                                                                                                     |
-| Participating actor  | "Student"                                                                                                                                                                                                                                                                                |
-| Entry condition(s)     | User logs in with username and password and clicks on applications page                                                                                                                                                                                                                  |
-| Exit condition(s)           | User is redirected to applications page showing remaining applications status                                                                                                                                                                                                            |
-| Flow of events | 1. User is on the application page 2. User scrolls down to part of the page displaying submitted pending applications 3. User selects option to withdraw 4. System prompts to confirm withdrawal 4. User selects confirm option 5. User is prompted successful withdrawal of application |
-| Alternative flow of events    | 4. User selects cancel on withdrawal confirmation prompt 5. User is prompted application withdrawal cancelled                                                                                                                                                                            |
-| Iteration #         | TBD                                                                                                                                                                                                                                                                                      |
+| Use case # 14      |                                                                                                                                                                                                                                                                                                                   |
+| ------------------ |-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Name              | Withdraw Application                                                                                                                                                                                                                                                                                              |
+| Participating actor  | "Student"                                                                                                                                                                                                                                                                                                         |
+| Entry condition(s)     | User logs in with username and password and clicks on applications page                                                                                                                                                                                                                                           |
+| Exit condition(s)           | User is redirected to applications page showing remaining applications status                                                                                                                                                                                                                                     |
+| Flow of events | 1. User is on the application page<br/> 2. User scrolls down to part of the page displaying submitted pending applications<br/> 3. User selects option to withdraw<br/> 4. System prompts to confirm withdrawal<br/> 5. User selects confirm option<br/> 6. User is prompted successful withdrawal of application |
+| Alternative flow of events    | 1. User selects cancel on withdrawal confirmation prompt<br/> 2. User is prompted application withdrawal cancelled                                                                                                                                                                                                     |
+| Iteration #         | TBD                                                                                                                                                                                                                                                                                                               |
 
 ----
 # 3. User Interface
