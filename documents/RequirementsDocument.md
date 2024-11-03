@@ -79,20 +79,20 @@ A brief description of the customer, stakeholders, and users of your software.
 This section will include the user stories you identified for your project. Make sure to write your user stories in the form : 
 "As a **[Role]**, I want **[Feature]** so that **[Reason/Benefit]** "
 
-1. Student Login: As a Student, I want to be able to login to the site so that I can use the site
-2. Professor Login: As a Professor, I want to be able to login to the site so that I can use the site
-3. Student Profile: As a Student, I want to be able to create my profile so that I can be recommended best courses and the professor can see if my profile matches the requirement
-4. Professor Profile: As a Professor, I want to be able to create my profile so that the student can see my information
-5. View Open SA Positions: As a Student, I want to view all open SA positions so that I decide which ones I am interested in
-6. View SA Position Details: As a Student, I want to view all the details of every open SA position so that I know if I can meet the qualifications
-7. View SA Position Recommendations: As a Student, I want to be recommended SA positions that match my profile 
-8. Apply For SA Position: As a Student, I want to apply for the open SA positions
-9. Create Course: As a Professor, I want to create course sections so that students can view the course information
-10. Create SA Positions: As a Professor, I want to create SA positions for a particular course so that students can apply for a particular course
-11. View Student Applications: As a Professor, I want to view all students applied for a SA position so that I know if the student took the course and if he/she got an A, to determine if good fit
-12. Add Student To A Position Manually: As a Professor, I want to add a student to the SA position so that I can register students who haven't been assigned a position
-13. Check Application Status: As a Student, I want to check status of my applications so that I know which applications are approved, rejected or still pending
-14. Withdraw Application: As a Student, I want to withdraw my pending applications so that I'm not in the system for positions as I'm no longer interested in
+1. **Student Login:** As a Student, I want to be able to login to the site so that I can use the site
+2. **Professor Login:** As a Professor, I want to be able to login to the site so that I can use the site
+3. **Student Profile:** As a Student, I want to be able to create my profile so that I can be recommended best courses and the professor can see if my profile matches the requirement
+4. **Professor Profile:** As a Professor, I want to be able to create my profile so that the student can see my information
+5. **View Open SA Positions:** As a Student, I want to view all open SA positions so that I decide which ones I am interested in
+6. **View SA Position Details:** As a Student, I want to view all the details of every open SA position so that I know if I can meet the qualifications
+7. **View SA Position Recommendations:** As a Student, I want to be recommended SA positions that match my profile 
+8. **Apply For SA Position:** As a Student, I want to apply for the open SA positions
+9. **Create Course:** As a Professor, I want to create course sections so that students can view the course information
+10. **Create SA Positions:** As a Professor, I want to create SA positions for a particular course so that students can apply for a particular course
+11. **View Student Applications:** As a Professor, I want to view all students applied for a SA position so that I know if the student took the course and if he/she got an A, to determine if good fit
+12. **Add Student To A Position:** As a Professor, I want to add a student to the SA position so that I can register students who haven't been assigned a position
+13. **Check Application Status:** As a Student, I want to check status of my applications so that I know which applications are approved, rejected or still pending
+14. **Withdraw Application:** As a Student, I want to withdraw my pending applications so that I'm not in the system for positions as I'm no longer interested in
 
 ----
 ## 2.3 Use Cases
@@ -115,36 +115,6 @@ Group the related user stories and provide a use case for each user story group.
 Each use case should also have a field called "Iteration" where you specify in which iteration you plan to implement this feature.
 
 You may use the following table template for your use cases. Copy-paste this table for each use case you will include in your document.
-
-| Use case # 12      |                  |
-| ------------------ |------------------|
-| Name              | Add Student To A Position Manually |
-| Participating actor  | "Professor" |
-| Entry condition(s)     | Faculty user logged in and is on the page listing students that applied. |
-| Exit condition(s)           | Prompt the screen that student was successfully added to course  |
-| Flow of events | 1. Faculty user views list of students that applied for SA positions. 2. Faculty user views qualifications of candidate. 3. Faculty user clicks on a student to add to a course|
-| Alternative flow of events    | 1. Faculty reverts to the previous page |
-| Iteration #         | TBD |
-
-| Use case # 13      |                  |
-| ------------------ |------------------|
-| Name              | Check Application Status |
-| Participating actor  | "Student" |
-| Entry condition(s)     | User logs in with username and password and then selects application page|
-| Exit condition(s)           | User clicks on another page (such as withdraw application) |
-| Flow of events | 1. User scrolls down to each application |
-| Alternative flow of events 2. Each application displays individual status   | 2. User submits new application, which will newly show as pending application |
-| Iteration #         | "enter your reponse here" |
-
-| Use case # 14      |                  |
-| ------------------ |------------------|
-| Name              |  Withdraw Application |
-| Participating actor  | "Student" |
-| Entry condition(s)     | User logs in with username and password and clicks on applications page |
-| Exit condition(s)           | User is redirected to applications page showing remaining applications status |
-| Flow of events | 1. User is on the application page 2. User scrolls down to part of the page displaying submitted pending applications 3. User selects option to withdraw 4. System prompts to confirm withdrawal 4. User selects confirm option 5. User is prompted successful withdrawal of application |
-| Alternative flow of events    | 4. User selects cancel on withdrawal confirmation prompt 5. User is prompted application withdrawal cancelled  |
-| Iteration #         | "enter your reponse here" |
 
 
 | Use case # 9               |                                                                                                                                                                                                                                                                                                                  |
@@ -176,6 +146,37 @@ You may use the following table template for your use cases. Copy-paste this tab
 | Flow of events             | 1. The user chooses view student applications option.<br/> 2. The system displays all the student applications for all the course sections handled by that specific user and also shows if a student applicant is already assigned to different course.<br/> 3. The user can select a particular student to view student's profile.<br/> 4. The system displays student's profile with all their information. |
 | Alternative flow of events | 1. In step 2, the system only displays student applications that are pending for approval from the professor.                                                                                                                                                                                                                                                                                                 |
 | Iteration #                | TBD                                                                                                                                                                                                                                                                                                                                                                                                           |
+
+
+| Use case # 12      |                                                                                                                                                                              |
+| ------------------ |------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Name              | Add Student To A Position                                                                                                                                              |
+| Participating actor  | "Professor"                                                                                                                                                                  |
+| Entry condition(s)     | Faculty user logged in and is on the page listing students that applied.                                                                                                     |
+| Exit condition(s)           | Prompt the screen that student was successfully added to course                                                                                                              |
+| Flow of events | 1. Faculty user views list of students that applied for SA positions. 2. Faculty user views qualifications of candidate. 3. Faculty user clicks on a student to add to a course |
+| Alternative flow of events    | 1. Faculty reverts to the previous page<br/> 2. The user can only choose the student who has not been yet assigned to any SAship position for any course.                    |
+| Iteration #         | TBD                                                                                                                                                                          |
+
+| Use case # 13      |                                                                               |
+| ------------------ |-------------------------------------------------------------------------------|
+| Name              | Check Application Status                                                      |
+| Participating actor  | "Student"                                                                     |
+| Entry condition(s)     | User logs in with username and password and then selects application page     |
+| Exit condition(s)           | User clicks on another page (such as withdraw application)                    |
+| Flow of events | 1. User scrolls down to each application                                      |
+| Alternative flow of events 2. Each application displays individual status   | 2. User submits new application, which will newly show as pending application |
+| Iteration #         | TBD                                                                           |
+
+| Use case # 14      |                                                                                                                                                                                                                                                                                          |
+| ------------------ |------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Name              | Withdraw Application                                                                                                                                                                                                                                                                     |
+| Participating actor  | "Student"                                                                                                                                                                                                                                                                                |
+| Entry condition(s)     | User logs in with username and password and clicks on applications page                                                                                                                                                                                                                  |
+| Exit condition(s)           | User is redirected to applications page showing remaining applications status                                                                                                                                                                                                            |
+| Flow of events | 1. User is on the application page 2. User scrolls down to part of the page displaying submitted pending applications 3. User selects option to withdraw 4. System prompts to confirm withdrawal 4. User selects confirm option 5. User is prompted successful withdrawal of application |
+| Alternative flow of events    | 4. User selects cancel on withdrawal confirmation prompt 5. User is prompted application withdrawal cancelled                                                                                                                                                                            |
+| Iteration #         | TBD                                                                                                                                                                                                                                                                                      |
 
 ----
 # 3. User Interface
