@@ -4,10 +4,10 @@
 --------
 Prepared by:
 
-* `<author1>`,`<organization>`
-* `<author1>`,`<organization>`
-* `<author1>`,`<organization>`
-* `<author1>`,`<organization>`
+* `Sai Teja Sunku`,`WPI`
+* `Achintya Sanjay`,`WPI`
+* `Ishaan Patel`,`WPI`
+* `Jake Grier`,`WPI`
 
 ---
 
@@ -32,11 +32,11 @@ Prepared by:
 
 ## Document Revision History
 
-| Name | Date | Changes | Version |
-| ------ | ------ | --------- | --------- |
-|Revision 1 |2024-11-07 |Initial draft | 1.0        |
-|      |      |         |         |
-|      |      |         |         |
+| Name | Date       | Changes | Version |
+| ------ |------------| --------- | --------- |
+|Revision 1 | 2024-11-03 |Initial draft | 1.0        |
+|      |            |         |         |
+|      |            |         |         |
 
 ----
 # 1. Introduction
@@ -79,20 +79,20 @@ A brief description of the customer, stakeholders, and users of your software.
 This section will include the user stories you identified for your project. Make sure to write your user stories in the form : 
 "As a **[Role]**, I want **[Feature]** so that **[Reason/Benefit]** "
 
-1. As a Student, I want to be able to login to the site so that I can use the site
-2. As a Professor, I want to be able to login to the site so that I can use the site
-3. As a Student, I want to be able to create my profile so that I can be recommended best courses and the professor can see if my profile matches the requirement
-4. As a Professor, I want to be able to create my profile so that the student can see my information
-5. As a Student, I want to view all open SA positions so that I decide which ones I am interested in
-6. As a Student, I want to view all the details of every open SA position so that I know if I can meet the qualifications
-7. As a Student, I want to be recommended SA positions that match my profile 
-8. As a Student, I want to apply for the open SA positions
-9. As a Professor, I want to create course sections so that students can view the course information
-10. As a Professor, I want to create SA positions for a particular course so that students can apply for a particular course
-11. As a Professor, I want to view all students applied for a SA position so that I know if the student took the course and if he/she got an A, to determine if good fit
-12. As a Professor, I want to add a student to the SA position so that I can register students who haven't applied for the position
-13. As a Student, I want to check status of my applications so that I know which applications are approved, rejected or still pending
-14. As a Student, I want to withdraw my pending applications so that I'm not in the system for positions as I'm no longer interested in
+1. Student Login: As a Student, I want to be able to login to the site so that I can use the site
+2. Professor Login: As a Professor, I want to be able to login to the site so that I can use the site
+3. Student Profile: As a Student, I want to be able to create my profile so that I can be recommended best courses and the professor can see if my profile matches the requirement
+4. Professor Profile: As a Professor, I want to be able to create my profile so that the student can see my information
+5. View Open SA Positions: As a Student, I want to view all open SA positions so that I decide which ones I am interested in
+6. View SA Position Details: As a Student, I want to view all the details of every open SA position so that I know if I can meet the qualifications
+7. View SA Position Recommendations: As a Student, I want to be recommended SA positions that match my profile 
+8. Apply For SA Position: As a Student, I want to apply for the open SA positions
+9. Create Course: As a Professor, I want to create course sections so that students can view the course information
+10. Create SA Positions: As a Professor, I want to create SA positions for a particular course so that students can apply for a particular course
+11. View Student Applications: As a Professor, I want to view all students applied for a SA position so that I know if the student took the course and if he/she got an A, to determine if good fit
+12. Add Student To A Position Manually: As a Professor, I want to add a student to the SA position so that I can register students who haven't applied for the position
+13. Check Application Status: As a Student, I want to check status of my applications so that I know which applications are approved, rejected or still pending
+14. Withdraw Application: As a Student, I want to withdraw my pending applications so that I'm not in the system for positions as I'm no longer interested in
 
 ----
 ## 2.3 Use Cases
@@ -116,15 +116,15 @@ Each use case should also have a field called "Iteration" where you specify in w
 
 You may use the following table template for your use cases. Copy-paste this table for each use case you will include in your document.
 
-| Use case # 1      |   |
-| ------------------ |--|
-| Name              | "enter your reponse here"  |
-| Participating actor  | "enter your reponse here"  |
-| Entry condition(s)     | "enter your reponse here"  |
-| Exit condition(s)           | "enter your reponse here"  |
-| Flow of events | "enter your reponse here"  |
-| Alternative flow of events    | "enter your reponse here"  |
-| Iteration #         | "enter your reponse here"  |
+| Use case # 1      |                  |
+| ------------------ |------------------|
+| Name              |                  |
+| Participating actor  | "enter your reponse here" |
+| Entry condition(s)     | "enter your reponse here" |
+| Exit condition(s)           | "enter your reponse here" |
+| Flow of events | "enter your reponse here" |
+| Alternative flow of events    | "enter your reponse here" |
+| Iteration #         | "enter your reponse here" |
 
 ----
 # 3. User Interface
