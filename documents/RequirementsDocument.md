@@ -68,6 +68,12 @@ This section specifies the software product's requirements. Specify all of the s
 
 A brief description of the customer, stakeholders, and users of your software.
 
+- The customer for this product are the undergraduate students who are interested in being an SA for a course.
+
+- The stakeholder is the Computer Science department at WPI, who want to make the process for recruiting student assistants easier 
+
+- The users of the software are the students who are interested in being a student assistant, and the instructor that want to create applications for their courses, and accept students to be a student assistant
+
 ----
 ## 2.2 User Stories
 This section will include the user stories you identified for your project. Make sure to write your user stories in the form : 
