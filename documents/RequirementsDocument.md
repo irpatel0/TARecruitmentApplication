@@ -1,6 +1,6 @@
 # Software Requirements and Use Cases
 
-## Your Project Title
+## Your Project Title: CSAssist
 --------
 Prepared by:
 
@@ -356,6 +356,8 @@ Here you should include a link to your GitHub repo issues page, i.e., your produ
 # 5. References
 
 Cite your references here.
+
+- The Collaborative Interface Design Tool. Figma. (n.d.). https://www.figma.com/ 
 
 For the papers you cite give the authors, the title of the article, the journal name, journal volume number, date of publication and inclusive page numbers. Giving only the URL for the journal is not appropriate.
 
