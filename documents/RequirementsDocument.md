@@ -305,7 +305,11 @@ You may use Figma to design your interface:
 
   Example image. The image file is in the `./images` directory.
   <kbd>
-      <img src="images/figma.jpg"  border="2">
+      <img src="images/CreateStudent.png">
+      <img src="images/StudentSignIn.png">
+      <img src="images/CreateInstructor.png">
+      <img src="images/InstructorSignIn.png">
+      
   </kbd>
   
 ----
