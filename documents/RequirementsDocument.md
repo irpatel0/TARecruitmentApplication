@@ -163,85 +163,50 @@ Actors Involved:
 | Alternative flow of events | 1. In step 3, the page will show an error and not submit if any fields are not filled out.<br/> 2. The user can leave the page at any time during step 2.                                     |
 | Iteration #                | TBD                                                                                                                                                                                                                                                                                                              |
 <!------------------------------------------------------------------------>
-Use Case 5
-Name: View open SA Positions,
-Participating actors: Students,
-Entry condition(s): Student has created an account and is logged in,
-Exit condition(s): The web applications displays a list of open SA Positons,
-Flow of events:
-  1. The student logs in to their account
-  2. The student selects the button "View Open SA Positions
-  3. The System gets the open SA Position from the database
-  4. The System displays a list of open SA positions,
-Alternative flow of events:
-  1. The Student is not logged in to an account: They will be redirected to the sign in page and a message will flash saying "Please log in to access this page"
-  2. No SA Positions are open: A message will flash saying "No open positions found"
-  3. There is an error fetching the data from the db: A message will flash saying "Error gathering information, please try again"
-Iteration # TBD
+| Use case # 5      |   |
+| ------------------ |--|
+| Name              | View open SA Positions     |
+| Participating actor  | Students  |
+| Entry condition(s)     | Student has created an account and is logged in  |
+| Exit condition(s)           | "The web applications displays a list of open SA Positons"  |
+| Flow of events |  1. The student logs in to their account<br>2. The student selects the button "View Open SA Positions<br>  3. The System gets the open SA Position from the database<br>4. The System displays a list of open SA positions|
+| Alternative flow of events    |1. The Student is not logged in to an account: They will be redirected to the sign in page and a message will flash saying "Please log in to access this page"<br>2. No SA Positions are open: A message will flash saying "No open positions found"<br>3. There is an error fetching the data from the db: A message will flash saying "Error gathering information, please try again"   |
+| Iteration #         | TBD  |
+                                                                        
 <!------------------------------------------------------------------------->
-Use Case 6
-Name: View Details of SA Positon,
-Participating actors: Students,
-Entry condition(s): Student has created an account and is logged in,
-Exit condition(s): The web applications displays the details of the selected position,
-Flow of events:
-  1. The student logs in to their account
-  2. The student selects to view all open SA Positions
-  3. The system gets all open sa positions from the DB
-  4. The system displays a list of all open SA Positions
-  5. The Student selects "View Details" on one of the SA Positions
-  6. The system gets the data from that position in the db
-  7. The system displays the details of that position to the student. 
-Alternative flow of events:
-  1. The Student is not logged in to an account: They will be redirected to the sign in page and a message will flash saying "Please log in to access this page"
-  2. No SA Positions are open: A message will flash saying "No open positions found"
-  3. There is an error fetching the data from the db: A message will flash saying "Error gathering information, please try again"
-  4. The student selects to view the details of a positon but it is no longer found in the db: Flash error saying "Position not found"
-Iteration # TBD
+| Use case # 6      |   |
+| ------------------ |--|
+| Name              | View Details of SA Positon  |
+| Participating actor  | Student  |
+| Entry condition(s)     |  Student has created an account and is logged in  |
+| Exit condition(s)           | The web applications displays the details of the selected position |
+| Flow of events |   1. The student logs in to their account<br>2. The student selects to view all open SA Positions<br>3. The system gets all open sa positions from the DB<br>4. The system displays a list of all open SA Positions<br>5. The Student selects "View Details" on one of the SA Positions<br>6. The system gets the data from that position in the db<br>7. The system displays the details of that position to the student.   |
+| Alternative flow of events    |1. The Student is not logged in to an account: They will be redirected to the sign in page and a message will flash saying "Please log in to access this page"<br>2. No SA Positions are open: A message will flash saying "No open positions found"<br>3. There is an error fetching the data from the db: A message will flash saying "Error gathering information, please try again"<br>4. The student selects to view the details of a positon but it is no longer found in the db: Flash error saying "Position not found" |
+| Iteration #         | TBD  |
+
 <!------------------------------------------------------------------------->
-Use Case 7
-Name: View Recommended positions,
-Participating actors: Students,
-Entry condition(s): Student has created an account and is logged in,
-Exit condition(s): The web applications displays a list of open positions ranked on the recomendation algorithm,
-Flow of events:
-  1. The student logs in to their account
-  2. The student selects to view all open SA Positions
-  3. The system gets all open sa positions from the DB
-  4. The system displays a list of all open SA Positions
-  5. The student selects the button "Filter by recommendned"
-  6. The web application reorders the list of open sa Positions using the recommendation algorithm
-  7. The web application displays the reordered list of positions.
-Alternative flow of events:
-  1. The Student is not logged in to an account: They will be redirected to the sign in page and a message will flash saying "Please log in to access this page"
-  2. No SA Positions are open: A message will flash saying "No open positions found"
-  3. There is an error fetching the data from the db: A message will flash saying "Error gathering information, please try again"
-  4. The student is not recommeneded for any positions, flash message saying "No positions found" 
-Iteration # TBD
+| Use case # 7      |   |
+| ------------------ |--|
+| Name              | View Recommended Positions  |
+| Participating actor  | Student  |
+| Entry condition(s)     | Student has created an account and is logged in  |
+| Exit condition(s)           | The web applications displays a list of open positions ranked on the recomendation algorithm  |
+| Flow of events |1. The student logs in to their account<br>2. The student selects to view all open SA Positions<br>3. The system gets all open sa positions from the DB<br>4. The system displays a list of all open SA Positions<br>5. The student selects the button "Filter by recommendned"<br>6. The web application reorders the list of open sa Positions using the recommendation algorithm<br>7. The web application displays the reordered list of positions. |
+| Alternative flow of events    | 1. The Student is not logged in to an account: They will be redirected to the sign in page and a message will flash saying "Please log in to access this page"<br>2. No SA Positions are open: A message will flash saying "No open positions found"<br>3. There is an error fetching the data from the db: A message will flash saying "Error gathering information, please try again"<br>4. The student is not recommeneded for any positions, flash message saying "No positions found"  |
+| Iteration #         | TBD  |
+
 <!------------------------------------------------------------------------->
-Use Case 8
-Name: Apply for SA Positions,
-Participating actors: Students,
-Entry condition(s): Student has created an account and is logged in,
-Exit condition(s): The system adds the students application to the db,
-Flow of events:
-  1. The student logs in to their account
-  2. The student selects to view all open SA Positions
-  3. The system gets all open sa positions from the DB
-  4. The system displays a list of all open SA Positions
-  5. The student selects the "Apply" button on the selected position
-  6. The system displays the applicaton form for the selected position.
-  7. The student enters the grade they earned in the course.
-  8. The student enters the year and term they took the course.
-  9. The student enters the year and term they are applying for.
-  10. The student selects Submit.
-  11. The system adds the application to the db.
-Alternative flow of events:
-  1. The Student is not logged in to an account: They will be redirected to the sign in page and a message will flash saying "Please log in to access this page"
-  2. No SA Positions are open: A message will flash saying "No open positions found"
-  3. There is an error fetching the data from the db: A message will flash saying "Error gathering information, please try again"
-  4. The student does not enter all fields: Flash message saying "Please complete all fields before submitting."
-Iteration # TBD
+| Use case # 8      |   |
+| ------------------ |--|
+| Name              | "Apply for SA Positions"  |
+| Participating actor  | "Student"  |
+| Entry condition(s)     | "Student has created an account and is logged in"  |
+| Exit condition(s)           | "The system adds the students application to the db"  |
+| Flow of events | 1. The student logs in to their account<br>2. The student selects to view all open SA Positions<br>3. The system gets all open sa positions from the DB<br>4. The system displays a list of all open SA Positions<br>5. The student selects the "Apply" button on the selected position<br>6. The system displays the applicaton form for the selected position.<br>7. The student enters the grade they earned in the course.<br>8. The student enters the year and term they took the course.<br>9. The student enters the year and term they are applying for.<br>10. The student selects Submit.<br>11. The system adds the application to the db.  |
+| Alternative flow of events    | 1. The Student is not logged in to an account: They will be redirected to the sign in page and a message will flash saying "Please log in to access this page"<br>2. No SA Positions are open: A message will flash saying "No open positions found"<br>3. There is an error fetching the data from the db: A message will flash saying "Error gathering information, please try again"<br>4. The student does not enter all fields: Flash message saying "Please complete all fields before submitting." |
+| Iteration #         | TBD  |
+
+
 <!------------------------------------------------------------------------->
 | Use case # 9               |                                                                                                                                                                                                                                                                                                                  |
 |----------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
