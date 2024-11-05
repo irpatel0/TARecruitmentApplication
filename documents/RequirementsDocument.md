@@ -243,7 +243,7 @@ Iteration # TBD
 | Entry condition(s)         | The user is logged in to the application and opened the create course page.                                                                                                                                                                                                                                      |
 | Exit condition(s)          | The new created course is displayed correctly with all the information entered by professor.                                                                                                                                                                                                                     |
 | Flow of events             | 1. The user chooses the create course option.<br/> 2. The system prompts the user to choose course number, section, and term from the pre-created list of courses.<br/> 3. The user submits the chosen course number, section, and term.<br/> 4. The system adds the course and displays the new course created. |
-| Alternative flow of events | 1. In step 2, if the desired course for the professor to add does not exist, they can manually enter the course number and choose the section and term they are going to offer that course.<br/> 2. The user can abort creating the course at any time during steps 2 or 3.                                      |
+| Alternative flow of events | 1. In step 2, the desired course for the professor exists in the predetermined list of courses.<br/> 2. The user can abort creating the course at any time during steps 2 or 3.                   |
 | Iteration #                | TBD                                                                                                                                                                                                                                                                                                              |
 
 | Use case # 10              |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
@@ -253,7 +253,7 @@ Iteration # TBD
 | Entry condition(s)         | The user is logged in to the application and opened the create SA positions page.                                                                                                                                                                                                                                                                                                                                                                                                                                |
 | Exit condition(s)          | The SA position is successfully added to a specific course with all the correct information of the qualifications entered by the professor.                                                                                                                                                                                                                                                                                                                                                                      |
 | Flow of events             | 1. The user chooses the create SA position option.<br/> 2. The system prompts the user to enter course section<br/> 3. The professor enters the course section for which SAships needs to be added.<br/> 4. The system prompts the user to enter number of SAs and qualifications needed for that particular position.<br/> 5. The user fills out all the SA position information and submits.<br/> 6. The system displays a success message by adding the SA position to the course specified by the professor. |
-| Alternative flow of events | 1. In step 2, the user can create SA positions only for the courses created by them. If the user chooses a section that was not created by them, then the system throws an error and does not allow to add SAships.<br/> 2. In step 4, the user can enter as many additional qualifications they want but min GPA, grade earned for the course, prior SA experience are required information.<br/> 3. The user can create multiple SA positions for multiple course sections that were created by the same user. |
+| Alternative flow of events | 1. In step 2, the user can create SA positions only for the courses created by them. If the user chooses a section that was not created by them, then the system throws an error and does not allow to add SAships.<br/> 2. In step 4, the user can enter as many as qualifications needed.<br/> 3. The user can create multiple SA positions for multiple course sections that were created by the same user.                                                                                                   |
 | Iteration #                | TBD                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
 
 | Use case # 11              |                                                                                                                                                                                                                                                                                                                                                                                                               |
@@ -302,10 +302,25 @@ Iteration # TBD
 
 Here you should include the sketches or mockups for the main parts of the interface.
 You may use Figma to design your interface:
-
-  Example image. The image file is in the `./images` directory.
+  
+#### Add Course Sections  
   <kbd>
-      <img src="images/figma.jpg"  border="2">
+      <img src="images/AddCourseSections.png"  border="2">
+  </kbd>
+
+#### Apply For SA Position
+  <kbd>
+      <img src="images/ApplyForSAPosition.png"  border="2">
+  </kbd>
+
+#### Create SA Position
+  <kbd>
+      <img src="images/CreateSAPosition.png"  border="2">
+  </kbd>
+
+#### View Student Qualifications
+  <kbd>
+      <img src="images/ViewStudentQualifications.png"  border="2">
   </kbd>
   
 ----
