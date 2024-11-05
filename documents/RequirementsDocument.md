@@ -303,6 +303,26 @@ Iteration # TBD
 Here you should include the sketches or mockups for the main parts of the interface.
 You may use Figma to design your interface:
   
+#### Create Student Profile Page
+  <kbd>
+      <img src="images/CreateStudent1.png">
+  </kbd>
+
+#### Student Sign In Page
+  <kbd>      
+      <img src="images/StudentSignIn1.png">
+  </kbd>
+
+#### Create Instructor Profile Page
+  <kbd>      
+      <img src="images/CreateInstructor1.png">
+  </kbd>
+
+#### Instructor Sign In Page
+  <kbd>      
+      <img src="images/InstructorSignIn1.png">
+  </kbd>
+
 #### Add Course Sections  
   <kbd>
       <img src="images/AddCourseSections.png"  border="2">
@@ -322,6 +342,10 @@ You may use Figma to design your interface:
   <kbd>
       <img src="images/ViewStudentQualifications.png"  border="2">
   </kbd>
+
+      
+
+  
   
 ----
 # 4. Product Backlog
