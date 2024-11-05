@@ -308,7 +308,7 @@ You may use Figma to design your interface:
       <h3>Create Student Profile Page</h3>
       <img src="">
       <h3>Student Sign In Page</h3>
-      <img src="">
+      <img src="images/StudentSignIn1.png">
       <h3>Create Instructor Profile Page</h3>
       <img src="">
       <h3>Instructor Sign In Page</h3>
