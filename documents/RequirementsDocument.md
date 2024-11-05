@@ -32,11 +32,11 @@ Prepared by:
 
 ## Document Revision History
 
-| Name | Date       | Changes | Version |
-| ------ |------------| --------- | --------- |
-|Revision 1 | 2024-11-03 |Initial draft | 1.0        |
-|      |            |         |         |
-|      |            |         |         |
+| Name       | Date       | Changes                                                                        | Version |
+|------------|------------|--------------------------------------------------------------------------------|---------|
+| Revision 1 | 2024-11-03 | Worked on Introduction, User Stores, and Use Cases                             | 1.0     |
+| Revision 2 | 2024-11-04 | Worked on User Interfaces using Figma and Product and Sprint Backlog on Github | 2.0     |
+| Revision 3 | 2024-11-05 | Worked on Use Cases and Reviewed Requirements Document                         | 3.0     |
 
 ----
 # 1. Introduction
