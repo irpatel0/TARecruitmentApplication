@@ -306,13 +306,13 @@ You may use Figma to design your interface:
   Example image. The image file is in the `./images` directory.
   <kbd>
       <h3>Create Student Profile Page</h3>
-      <img src="images/CreateStudent.png">
+      <img src="">
       <h3>Student Sign In Page</h3>
-      <img src="images/StudentSignIn.png">
+      <img src="">
       <h3>Create Instructor Profile Page</h3>
-      <img src="images/CreateInstructor.png">
+      <img src="">
       <h3>Instructor Sign In Page</h3>
-      <img src="images/InstructorSignIn.png">
+      <img src="">
       
   </kbd>
   
