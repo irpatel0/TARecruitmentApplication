@@ -328,14 +328,29 @@ You may use Figma to design your interface:
       <img src="images/AddCourseSections.png"  border="2">
   </kbd>
 
+  #### View Open SA Positions
+  <kbd>
+      <img src="images/CS3733_TeamProject1_3and4student.png">
+  </kbd>
+
 #### Apply For SA Position
   <kbd>
       <img src="images/ApplyForSAPosition.png"  border="2">
   </kbd>
 
+ #### View SA Applications Status
+  <kbd>
+      <img src="images/CS3733_TeamProject1_6&7student.png"  border="2">
+  </kbd> 
+
 #### Create SA Position
   <kbd>
       <img src="images/CreateSAPosition.png"  border="2">
+  </kbd>
+
+  #### View Student Applicants List
+  <kbd>
+      <img src="images/CS3733_TeamProject1_5instructor.png"  border="2">
   </kbd>
 
 #### View Student Qualifications
