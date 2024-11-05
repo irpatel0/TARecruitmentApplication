@@ -116,6 +116,13 @@ Each use case should also have a field called "Iteration" where you specify in w
 
 You may use the following table template for your use cases. Copy-paste this table for each use case you will include in your document.
 
+
+Actors Involved:
+ - Students are users that are computer science students at WPI looking for SA Positions to apply to.
+ - Proffesors are instructors at WPI looking to find students to work as SAs in their courses
+
+
+
 | Use case # 1               |                                                                                                                                                                                                                                                                                                                  |
 |----------------------------| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | Name                       | Student Login                                                                                                                                                                                                                                                                                            |
