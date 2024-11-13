@@ -78,22 +78,22 @@ Include a detailed description of the routes your application will implement.
 * You can use the following table template to list your route specifications. 
 * Organize this section according to your subsytem decomposition, i.e., include a sub-section for each subsytem and list all routes for that sub-section in a table.  
 
-#### 2.2.2.1 \<Subsystem1> Routes
+#### 2.2.2.1 \<Student> Routes
 
 |   | Methods           | URL Path   | Description  |
 |:--|:------------------|:-----------|:-------------|
-|1. |                   |            |              |
-|2. |                   |            |              |
-|3. |                   |            |              |
-|4. |                   |            |              |
-|5. |                   |            |              |
+|1. |view_positions()   |/student/viewpositions |  Student can view open positions for SA                    
+|2. |view_recommend()   | /student/viewrecommend           |  Students can view recommended positions to apply for based on their credentials            |
+|3. |view_SA_details()  |  /student/viewsadetails          |   Students can check the details of each SA position           |
+|4. |check_app_status() |  /student/checkappstatus          |  Students can check status of submitted SA application(s)            |
+|5. | withdraw_app()    |  /student/withdrawapp          |  Students can withdraw existing submitted applications            |
 |6. |                   |            |              |
 
-#### 2.2.2.2 \<Subsystem2> Routes
+#### 2.2.2.2 \<Main> Routes
 
 |   | Methods           | URL Path   | Description  |
 |:--|:------------------|:-----------|:-------------|
-|1. |                   |            |              |
+|1. | index()           |  /index    |   Home Page   |
 |2. |                   |            |              |
 |3. |                   |            |              |
 |4. |                   |            |              |
