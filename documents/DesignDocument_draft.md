@@ -55,6 +55,22 @@ The subsystem routes gives information about the routes, decorator functions and
 (**Note**: For all subsections of Section-2: You should describe the design for the end product (completed application) - not only your iteration1 version. You will revise this document and add more details later.)
 
 ## 2.1 Database Model
+1. Student
+    *   This database model will maintain information about students, and will maintain information about past SA roles.
+    * Student will have a relationship with Course, to show prior courses that the Student has been an SA for
+    * Student will have a relationship with Position, to show courses that the student has applied to be an SA for
+    * Student will have a relationship with Position to show courses that the student is currently assigned to be an SA for
+2. Professor
+    * This database model will maintain information about professors.
+    * Professor will have a relationship with Course, to show courses that the Professor is teaching
+3. Course
+    * This database model will maintain information about Course sections and will maintain information about the professor teaching the course.
+    * Course will have a relationship with Teacher, to show the professor teaching that course
+    * Courses will have a relationship with Position, to show open SA positions for the course
+4. Position
+    * This database model will maintain information about the SA positions of a course. It will maintain information about the course it is assigned to, the SA applicants, and the current SAs of the course.
+    * Position will have a relatinoship with Course, to show the course that the postion is associated with
+
 
 Provide a list of your tables (i.e., SQL Alchemy classes) in your database model and briefly explain the role of each table. 
 
