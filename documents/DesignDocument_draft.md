@@ -94,27 +94,42 @@ Include a detailed description of the routes your application will implement.
 * You can use the following table template to list your route specifications. 
 * Organize this section according to your subsytem decomposition, i.e., include a sub-section for each subsytem and list all routes for that sub-section in a table.  
 
-#### 2.2.2.1 \<Subsystem1> Routes
+#### 2.2.2.1 \<Student> Routes
 
 |   | Methods           | URL Path   | Description  |
 |:--|:------------------|:-----------|:-------------|
-|1. |                   |            |              |
-|2. |                   |            |              |
-|3. |                   |            |              |
-|4. |                   |            |              |
-|5. |                   |            |              |
-|6. |                   |            |              |
+|1. |view_positions()   |/student/viewpositions |  Student can view open positions for SA                    
+|2. |view_recommend()   | /student/viewrecommend           |  Students can view recommended positions to apply for based on their credentials            |
+|3. |view_SA_details()  |  /student/viewsadetails          |   Students can check the details of each SA position           |
+|4. |check_app_status() |  /student/checkappstatus          |  Students can check status of submitted SA application(s)            |
+|5. | withdraw_app()    |  /student/withdrawapp          |  Students can withdraw existing submitted applications            |
+|6. |   student_register()                |   /student/studentregister         |  Students can create student profiles to access SA positions information and application pages            |
 
-#### 2.2.2.2 \<Subsystem2> Routes
+#### 2.2.2.2 \<Main> Routes
 
 |   | Methods           | URL Path   | Description  |
 |:--|:------------------|:-----------|:-------------|
-|1. |                   |            |              |
-|2. |                   |            |              |
-|3. |                   |            |              |
-|4. |                   |            |              |
-|5. |                   |            |              |
-|6. |                   |            |              |
+|1. | index()           |  /index    |   Home Page   |
+
+#### 2.2.2.3 \Auth Routes
+
+|    | Methods     | URL Path       | Description                                                                                                                                                                                                                       |
+|:---|:------------|:---------------|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 1. | login()     | /user/login    | Authenticates the user based on username and password and redirects to homepage according to their role on success. If the validation fails because of wrong credentials or user does not exist, then error message is displayed. |
+| 2. | logout()    | /user/logout   | Logs out the user from the session and redirect back to the login page.                                                                                                                                                           |
+| 3. | login_sso() | /user/loginsso | Allows user to login using Azure SSO instead of email and password.                                                                                                                                                               |
+
+#### 2.2.2.4 \Instructor Routes
+
+|   | Methods                  | URL Path                             | Description                                                                                                                                                                                           |
+|:--|:-------------------------|:-------------------------------------|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|1. | add_student(student_id)  | /instructor/<student_id>/addstudent  | Adds the selected student to the open SA position only if the student is unassigned, else throws an error. Saves the student for that position and mark as assigned.                                  |
+|2. | view_student(student_id) | /instructor/<student_id>/viewstudent | Displays the student information and qualifications for the positions.                                                                                                                                |
+|3. | view_allstudents()       | /instructor/viewallstudents          | Displays all the students who applied for every SA position that the instructor created.                                                                                                              |
+|4. | create_position()        | /instructor/createposition           | Create a SA position for the course that the instructor created and save the data in database. SA position form includes course section, number of SAs, and qualifications information.               |
+|5. | create_course()          | /instructor/createcourse             | Create course section by selecting course from course catalog, course section, and the term. After submitting the course is saved into database.                                                      |
+|6. | instructor_register()    | /instructor/register                 | Create instructor profile with username, password, name, WPI ID, email, and phone number. After submitting the data is stored into database and the username and password can be used for logging-in. |
+
 
 Repeat the above for other subsystems you included in your application. 
 
