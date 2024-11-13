@@ -33,8 +33,8 @@ Prepared by:
 
 | Name | Date | Changes | Version |
 | ------ | ------ | --------- | --------- |
-|Revision 1 |2024-11-15 |Initial draft | 1.0        |
-|      |      |         |         |
+|Revision 1 |2024-11-11 |Initial draft      | 1.0 |
+|Revision 2 |2024-11-13 |Revised section 2.2| 2.0 |
 
 
 # 1. Introduction
