@@ -57,6 +57,10 @@ Provide a UML diagram of your database model showing the associations and relati
 
 Describe the high-level architecture of your software:  i.e., the major subsystems and how they fit together. Provide a UML component diagram that illustrates the architecture of your software. Briefly mention the role of each subsystem in your architectural design. Please refer to the "System Level Design" lectures in Week 4. 
 
+<kbd>
+      <img src="images/CS3733_Subsystems_Diagram.drawio.png"  border="2">
+</kbd>
+
 ### 2.2.2 Interfaces
 
 Include a detailed description of the routes your application will implement. 
