@@ -103,7 +103,7 @@ Include a detailed description of the routes your application will implement.
 |3. |view_SA_details()  |  /student/viewsadetails          |   Students can check the details of each SA position           |
 |4. |check_app_status() |  /student/checkappstatus          |  Students can check status of submitted SA application(s)            |
 |5. | withdraw_app()    |  /student/withdrawapp          |  Students can withdraw existing submitted applications            |
-|6. |                   |            |              |
+|6. |   student_register()                |   /student/studentregister         |  Students can create student profiles to access SA positions information and application pages            |
 
 #### 2.2.2.2 \<Main> Routes
 
