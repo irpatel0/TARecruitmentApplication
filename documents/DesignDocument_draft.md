@@ -55,6 +55,22 @@ The subsystem routes gives information about the routes, decorator functions and
 (**Note**: For all subsections of Section-2: You should describe the design for the end product (completed application) - not only your iteration1 version. You will revise this document and add more details later.)
 
 ## 2.1 Database Model
+1. Student
+    *   This database model will maintain information about students, and will maintain information about past SA roles.
+    * Student will have a relationship with Course, to show prior courses that the Student has been an SA for
+    * Student will have a relationship with Position, to show courses that the student has applied to be an SA for
+    * Student will have a relationship with Position to show courses that the student is currently assigned to be an SA for
+2. Professor
+    * This database model will maintain information about professors.
+    * Professor will have a relationship with Course, to show courses that the Professor is teaching
+3. Course
+    * This database model will maintain information about Course sections and will maintain information about the professor teaching the course.
+    * Course will have a relationship with Teacher, to show the professor teaching that course
+    * Courses will have a relationship with Position, to show open SA positions for the course
+4. Position
+    * This database model will maintain information about the SA positions of a course. It will maintain information about the course it is assigned to, the SA applicants, and the current SAs of the course.
+    * Position will have a relatinoship with Course, to show the course that the postion is associated with
+
 
 Provide a list of your tables (i.e., SQL Alchemy classes) in your database model and briefly explain the role of each table. 
 
@@ -78,18 +94,24 @@ Include a detailed description of the routes your application will implement.
 * You can use the following table template to list your route specifications. 
 * Organize this section according to your subsytem decomposition, i.e., include a sub-section for each subsytem and list all routes for that sub-section in a table.  
 
-#### 2.2.2.1 \<Subsystem1> Routes
+#### 2.2.2.1 \<Student> Routes
 
 |   | Methods           | URL Path   | Description  |
 |:--|:------------------|:-----------|:-------------|
-|1. |                   |            |              |
-|2. |                   |            |              |
-|3. |                   |            |              |
-|4. |                   |            |              |
-|5. |                   |            |              |
-|6. |                   |            |              |
+|1. |view_positions()   |/student/viewpositions |  Student can view open positions for SA                    
+|2. |view_recommend()   | /student/viewrecommend           |  Students can view recommended positions to apply for based on their credentials            |
+|3. |view_SA_details()  |  /student/viewsadetails          |   Students can check the details of each SA position           |
+|4. |check_app_status() |  /student/checkappstatus          |  Students can check status of submitted SA application(s)            |
+|5. | withdraw_app()    |  /student/withdrawapp          |  Students can withdraw existing submitted applications            |
+|6. |   student_register()                |   /student/studentregister         |  Students can create student profiles to access SA positions information and application pages            |
 
-#### 2.2.2.2 \Auth Routes
+#### 2.2.2.2 \<Main> Routes
+
+|   | Methods           | URL Path   | Description  |
+|:--|:------------------|:-----------|:-------------|
+|1. | index()           |  /index    |   Home Page   |
+
+#### 2.2.2.3 \Auth Routes
 
 |    | Methods     | URL Path       | Description                                                                                                                                                                                                                       |
 |:---|:------------|:---------------|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -97,7 +119,7 @@ Include a detailed description of the routes your application will implement.
 | 2. | logout()    | /user/logout   | Logs out the user from the session and redirect back to the login page.                                                                                                                                                           |
 | 3. | login_sso() | /user/loginsso | Allows user to login using Azure SSO instead of email and password.                                                                                                                                                               |
 
-#### 2.2.2.3 \Instructor Routes
+#### 2.2.2.4 \Instructor Routes
 
 |   | Methods                  | URL Path                             | Description                                                                                                                                                                                           |
 |:--|:-------------------------|:-------------------------------------|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
