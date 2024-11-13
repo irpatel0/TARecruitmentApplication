@@ -106,6 +106,67 @@ Repeat the above for other subsystems you included in your application.
 
 Provide a list of the page templates you plan to create and supplement your description with UI sketches or screenshots. Make sure to mention which user-stories in your “Requirements and Use Cases" document will utilize these interfaces for user interaction. 
 
+1. Student sign in page<br>This page includes a form for students to sign into their account, a button to switch to instructor sign in, and a button to register.<br>
+User story: 1
+  <kbd>      
+      <img src="images/StudentSignIn1.png">
+  </kbd>
+
+2. Instructor sign in page<br>This page includes a form for instructors to sign in, a button to switch to student sign in page, and a button to register.<br>
+User story: 2
+  <kbd>      
+      <img src="images/InstructorSignIn1.png">
+  </kbd>
+
+3. Student create account page<br>This page includes a form for a student to create an account and register, and a button to switch to the sign in page.<br>
+User story: 3
+  <kbd>      
+      <img src="images/CreateStudent1.png">
+  </kbd>
+
+4. Instructor create account page<br>This page includes a form for a professor to create an account and register, and a button to switch to the sign in page.<br>
+User story: 4
+  <kbd>      
+      <img src="images/CreateInstructor1.png">
+  </kbd>
+
+5. Add course section pages<br>This page includes a form for professors to add course sections, and a logout button.<br>
+User Story: 9
+  <kbd>      
+      <img src="images/AddCourseSections.png">
+  </kbd>
+
+6. View Open SA Positions page<br>This page includes three secions to display the three recomended levels for the open sa positions. It also has a logout button.<br>
+User Story: 5, 6, 7
+  <kbd>      
+      <img src="images/CS3733_TeamProject1_3and4student.png">
+  </kbd>
+
+7. Apply for SA Position page<br> This page includes a form for students to submit their application to open sa positions. It also has a logout button<br>
+User Story: 8
+  <kbd>      
+      <img src="images/ApplyForSAPosition.png">
+  </kbd>
+
+8. View application status page<br> This page allows students to view the status of all their applications and gives the option to withdraw. It also includes a logout button.<br>
+User Story: 13, 14
+  <kbd>      
+      <img src="images/CS3733_TeamProject1_6%267student.png">
+  </kbd>
+
+9. Create SA Position page<br>This page includes a form for instructors to create sa positions.<br>
+User Story: 10, 12
+  <kbd>      
+      <img src="images/CS3733_TeamProject1_5instructor.png">
+  </kbd>
+
+10. View Student Qualifications<br> This page displays a selected students qualifications to an instructor<br>
+User Story: 11
+  <kbd>      
+      <img src="images/ViewStudentQualifications.png">
+  </kbd>
+
+
 # 3. References
 
 Cite your references here.
