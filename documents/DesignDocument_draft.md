@@ -4,10 +4,10 @@
 --------
 Prepared by:
 
-* `<author1>`,`<organization>`
-* `<author2>`,`<organization>`
-* `<author3>`,`<organization>`
-* `<author4>`,`<organization>`
+* `Sai Teja Sunku`,`WPI`
+* `Achintya Sanjay`,`WPI`
+* `Ishaan Patel`,`WPI`
+* `Jake Grier`,`WPI`
 ---
 
 **Course** : CS 3733 - Software Engineering 
@@ -40,6 +40,15 @@ Prepared by:
 # 1. Introduction
 
 Explain the purpose of this document. If this is a revision of an earlier document, please make sure to summarize what changes have been made during the revision (keep this discussion brief). 
+
+This Design Document aims to explain software design of CSAssist web application. The software design includes:
+1. Database Model
+2. Subsystems and Interfaces
+3. Subsystem Routes
+4. User Interfaces
+The database model provide information about the tables involved, fields in each table, foreign and primary keys, any association table, and multiplicity and interactions between tables.
+The subsystem and interfaces provide information on how the web application is divided into different components and any dependencies between components. The subsystem is designed to have low coupling and high cohesion.
+The subsystem routes gives information about the routes, decorator functions and their purpose. The user interfaces provide high level overview of how the web application looks and features present for user to interact with.
 
 # 2. Software Design
 
