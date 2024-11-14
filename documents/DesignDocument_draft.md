@@ -82,6 +82,16 @@ Provide a UML diagram of your database model showing the associations and relati
 
 Describe the high-level architecture of your software:  i.e., the major subsystems and how they fit together. Provide a UML component diagram that illustrates the architecture of your software. Briefly mention the role of each subsystem in your architectural design. Please refer to the "System Level Design" lectures in Week 4. 
 
+#### Subsystem Overview
+The subsystems involved in this web application are:
+1. Main - handles homepage/index page for both the user roles: Student and Instructor
+2. Auth - handles the login, logout, and authentication logic for both users roles Student and Instructor and redirects accordingly. 
+3. Errors - displays error templates when some part of the app fails.
+4. Student - handles all the operations for a Student user like applying for SA position, viewing open positions, registering profile, providing recommendations, and application management. 
+5. Instructor - handles all the operations for a Instructor user like creating course section and SA position, registering profile, application management, and viewing student.
+All the subsystems fit together as the flow starts from Auth for logging-in, then Main for homepage, then Student or Instructor subsystem to handle main parts of the web app, finally Auth again manages logout. All the subsystems can throw errors through Error subsystem.
+
+#### UML Component Diagram
 <kbd>
       <img src="images/CS3733_Subsystems_Diagram.drawio.png"  border="2">
 </kbd>
@@ -107,9 +117,9 @@ Include a detailed description of the routes your application will implement.
 
 #### 2.2.2.2 \<Main> Routes
 
-|   | Methods           | URL Path   | Description  |
-|:--|:------------------|:-----------|:-------------|
-|1. | index()           |  /index    |   Home Page   |
+|   | Methods           | URL Path   | Description                         |
+|:--|:------------------|:-----------|:------------------------------------|
+|1. | index()           |  /index    | Home Page for Instructor or Student |
 
 #### 2.2.2.3 \Auth Routes
 
@@ -129,6 +139,13 @@ Include a detailed description of the routes your application will implement.
 |4. | create_position()        | /instructor/createposition           | Create a SA position for the course that the instructor created and save the data in database. SA position form includes course section, number of SAs, and qualifications information.               |
 |5. | create_course()          | /instructor/createcourse             | Create course section by selecting course from course catalog, course section, and the term. After submitting the course is saved into database.                                                      |
 |6. | instructor_register()    | /instructor/register                 | Create instructor profile with username, password, name, WPI ID, email, and phone number. After submitting the data is stored into database and the username and password can be used for logging-in. |
+
+#### 2.2.2.5 \Error Routes
+
+|    | Methods           | URL Path       | Description                                                         |
+|:---|:------------------|:---------------|:--------------------------------------------------------------------|
+| 1. | not_found_error() | 404            | Displays 404 error template                                         |
+| 2. | internal_error          | 500            | Displays 500 error template                                         |
 
 
 Repeat the above for other subsystems you included in your application. 
