@@ -41,8 +41,6 @@ Prepared by:
 
 # 1. Introduction
 
-Explain the purpose of this document. If this is a revision of an earlier document, please make sure to summarize what changes have been made during the revision (keep this discussion brief). 
-
 This Design Document aims to explain software design of CSAssist web application. The software design includes:
 1. Database Model
 2. Subsystems and Interfaces
