@@ -31,10 +31,11 @@ Prepared by:
 
 ### Document Revision History
 
-| Name | Date | Changes | Version |
-| ------ | ------ | --------- | --------- |
-|Revision 1 |2024-11-11 |Initial draft      | 1.0 |
-|Revision 2 |2024-11-13 |Revised section 2.2| 2.0 |
+| Name       | Date       | Changes                                          | Version |
+|------------|------------|--------------------------------------------------|---------|
+| Revision 1 | 2024-11-12 | Initial draft for section 1, 2.1, 2.2, 2.3       | 1.0     |
+| Revision 2 | 2024-11-13 | Added information to section 2.2                 | 2.0     |
+| Revision 3 | 2024-11-14 | Revised section 2.2 and added additional details | 3.0     |
 
 
 # 1. Introduction
@@ -104,7 +105,7 @@ Include a detailed description of the routes your application will implement.
 * You can use the following table template to list your route specifications. 
 * Organize this section according to your subsytem decomposition, i.e., include a sub-section for each subsytem and list all routes for that sub-section in a table.  
 
-#### 2.2.2.1 \<Student> Routes
+#### 2.2.2.1 Student Routes
 
 |   | Methods           | URL Path   | Description  |
 |:--|:------------------|:-----------|:-------------|
@@ -115,13 +116,13 @@ Include a detailed description of the routes your application will implement.
 |5. | withdraw_app()    |  /student/withdrawapp          |  Students can withdraw existing submitted applications            |
 |6. |   student_register()                |   /student/studentregister         |  Students can create student profiles to access SA positions information and application pages            |
 
-#### 2.2.2.2 \<Main> Routes
+#### 2.2.2.2 Main Routes
 
 |   | Methods           | URL Path   | Description                         |
 |:--|:------------------|:-----------|:------------------------------------|
 |1. | index()           |  /index    | Home Page for Instructor or Student |
 
-#### 2.2.2.3 \Auth Routes
+#### 2.2.2.3 Auth Routes
 
 |    | Methods     | URL Path       | Description                                                                                                                                                                                                                       |
 |:---|:------------|:---------------|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -129,7 +130,7 @@ Include a detailed description of the routes your application will implement.
 | 2. | logout()    | /user/logout   | Logs out the user from the session and redirect back to the login page.                                                                                                                                                           |
 | 3. | login_sso() | /user/loginsso | Allows user to login using Azure SSO instead of email and password.                                                                                                                                                               |
 
-#### 2.2.2.4 \Instructor Routes
+#### 2.2.2.4 Instructor Routes
 
 |   | Methods                  | URL Path                             | Description                                                                                                                                                                                           |
 |:--|:-------------------------|:-------------------------------------|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -140,12 +141,12 @@ Include a detailed description of the routes your application will implement.
 |5. | create_course()          | /instructor/createcourse             | Create course section by selecting course from course catalog, course section, and the term. After submitting the course is saved into database.                                                      |
 |6. | instructor_register()    | /instructor/register                 | Create instructor profile with username, password, name, WPI ID, email, and phone number. After submitting the data is stored into database and the username and password can be used for logging-in. |
 
-#### 2.2.2.5 \Error Routes
+#### 2.2.2.5 Error Routes
 
 |    | Methods           | URL Path       | Description                                                         |
 |:---|:------------------|:---------------|:--------------------------------------------------------------------|
 | 1. | not_found_error() | 404            | Displays 404 error template                                         |
-| 2. | internal_error          | 500            | Displays 500 error template                                         |
+| 2. | internal_error()  | 500            | Displays 500 error template                                         |
 
 
 Repeat the above for other subsystems you included in your application. 
