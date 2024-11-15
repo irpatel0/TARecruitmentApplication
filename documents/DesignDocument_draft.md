@@ -36,6 +36,7 @@ Prepared by:
 | Revision 1 | 2024-11-12 | Initial draft for section 1, 2.1, 2.2, 2.3       | 1.0     |
 | Revision 2 | 2024-11-13 | Added information to section 2.2                 | 2.0     |
 | Revision 3 | 2024-11-14 | Revised section 2.2 and added additional details | 3.0     |
+| Revision 4 | 2024-11-15 | Added UML design for section 2.1                 | 4.0     |
 
 
 # 1. Introduction
@@ -73,9 +74,9 @@ The subsystem routes gives information about the routes, decorator functions and
     * Position will have a relatinoship with Course, to show the course that the postion is associated with
 
 
-Provide a list of your tables (i.e., SQL Alchemy classes) in your database model and briefly explain the role of each table. 
-
-Provide a UML diagram of your database model showing the associations and relationships among tables. 
+<kbd>      
+      <img src="images/UML.png">
+  </kbd>
 
 ## 2.2 Subsystems and Interfaces
 
