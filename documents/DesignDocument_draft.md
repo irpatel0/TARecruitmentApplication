@@ -1,6 +1,6 @@
 # Project Design Document
 
-## Your Project Title
+## Your Project Title: CSAssist
 --------
 Prepared by:
 
@@ -82,8 +82,6 @@ The subsystem routes gives information about the routes, decorator functions and
 
 ### 2.2.1 Overview
 
-Describe the high-level architecture of your software:  i.e., the major subsystems and how they fit together. Provide a UML component diagram that illustrates the architecture of your software. Briefly mention the role of each subsystem in your architectural design. Please refer to the "System Level Design" lectures in Week 4. 
-
 #### Subsystem Overview
 The subsystems involved in this web application are:
 1. Main - handles homepage/index page for both the user roles: Student and Instructor
@@ -99,12 +97,6 @@ All the subsystems fit together as the flow starts from Auth for logging-in, the
 </kbd>
 
 ### 2.2.2 Interfaces
-
-Include a detailed description of the routes your application will implement. 
-* Brainstorm with your team members and identify all routes you need to implement for the **completed** application.
-* For each route specify its “methods”, “URL path”, and “a description of the operation it implements”.  
-* You can use the following table template to list your route specifications. 
-* Organize this section according to your subsytem decomposition, i.e., include a sub-section for each subsytem and list all routes for that sub-section in a table.  
 
 #### 2.2.2.1 Student Routes
 
@@ -150,7 +142,6 @@ Include a detailed description of the routes your application will implement.
 | 2. | internal_error()  | 500            | Displays 500 error template                                         |
 
 
-Repeat the above for other subsystems you included in your application. 
 
 ### 2.3 User Interface Design 
 
