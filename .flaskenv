@@ -1,0 +1,2 @@
+FLASK_APP=csassist.py
+FLASK_DEBUG=1
