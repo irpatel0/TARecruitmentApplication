@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% import 'bootstrap_wtf.html' as wtf %}
+
+{% block content %}
+
+    <h1>Viewing Student Profile {{student.firstname}} {{student.lastname}}</h1>
+    <hr>
+    <p>Student ID: {{student.id}}</p>
+    <p>Student Email: {{student.email}}</p>
+    <p>Student Phone: {{student.phone}}</p>
+    <p>Student GPA: {{student.gpa}}</p>
+    <p>Student Graduation Date: {{student.graduation_date}}</p>
+
+{% endblock %}

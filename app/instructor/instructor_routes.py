@@ -3,6 +3,7 @@ import sqlalchemy as sqla
 from app import db
 from app.instructor import instructor_blueprint as bp_instructor
 from flask_login import current_user, login_required
+from app.main.models import Course, Student, Instructor, CourseSection, Position
 from app.main.models import Course, Position
 from app.main.forms import CourseForm, PositionForm
 
@@ -43,12 +44,13 @@ def create_position():
     return render_template('createposition.html', form=pform)
 
 @bp_instructor.route('/instructor/student', methods=['GET'])
-def student():
+def view_students():
     return "Student"
 
 @bp_instructor.route('/instructor/student/<student_id>', methods=['GET'])
 def student_profile(student_id):
-    return "Student Profile"
+    student = db.session.get(Student, student_id)
+    return render_template('student_profile.html', student = student)
 
 
 @bp_instructor.route('/instructor/student/assign', methods=['GET', 'POST'])
