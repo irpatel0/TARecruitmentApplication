@@ -11,7 +11,7 @@ from app.student.student_forms import StudentRegistrationForm
 from app.instructor.instructor_forms import InstructorRegistrationForm
 
 
-@bp_student.route('/student/studentregister', methods=['POST'])
+@bp_auth.route('/student/studentregister', methods=['GET', 'POST'])
 def student_register():
     if current_user.is_authenticated:
         return redirect(url_for('main.index'))
@@ -27,8 +27,8 @@ def student_register():
                           gpa=srform.GPA.data,
                           graduation_date=srform.graduation_date.data,
                           )
-        for c in srform.Courses_taught.data:
-            student.courses_taught.add(c)
+        # for c in srform.Courses_taught.data:
+        #     student.courses_taught.add(c)
         student.set_password(srform.password.data)
         db.session.add(student)
         db.session.commit()
@@ -38,7 +38,7 @@ def student_register():
     return render_template('student_register.html', form=srform)
 
 
-@bp_instructor.route('/instructor/register', methods=['POST'])
+@bp_auth.route('/instructor/register', methods=['POST'])
 def instructor_register():
     if current_user.is_authenticated:
         return redirect(url_for('main.index'))

@@ -11,20 +11,20 @@ class StudentRegistrationForm(FlaskForm):
     
     first_name = StringField('First Name', validators=[DataRequired()])
     last_name = StringField('Last Name', validators=[DataRequired()])
-    WPI_ID = IntegerField('WPI ID', validators=[DataRequired(), Length(min=9, max=9)])
+    WPI_ID = StringField('WPI ID', validators=[DataRequired(), Length(min=9, max=10)])
     email = StringField('Email', validators=[DataRequired(), Email()])
-    phone = IntegerField('Phone Number', validators=[DataRequired(), Length(min=10, max=10)])
+    phone = StringField('Phone Number', validators=[DataRequired(), Length(10)])
     username = StringField('Username', validators = [DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
     password2 = PasswordField('Confirm Password', validators=[DataRequired(), EqualTo('password')])
     GPA = FloatField('GPA', validators=[DataRequired()])
-    Courses_taught = QuerySelectMultipleField( 'Tag', query_factory= lambda : db.session.scalars(sqla.select(CourseSection)), get_label= lambda theCourse : theCourse.course_number, widget=ListWidget(prefix_label=False),
-         option_widget=CheckboxInput() )
+    # Courses_taught = QuerySelectMultipleField( 'Tag', query_factory= lambda : db.session.scalars(sqla.select(CourseSection)), get_label= lambda theCourse : theCourse.course_number, widget=ListWidget(prefix_label=False),
+    #      option_widget=CheckboxInput() )
     graduation_date = StringField('Graduation Date', validators = [DataRequired()])
     submit = SubmitField('Register')
 
 
-    def validate_WPI_id(self, WPI_ID):
+    def validate_wpi_id(self, WPI_ID):
         query = sqla.select(Student).where(Student.WPI_ID == WPI_ID.data)
         student = db.session.scalars(query).first()
         if student is not None:
