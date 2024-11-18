@@ -11,7 +11,7 @@ from app.instructor.instructor_forms import CourseForm, PositionForm
 def index():
     return "CSASSIST-Instructor"
 
-@bp_instructor.route('/instructor/create_course', methods=['GET'])
+@bp_instructor.route('/instructor/create_course', methods=['GET', 'POST'])
 @login_required
 def create_course():
     cform = CourseForm()
@@ -31,7 +31,7 @@ def create_position():
     pform = PositionForm()
     if pform.validate_on_submit():
         new_position = Position(
-            section_id=pform.course_section.data.id,
+            section_id=pform.course_section.data,
             num_SAs=pform.num_SAs.data,
             min_GPA=pform.min_GPA.data,
             min_grade=pform.min_grade.data
