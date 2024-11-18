@@ -59,3 +59,4 @@ class CourseSection(db.Model):
     instructor_id : sqlo.Mapped[int] = sqlo.mapped_column(sqla.ForeignKey(Instructor.id))
     term : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(5))
     instructor : sqlo.Mapped[Instructor] = sqlo.relationship('Instructor', backref='course_sections')
+
