@@ -22,7 +22,7 @@ def login():
             query = sqla.select(User).where(User.username == lform.username.data)
             user = db.session.scalars(query).first()
 
-            if (user is None) or(user.check_password(lform.password.data) == False):
+            if (user is None) or(user.get_password(lform.password.data) == False):
                 flash('Invalid username or password')
                 return redirect(url_for('auth.login'))
             login_user(user, remember=lform.remember_me.data)
@@ -32,3 +32,9 @@ def login():
                 return redirect(url_for('main.instructor_index'))
 
     return render_template('login.html', form = lform)
+
+@bp_auth.route('/user/logout', methods=['GET'])
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for('auth.login'))
