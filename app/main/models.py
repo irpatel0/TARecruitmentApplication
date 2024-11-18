@@ -58,5 +58,14 @@ class CourseSection(db.Model):
     section : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(5))
     instructor_id : sqlo.Mapped[int] = sqlo.mapped_column(sqla.ForeignKey(Instructor.id))
     term : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(5))
-    instructor : sqlo.Mapped[Instructor] = sqlo.relationship('Instructor', backref='course_sections')
+    instructor : sqlo.Mapped['Instructor'] = sqlo.relationship('Instructor', backref='course_sections')
+
+class Position(db.Model):
+    id : sqlo.Mapped[int] = sqlo.mapped_column(sqla.Integer, primary_key=True)
+    section_id : sqlo.Mapped[int] = sqlo.mapped_column(sqla.ForeignKey(CourseSection.id))
+    num_SAs : sqlo.Mapped[int] = sqlo.mapped_column(sqla.Integer)
+    available : sqlo.Mapped[bool] = sqlo.mapped_column(sqla.Boolean, default=True)
+    min_GPA : sqlo.Mapped[float] = sqlo.mapped_column(sqla.Float, default=0)
+    min_grade : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(2), default='A')
+
 
