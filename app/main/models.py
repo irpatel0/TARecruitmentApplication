@@ -60,7 +60,7 @@ class CourseSection(db.Model):
     term : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(5))
 
     #relations
-    instructor : sqlo.Mapped['Instructor'] = sqlo.relationship('Instructor', backref='course_sections')
+    professor : sqlo.Mapped['Instructor'] = sqlo.relationship(back_populates='course_sections')
 
 class Position(db.Model):
     id : sqlo.Mapped[int] = sqlo.mapped_column(sqla.Integer, primary_key=True)
