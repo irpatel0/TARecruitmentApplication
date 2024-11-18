@@ -19,11 +19,10 @@ def view_students():
     return "Student"
 
 @bp_instructor.route('/instructor/student/<student_id>', methods=['GET'])
-@login_required
 def student_profile(student_id):
     student = db.session.get(Student, student_id)
     return render_template('student_profile.html', student = student)
-    
+
 
 @bp_instructor.route('/instructor/student/assign', methods=['GET', 'POST'])
 def assign_student():

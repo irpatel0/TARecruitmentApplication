@@ -4,10 +4,11 @@
 {% block content %}
 
     <h1>Viewing Student Profile {{student.firstname}} {{student.lastname}}</h1>
-    <h2>Student ID: {{student.student_id}}</h2>
-    <h2>Student Email: {{student.email}}</h2>
-    <h2>Student Phone: {{student.phone}}</h2>
-    <h2>Student GPA: {{student.gpa}}</h2>
-    <h2>Student Graduation Date: {{student.graduation_date}}</h2>
+    <hr>
+    <p>Student ID: {{student.id}}</p>
+    <p>Student Email: {{student.email}}</p>
+    <p>Student Phone: {{student.phone}}</p>
+    <p>Student GPA: {{student.gpa}}</p>
+    <p>Student Graduation Date: {{student.graduation_date}}</p>
 
 {% endblock %}

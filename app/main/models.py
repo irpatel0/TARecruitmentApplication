@@ -43,7 +43,7 @@ class Student(User):
 class Instructor(User):
     __tablename__ = 'instructor'
     id: sqlo.Mapped[int] = sqlo.mapped_column(sqla.ForeignKey(User.id), primary_key=True)
-    course_sections : sqlo.Mapped['CourseSection'] = sqlo.relationship('CourseSection', backref='instructor')
+    course_sections : sqlo.Mapped['CourseSection'] = sqlo.relationship(back_populates='professor')
 
     __mapper_args__ = {'polymorphic_identity': 'Instructor'}
 
@@ -58,7 +58,7 @@ class CourseSection(db.Model):
     section : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(5))
     instructor_id : sqlo.Mapped[int] = sqlo.mapped_column(sqla.ForeignKey(Instructor.id))
     term : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(5))
-    instructor : sqlo.Mapped['Instructor'] = sqlo.relationship('Instructor', backref='course_sections')
+    professor : sqlo.Mapped['Instructor'] = sqlo.relationship(back_populates='course_sections')
 
 class Position(db.Model):
     id : sqlo.Mapped[int] = sqlo.mapped_column(sqla.Integer, primary_key=True)
