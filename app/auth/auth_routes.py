@@ -10,7 +10,7 @@ from flask_login import login_user, current_user, logout_user, login_required
 @bp_auth.route('/student/studentregister', methods=['GET', 'POST'])
 def student_register():
     if current_user.is_authenticated:
-        return redirect(url_for('main.index'))
+        return redirect(url_for('main.student_index'))
 
     srform = StudentRegistrationForm()
     if srform.validate_on_submit():
@@ -37,7 +37,7 @@ def student_register():
 @bp_auth.route('/instructor/register', methods=['GET', 'POST'])
 def instructor_register():
     if current_user.is_authenticated:
-        return redirect(url_for('main.index'))
+        return redirect(url_for('main.instructor_index'))
 
     irform = InstructorRegistrationForm()
     if irform.validate_on_submit():
