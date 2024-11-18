@@ -1,3 +1,26 @@
 from flask_wtf import FlaskForm
 from app import db
 import sqlalchemy as sqla
+from wtforms import StringField, SubmitField, SelectField, TextAreaField, BooleanField, IntegerField, FloatField
+from wtforms_sqlalchemy.fields import QuerySelectField
+from wtforms.validators import  ValidationError, DataRequired, Length
+from app.main.models import Course, CourseSection
+
+class CourseForm(FlaskForm):
+    course_number = QuerySelectField('Course Number',
+                query_factory = lambda: db.session.scalars(sqla.select(Course).order_by(sqla.text('Course.number'))),
+                get_label = lambda theCourse : theCourse.number
+    )
+    section =  StringField('Section', validators=[Length(min=1, max=5)])
+    term = StringField('Term', validators=[Length(min=1, max=5)])
+    submit = SubmitField('Post')
+
+class PositionForm(FlaskForm):
+    course_section = QuerySelectField('Course Number',
+                query_factory = lambda: db.session.scalars(sqla.select(CourseSection).order_by(sqla.text('CourseSection.course_number'))),
+                get_label = lambda theCourse : theCourse.number
+    )
+    num_SAs = IntegerField('Number of SAs', validators=[DataRequired()])
+    min_GPA = FloatField('Min GPA', validators=[DataRequired()])
+    min_grade = StringField('Min Grade', validators=[DataRequired(), Length(max=1)])
+    submit = SubmitField('Post')
