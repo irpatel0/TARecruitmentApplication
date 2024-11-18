@@ -4,16 +4,21 @@ from typing import Optional
 import sqlalchemy as sqla
 import sqlalchemy.orm as sqlo
 from flask_login import UserMixin
+from app import login
+
+@login.user_loader
+def load_user(id):
+    return db.session.get(User, int(id))
 
 class User(db.Model, UserMixin):
     __tablename__ = 'user'
     id : sqlo.Mapped[int] = sqlo.mapped_column(primary_key=True)
-    username = sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(64), index=True, unique=True)
-    firstname = sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(120))
-    lastname = sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(120))
-    wpi_id = sqlo.Mapped[int] = sqlo.mapped_column(sqla.Integer, default=0, unique=True)
-    email = sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(120), unique=True)
-    phone = sqlo.Mapped[int] = sqlo.mapped_column(sqla.Integer, unique=True)
+    username : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(64), index=True, unique=True)
+    firstname : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(120))
+    lastname : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(120))
+    wpi_id : sqlo.Mapped[int] = sqlo.mapped_column(sqla.Integer, default=0, unique=True)
+    email : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(120), unique=True)
+    phone : sqlo.Mapped[int] = sqlo.mapped_column(sqla.Integer, unique=True)
     password_hash: sqlo.Mapped[Optional[str]] = sqlo.mapped_column(sqla.String(256))
     user_type : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(50))
 

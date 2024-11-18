@@ -8,6 +8,9 @@ db = SQLAlchemy()
 
 migrate = Migrate()
 
+login = LoginManager()
+login.login_view = 'auth.login'
+
 def create_app(config_class=Config):
     app = Flask(__name__)
     app.config.from_object(config_class)
@@ -16,6 +19,8 @@ def create_app(config_class=Config):
 
     db.init_app(app)
     migrate.init_app(app, db)
+
+    login.init_app(app)
 
     # blueprint registration
     from app.main import main_blueprint as main
