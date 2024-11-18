@@ -2,6 +2,8 @@ from flask import render_template, flash, redirect, url_for, request, jsonify
 import sqlalchemy as sqla
 from app import db
 from app.instructor import instructor_blueprint as bp_instructor
+from flask_login import current_user, login_required
+
 
 @bp_instructor.route('/instructor', methods=['GET'])
 def index():
@@ -11,7 +13,7 @@ def index():
 def create_course():
     return "Create Course"
 
-@bp_instructor.route('instructor/createposition', methods=['GET', 'POST'])
+@bp_instructor.route('/instructor/createposition', methods=['GET', 'POST'])
 def create_position():
     return "Create Position"
 
