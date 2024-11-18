@@ -4,8 +4,7 @@ from app import db
 from app.instructor import instructor_blueprint as bp_instructor
 from flask_login import current_user, login_required
 from app.main.models import Course, Student, Instructor, CourseSection, Position
-from app.main.models import Course, Position
-from app.main.forms import CourseForm, PositionForm
+from app.instructor.instructor_forms import CourseForm, PositionForm
 
 
 @bp_instructor.route('/instructor', methods=['GET'])
