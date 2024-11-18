@@ -3,12 +3,8 @@ from app import db
 from app.auth import auth_blueprint as bp_auth
 import sqlalchemy as sqla
 from app.main.models import User, Student, Instructor
-from app.auth.auth_forms import LoginForm
+from app.auth.auth_forms import LoginForm, StudentRegistrationForm, InstructorRegistrationForm
 from flask_login import login_user, current_user, logout_user, login_required
-from app.student import student_blueprint as bp_student
-from app.instructor import instructor_blueprint as bp_instructor
-from app.student.student_forms import StudentRegistrationForm
-from app.instructor.instructor_forms import InstructorRegistrationForm
 
 
 @bp_auth.route('/student/studentregister', methods=['GET', 'POST'])
@@ -21,7 +17,7 @@ def student_register():
         student = Student(username=srform.username.data,
                           firstname=srform.first_name.data,
                           lastname=srform.last_name.data,
-                          wpi_id=srform.WPI_ID.data,
+                          wpi_id=srform.wpi_id.data,
                           email=srform.email.data,
                           phone=srform.phone.data,
                           gpa=srform.GPA.data,
@@ -38,7 +34,7 @@ def student_register():
     return render_template('student_register.html', form=srform)
 
 
-@bp_auth.route('/instructor/register', methods=['POST'])
+@bp_auth.route('/instructor/register', methods=['GET', 'POST'])
 def instructor_register():
     if current_user.is_authenticated:
         return redirect(url_for('main.index'))
@@ -48,7 +44,7 @@ def instructor_register():
         instructor = Instructor(username=irform.username.data,
                                 firstname=irform.first_name.data,
                                 lastname=irform.last_name.data,
-                                wpi_id=irform.WPI_ID.data,
+                                wpi_id=irform.wpi_id.data,
                                 email=irform.email.data,
                                 phone=irform.phone.data,
                                 )
