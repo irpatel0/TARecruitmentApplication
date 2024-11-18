@@ -5,5 +5,18 @@
 
     <h1>Welcome to create position</h1>
 
+    {% if form %}
+        <form action="" method="post">
+            {{ form.hidden_tag() }}
+
+            {{wtf.form_field(form.course_section)}}
+            {{wtf.form_field(form.num_SAs)}}
+            {{wtf.form_field(form.min_GPA)}}
+            {{wtf.form_field(form.min_grade)}}
+            {{wtf.form_field(form.submit)}}
+
+        </form>
+    {% endif %}
+
 
 {% endblock %}

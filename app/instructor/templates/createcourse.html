@@ -9,10 +9,9 @@
         <form action="" method="post">
             {{ form.hidden_tag() }}
 
-            {{wtf.form_field(form.title)}}
-            {{wtf.form_field(form.body)}}
-            {{wtf.form_field(form.happiness_level)}}
-            {{ form.tag() }}
+            {{wtf.form_field(form.course_number)}}
+            {{wtf.form_field(form.section)}}
+            {{wtf.form_field(form.term)}}
             {{wtf.form_field(form.submit)}}
 
         </form>
