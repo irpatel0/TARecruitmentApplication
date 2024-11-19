@@ -17,7 +17,7 @@ from app.main.models import Course, CourseSection
 class CourseForm(FlaskForm):
     course_number = QuerySelectField('Course Number',
                 query_factory = lambda: db.session.scalars(sqla.select(Course).order_by(sqla.text('Course.number'))),
-                get_label = lambda theCourse : theCourse.number
+                get_label = lambda theCourse : f"{theCourse.number} - {theCourse.title}"
     )
     section =  StringField('Section', validators=[Length(min=1, max=5)])
     term = StringField('Term', validators=[Length(min=1, max=5)])
@@ -26,7 +26,7 @@ class CourseForm(FlaskForm):
 class PositionForm(FlaskForm):
     course_section = QuerySelectField('Course Section',
                 query_factory = lambda: db.session.scalars(sqla.select(CourseSection).where(CourseSection.instructor_id == current_user.id)),
-                get_label = lambda theCourseSection : theCourseSection.course_number
+                get_label = lambda theCourseSection : f"{theCourseSection.course_number}-{theCourseSection.section} ({theCourseSection.term})"
     )
     num_SAs = IntegerField('Number of SAs', validators=[DataRequired()])
     min_GPA = FloatField('Min GPA', validators=[DataRequired()])
