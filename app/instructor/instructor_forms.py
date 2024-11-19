@@ -10,8 +10,8 @@ from wtforms.widgets import ListWidget, CheckboxInput
 from app import db
 import sqlalchemy as sqla
 from wtforms import StringField, SubmitField, SelectField, TextAreaField, BooleanField, IntegerField, FloatField
-from wtforms_sqlalchemy.fields import QuerySelectField
 from wtforms.validators import  ValidationError, DataRequired, Length
+from flask_login import current_user
 from app.main.models import Course, CourseSection
 
 class CourseForm(FlaskForm):
@@ -24,6 +24,10 @@ class CourseForm(FlaskForm):
     submit = SubmitField('Post')
 
 class PositionForm(FlaskForm):
+    course_section = QuerySelectField('Course Section',
+                query_factory = lambda: db.session.scalars(sqla.select(CourseSection).where(CourseSection.user_id == current_user.id).order_by(sqla.text('CourseSection.number'))),
+                get_label = lambda theCourseSection : theCourseSection.number
+    )
     num_SAs = IntegerField('Number of SAs', validators=[DataRequired()])
     min_GPA = FloatField('Min GPA', validators=[DataRequired()])
     min_grade = StringField('Min Grade', validators=[DataRequired(), Length(max=1)])
