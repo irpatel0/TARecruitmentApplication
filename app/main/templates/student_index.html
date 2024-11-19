@@ -4,6 +4,11 @@
 {% block content %}
 
     <h1>Welcome to Student Page</h1>
-
-
+    <!-- Display the number and title of every item in the Course table -->
+    <h2>Open Positions</h2>
+    <ul>
+        {% for position in positions %}
+            <li>{{ position.number }}: {{ position.title }}</li>
+        {% endfor %}
+    </ul>
 {% endblock %}
