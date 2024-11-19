@@ -111,7 +111,8 @@ All the subsystems fit together as the flow starts from Auth for logging-in, the
 
 |   | Methods           | URL Path   | Description                         |
 |:--|:------------------|:-----------|:------------------------------------|
-|1. | index()           |  /index    | Home Page for Instructor or Student |
+|1. | student_index()           |  student/studentindex    | Home Page for Student |
+|2. | instructor_index()           |  instructor/instructorindex    | Home Page for Instructor |
 
 #### 2.2.2.3 Auth Routes
 
