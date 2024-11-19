@@ -2,20 +2,23 @@
 {% import 'bootstrap_wtf.html' as wtf %}
 
 {% block content %}
-    <h1>Instructor Registration</h1>
+    <h3 class="form-title">Instructor Registration</h3>
+    <div class="register-form">
 
-    <form action = "{{url_for('auth.instructor_register')}}" method = 'POST'> 
-        {{ form.hidden_tag()}}
-        {{wtf.form_field(form.first_name)}}
-        {{wtf.form_field(form.last_name)}}
-        {{wtf.form_field(form.wpi_id)}}
-        {{wtf.form_field(form.email)}}
-        {{wtf.form_field(form.phone)}}
-        {{wtf.form_field(form.username)}}
-        {{wtf.form_field(form.password)}}
-        {{wtf.form_field(form.password2)}}
-        {{wtf.form_field(form.submit)}}
-    
-    </form>
+        <form action = "{{url_for('auth.instructor_register')}}" method = 'POST'>
+            {{ form.hidden_tag()}}
+
+            {{wtf.form_field(form.first_name)}}
+            {{wtf.form_field(form.last_name)}}
+            {{wtf.form_field(form.wpi_id)}}
+            {{wtf.form_field(form.email)}}
+            {{wtf.form_field(form.phone)}}
+            {{wtf.form_field(form.username)}}
+            {{wtf.form_field(form.password)}}
+            {{wtf.form_field(form.password2)}}
+            {{wtf.form_field(form.submit)}}
+
+        </form>
+    </div>
 
 {% endblock %}
