@@ -16,7 +16,7 @@
     height: 3px;
     width: 120px;
     bottom: 0;
-    background: #427cc5;
+    background: #696969;
     left: 0;
     right: 0;
     margin: 0 auto;
@@ -41,3 +41,12 @@
     color: #fff;
 }
 
+.footback{
+    background-color: #808080;
+    padding: 1px !important;
+    margin: 10px 0 0 0 !important;
+}
+
+.footer-features{
+    text-decoration: none;
+}
