@@ -32,3 +32,12 @@
 
 }
 
+.useritem{
+    color: crimson;
+    text-transform: uppercase;
+}
+
+.nav-text:hover{
+    color: #fff;
+}
+

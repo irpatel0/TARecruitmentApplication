@@ -16,9 +16,9 @@
 
     <body>
 
-    <nav class="navbar navbar-light navbar-expand-lg" style="background-color: #b4cbdd; width: 100%;">
+    <nav class="navbar bg-dark border-bottom border-body navbar-expand-lg" data-bs-theme="dark" style=" width: 100%;">
         <div class="container">
-          <a class="navbar-brand" href="{{ url_for('main.index') }}">CSAssist</a>
+          <a class="navbar-brand text-white" href="{{ url_for('main.index') }}">CSAssist</a>
           <button class="navbar-toggler" type="button" >
             <span class="navbar-toggler-icon"></span>
           </button>
@@ -29,19 +29,20 @@
             <ul class="navbar-nav mb-2 mb-lg-0">
                 {% if current_user.is_anonymous %}
               <li class="nav-item border border-light px-2 ms-2">
-                  <a class="nav-link" aria-current="page" href="{{ url_for('auth.student_register') }}">Student Register</a>
+                  <a class="nav-link nav-text" aria-current="page" href="{{ url_for('auth.student_register') }}">Student Register</a>
               </li>
                 <li class="nav-item border border-light px-2 ms-2">
-                  <a class="nav-link" aria-current="page" href="{{ url_for('auth.instructor_register') }}">Instructor Register</a>
+                  <a class="nav-link nav-text" aria-current="page" href="{{ url_for('auth.instructor_register') }}">Instructor Register</a>
               </li>
               <li class="nav-item border border-light px-2 ms-2">
-                <a class="nav-link" aria-current="page" href="{{ url_for('auth.login') }}">Login</a>
+                <a class="nav-link nav-text" aria-current="page" href="{{ url_for('auth.login') }}">Login</a>
               </li>
               {% else %}
-                  Current user is: <span class="useritem">{{ current_user.username }}</span>
+                <li class="nav-item px-2 ms-2">
+                  <span class="nav-link text-white">Current user is: <span class="useritem">{{ current_user.username }}</span></span>
+              </li>
               <li class="nav-item border border-light px-2 ms-2">
-
-                <a class="nav-link" aria-current="page" href="{{ url_for('auth.logout') }}">Logout</a>
+                <a class="nav-link nav-text" aria-current="page" href="{{ url_for('auth.logout') }}">Logout</a>
               </li>
               {% endif %}
             </ul>
@@ -60,6 +61,71 @@
       {% endwith %}
       {% block content %}{% endblock %}
     </div>
+
+    <footer class="bg-dark text-white pt-5 pb-4">
+        <div class="container text-center text-md-left">
+            <div class="row text-center text-md-left">
+                <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
+                    <h5 class="text-uppercase mb-4 font-weight-bold text-warning">About Us</h5>
+                    <p>The software being developed for Computer Science department to recruit undergraduate student assistants (SAs) for the introductory level courses and lab sections. </p>
+                </div>
+
+                <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mt-3">
+                    <h5 class="text-uppercase mb-4 font-weight-bold text-warning">Features</h5>
+                    <p>
+                        <a class="text-white">Secured login system</a>
+                    </p>
+                    <p>
+                        <a class="text-white">Apply for open SA positions</a>
+                    </p>
+                    <p>
+                        <a class="text-white">Recommend SA positions</a>
+                    </p>
+                    <p>
+                        <a class="text-white">View application status</a>
+                    </p>
+                </div>
+
+                <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
+                    <h5 class="text-uppercase mb-4 font-weight-bold text-warning">Quick Links</h5>
+                    <p>
+                        <a class="text-white">Secured login system</a>
+                    </p>
+                    <p>
+                        <a class="text-white">Apply for open SA positions</a>
+                    </p>
+                    <p>
+                        <a class="text-white">Recommend SA positions</a>
+                    </p>
+                    <p>
+                        <a class="text-white">View application status</a>
+                    </p>
+                </div>
+
+                <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mt-3">
+                    <h5 class="text-uppercase mb-4 font-weight-bold text-warning">Contact Us</h5>
+                    <p>
+                        This software was created for Worcester Polytechnic Institute, Computer Science department
+                    </p>
+                    <p>
+                        cs@wpi.edu
+                    </p>
+                </div>
+
+            </div>
+
+            <hr class="mb-4">
+            <div class="row align-items-center">
+                <p>
+                    Copyright &#169; All rights reserved by:
+                    <a style="text-decoration: none;"><strong class="text-warning">Team Alpha</strong> </a>
+                </p>
+
+            </div>
+
+        </div>
+
+    </footer>
 
     <script
     src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
