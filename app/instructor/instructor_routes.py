@@ -16,8 +16,9 @@ def index():
 def create_course():
     cform = CourseForm()
     if cform.validate_on_submit():
-        new_course = Course(course_number = cform.course_number.data,
+        new_course = CourseSection(course_number = cform.course_number.data,
                             section = cform.section.data,
+                            instructor_id = current_user.id,
                             term = cform.term.data)
         db.session.add(new_course)
         db.session.commit()

@@ -24,10 +24,6 @@ class CourseForm(FlaskForm):
     submit = SubmitField('Post')
 
 class PositionForm(FlaskForm):
-    course_section = QuerySelectField('Course Number',
-                query_factory = lambda: db.session.scalars(sqla.select(CourseSection).order_by(sqla.text('CourseSection.course_number'))),
-                get_label = lambda theCourse : theCourse.number
-    )
     num_SAs = IntegerField('Number of SAs', validators=[DataRequired()])
     min_GPA = FloatField('Min GPA', validators=[DataRequired()])
     min_grade = StringField('Min Grade', validators=[DataRequired(), Length(max=1)])
