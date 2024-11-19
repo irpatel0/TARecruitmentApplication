@@ -58,10 +58,16 @@ class CourseSection(db.Model):
     section : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(5))
     instructor_id : sqlo.Mapped[int] = sqlo.mapped_column(sqla.ForeignKey(Instructor.id))
     term : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(5))
-
+    position : sqlo.Mapped['Position'] = sqlo.relationship(back_populates='course_section')
     #relations
     professor : sqlo.Mapped['Instructor'] = sqlo.relationship(back_populates='course_sections')
     course = db.relationship('Course', backref='course_sections')
+
+    def hasPosition(self):
+        return self.position is not None
+    
+    def __repr__(self):
+        return f'{self.course_number} - {self.section} - {self.term}'
 
 class Position(db.Model):
     id : sqlo.Mapped[int] = sqlo.mapped_column(sqla.Integer, primary_key=True)
@@ -73,4 +79,5 @@ class Position(db.Model):
     course_section = db.relationship('CourseSection', backref='positions')
     def __repr__(self):
         course_number = self.course_section.course.number
-        return f'Position for {course_number}'
+        course_term = self.course_section.term
+        return f'{course_number} - {self.course_section.section} - {course_term}'

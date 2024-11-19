@@ -1,0 +1,32 @@
+.courseSections{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    list-style-type: none;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.button{
+  border: 1px solid black;
+  padding: 2px 5px;
+  text-decoration: none;
+  color: black;
+  border-radius: 5px;
+}
+.view{
+  background-color: white;
+}
+.view:hover{
+  background-color: #CCC;
+}
+.create{
+  background-color: #ff8080;
+  color: red;
+}
+.filled{
+  background-color: #00ff00;
+  color: green;
+}

@@ -3,20 +3,24 @@
 
 {% block content %}
 
-    <h1>Welcome to Instructor Page</h1>
     <!-- Display everything in courses -->
     <h4>My Course Sections</h4>
-    <ul>
+    <ul class = "courseSections">
         {% for course in coursesections %}
-            <li>{{course.term}}</li>
+            <li>{{course}}
+                {%if course.hasPosition()%}
+                    {%if course.position.available%}
+                        <a href="#" class = "button view">View Applicants</a>
+                    {%else%}
+                        <a href="#" class = "button filled">Filled</a>
+                    {%endif%}
+                {%else%}
+                    <a href="#" class = "button create">Create Position</a>
+                {%endif%}
+            </li>
+
         {% endfor %}
     </ul>
-    <!-- Display Everything in positions -->
-    <h4>Open Positions</h4>
-    <ul>
-        {% for position in positions %}
-            <li>{{position}}</li>
-        {% endfor %}
-    </ul>
+  
 
 {% endblock %}
