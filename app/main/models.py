@@ -61,6 +61,7 @@ class CourseSection(db.Model):
 
     #relations
     professor : sqlo.Mapped['Instructor'] = sqlo.relationship(back_populates='course_sections')
+    course = db.relationship('Course', backref='course_sections')
 
 class Position(db.Model):
     id : sqlo.Mapped[int] = sqlo.mapped_column(sqla.Integer, primary_key=True)
@@ -69,5 +70,7 @@ class Position(db.Model):
     available : sqlo.Mapped[bool] = sqlo.mapped_column(sqla.Boolean, default=True)
     min_GPA : sqlo.Mapped[float] = sqlo.mapped_column(sqla.Float, default=0)
     min_grade : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(2), default='A')
-
-
+    course_section = db.relationship('CourseSection', backref='positions')
+    def __repr__(self):
+        course_number = self.course_section.course.number
+        return f'Position for {course_number}'

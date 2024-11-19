@@ -23,8 +23,10 @@ def student_index():
 @bp_main.route('/instructor_index', methods=['GET'])
 @login_required
 def instructor_index():
+    coursesections = db.session.query(CourseSection).all()
+    positions = db.session.query(Position).all()
     if current_user.user_type != 'Instructor':
         flash('You are not allowed to access Instructor Page')
         return redirect(url_for('auth.login'))
-    return render_template('instructor_index.html')
+    return render_template('instructor_index.html', positions = positions, coursesections = coursesections)
 

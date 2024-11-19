@@ -4,6 +4,19 @@
 {% block content %}
 
     <h1>Welcome to Instructor Page</h1>
-
+    <!-- Display everything in courses -->
+    <h4>My Course Sections</h4>
+    <ul>
+        {% for course in coursesections %}
+            <li>{{course.term}}</li>
+        {% endfor %}
+    </ul>
+    <!-- Display Everything in positions -->
+    <h4>Open Positions</h4>
+    <ul>
+        {% for position in positions %}
+            <li>{{position}}</li>
+        {% endfor %}
+    </ul>
 
 {% endblock %}
