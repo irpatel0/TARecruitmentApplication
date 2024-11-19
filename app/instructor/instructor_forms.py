@@ -25,8 +25,8 @@ class CourseForm(FlaskForm):
 
 class PositionForm(FlaskForm):
     course_section = QuerySelectField('Course Section',
-                query_factory = lambda: db.session.scalars(sqla.select(CourseSection).where(CourseSection.user_id == current_user.id).order_by(sqla.text('CourseSection.number'))),
-                get_label = lambda theCourseSection : theCourseSection.number
+                query_factory = lambda: db.session.scalars(sqla.select(CourseSection).where(CourseSection.instructor_id == current_user.id)),
+                get_label = lambda theCourseSection : theCourseSection.course_number
     )
     num_SAs = IntegerField('Number of SAs', validators=[DataRequired()])
     min_GPA = FloatField('Min GPA', validators=[DataRequired()])

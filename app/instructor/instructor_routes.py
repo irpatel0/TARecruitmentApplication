@@ -16,7 +16,7 @@ def index():
 def create_course():
     cform = CourseForm()
     if cform.validate_on_submit():
-        new_course = CourseSection(course_number = cform.course_number.data,
+        new_course = CourseSection(course_number = cform.course_number.data.number,
                             section = cform.section.data,
                             instructor_id = current_user.id,
                             term = cform.term.data)
@@ -32,7 +32,7 @@ def create_position():
     pform = PositionForm()
     if pform.validate_on_submit():
         new_position = Position(
-            section_id=pform.course_section.data,
+            section_id=pform.course_section.data.id,
             num_SAs=pform.num_SAs.data,
             min_GPA=pform.min_GPA.data,
             min_grade=pform.min_grade.data

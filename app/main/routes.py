@@ -3,7 +3,7 @@ import sqlalchemy as sqla
 from app import db
 from app.main import main_blueprint as bp_main
 from flask_login import current_user, login_required
-from app.main.models import Course, Position
+from app.main.models import Course, Position,  CourseSection
 
 
 @bp_main.route('/', methods=['GET'])
