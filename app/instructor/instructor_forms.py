@@ -4,12 +4,11 @@
 
 from flask_wtf import FlaskForm
 from wtforms.validators import  Length, DataRequired, Email, EqualTo, ValidationError
-from wtforms import StringField, SubmitField, TextAreaField, PasswordField, BooleanField, IntegerField, FloatField
+from wtforms import StringField, SubmitField, TextAreaField, PasswordField, BooleanField, IntegerField, FloatField, SelectMultipleField
 from wtforms_sqlalchemy.fields import QuerySelectField, QuerySelectMultipleField 
 from wtforms.widgets import ListWidget, CheckboxInput
 from app import db
 import sqlalchemy as sqla
-from wtforms import StringField, SubmitField, SelectField, TextAreaField, BooleanField, IntegerField, FloatField
 from wtforms.validators import  ValidationError, DataRequired, Length
 from flask_login import current_user
 from app.main.models import Course, CourseSection

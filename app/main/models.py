@@ -10,6 +10,13 @@ from app import login
 def load_user(id):
     return db.session.get(User, int(id))
 
+pastEnrollments = db.Table(
+    'pastEnrollments',
+    db.metadata,
+    sqla.Column('student_id', sqla.Integer, sqla.ForeignKey('student.id'), primary_key=True),
+    sqla.Column('course_id', sqla.Integer, sqla.ForeignKey('course.id'), primary_key=True)
+)
+
 class User(db.Model, UserMixin):
     __tablename__ = 'user'
     id : sqlo.Mapped[int] = sqlo.mapped_column(primary_key=True)
@@ -40,6 +47,12 @@ class Student(User):
 
     __mapper_args__ = {'polymorphic_identity': 'Student'}
 
+    #relationships
+    taught : sqlo.WriteOnlyMapped['Course'] = sqlo.relationship(
+            secondary=pastEnrollments, 
+            primaryjoin=(pastEnrollments.c.student_id == id),
+            back_populates='taught_by',
+        )
 class Instructor(User):
     __tablename__ = 'instructor'
     id: sqlo.Mapped[int] = sqlo.mapped_column(sqla.ForeignKey(User.id), primary_key=True)
@@ -48,13 +61,22 @@ class Instructor(User):
     __mapper_args__ = {'polymorphic_identity': 'Instructor'}
 
 class Course(db.Model):
-    number: sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(7), primary_key=True)
+    __tablename__ = 'course'
+    id : sqlo.Mapped[int] = sqlo.mapped_column(sqla.Integer, primary_key=True)
+    number: sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(7), unique=True)
     title : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(120))
+
+    #relationships
+    taught_by : sqlo.WriteOnlyMapped['Student'] = sqlo.relationship(
+            secondary=pastEnrollments, 
+            primaryjoin=(pastEnrollments.c.course_id == id),
+            back_populates='taught',
+    )
 
 
 class CourseSection(db.Model):
     id : sqlo.Mapped[int] = sqlo.mapped_column(sqla.Integer, primary_key=True)
-    course_number : sqlo.Mapped[str] = sqlo.mapped_column(sqla.ForeignKey(Course.number))
+    course_number : sqlo.Mapped[str] = sqlo.mapped_column(sqla.ForeignKey(Course.id))
     section : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(5))
     instructor_id : sqlo.Mapped[int] = sqlo.mapped_column(sqla.ForeignKey(Instructor.id))
     term : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(5))
