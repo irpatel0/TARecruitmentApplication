@@ -17,9 +17,6 @@ def index():
 @role_required('Student')
 def student_index():
     positions = db.session.query(Position).all()
-    if current_user.user_type != 'Student':
-        flash('You are not allowed to access Student Page')
-        return redirect(url_for('auth.login'))
     return render_template('student_index.html', positions = positions)
 
 @bp_main.route('/instructor_index', methods=['GET'])
@@ -28,8 +25,5 @@ def student_index():
 def instructor_index():
     coursesections = db.session.query(CourseSection).all()
     positions = db.session.query(Position).all()
-    if current_user.user_type != 'Instructor':
-        flash('You are not allowed to access Instructor Page')
-        return redirect(url_for('auth.login'))
     return render_template('instructor_index.html', positions = positions, coursesections = coursesections)
 
