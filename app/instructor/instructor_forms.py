@@ -29,5 +29,5 @@ class PositionForm(FlaskForm):
     )
     num_SAs = IntegerField('Number of SAs', validators=[DataRequired()])
     min_GPA = FloatField('Min GPA', validators=[DataRequired()])
-    min_grade = StringField('Min Grade', validators=[DataRequired(), Length(max=1)])
+    min_grade = StringField('Min Grade', validators=[DataRequired(), Length(max=2)])
     submit = SubmitField('Post')
