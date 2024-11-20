@@ -91,7 +91,7 @@ All the subsystems fit together as the flow starts from Auth for logging-in, the
 
 #### UML Component Diagram
 <kbd>
-      <img src="images/CS3733_Subsystems_Diagram.drawio.png"  border="2">
+      <img src="images/CS3733_DesignDraftFinal_ComponentDiagram.png"  border="2">
 </kbd>
 
 ### 2.2.2 Interfaces
@@ -105,7 +105,7 @@ All the subsystems fit together as the flow starts from Auth for logging-in, the
 |3. |view_SA_details()  |  /student/viewsadetails          |   Students can check the details of each SA position           |
 |4. |check_app_status() |  /student/checkappstatus          |  Students can check status of submitted SA application(s)            |
 |5. | withdraw_app()    |  /student/withdrawapp          |  Students can withdraw existing submitted applications            |
-|6. |   student_register()                |   /student/studentregister         |  Students can create student profiles to access SA positions information and application pages            |
+
 
 #### 2.2.2.2 Main Routes
 
@@ -114,6 +114,7 @@ All the subsystems fit together as the flow starts from Auth for logging-in, the
 |1. | student_index()           |  student/studentindex    | Home Page for Student |
 |2. | instructor_index()           |  instructor/instructorindex    | Home Page for Instructor |
 
+
 #### 2.2.2.3 Auth Routes
 
 |    | Methods     | URL Path       | Description                                                                                                                                                                                                                       |
@@ -121,6 +122,8 @@ All the subsystems fit together as the flow starts from Auth for logging-in, the
 | 1. | login()     | /user/login    | Authenticates the user based on username and password and redirects to homepage according to their role on success. If the validation fails because of wrong credentials or user does not exist, then error message is displayed. |
 | 2. | logout()    | /user/logout   | Logs out the user from the session and redirect back to the login page.                                                                                                                                                           |
 | 3. | login_sso() | /user/loginsso | Allows user to login using Azure SSO instead of email and password.                                                                                                                                                               |
+|4. | instructor_register()    | /instructor/register                 | Create instructor profile with username, password, name, WPI ID, email, and phone number. After submitting the data is stored into database and the username and password can be used for logging-in. |
+|5. |   student_register()                |   /student/register         |  Students can create student profiles to access SA positions information and application pages            |
 
 #### 2.2.2.4 Instructor Routes
 
@@ -131,7 +134,9 @@ All the subsystems fit together as the flow starts from Auth for logging-in, the
 |3. | view_allstudents()       | /instructor/viewallstudents          | Displays all the students who applied for every SA position that the instructor created.                                                                                                              |
 |4. | create_position()        | /instructor/createposition           | Create a SA position for the course that the instructor created and save the data in database. SA position form includes course section, number of SAs, and qualifications information.               |
 |5. | create_course()          | /instructor/createcourse             | Create course section by selecting course from course catalog, course section, and the term. After submitting the course is saved into database.                                                      |
-|6. | instructor_register()    | /instructor/register                 | Create instructor profile with username, password, name, WPI ID, email, and phone number. After submitting the data is stored into database and the username and password can be used for logging-in. |
+|6. | accept_student() | /instructor/<student_id>/acceptstudent | Accepts the selected student for the applied SA position |
+|7. | reject_student() | /instructor/<student_id>/rejectstudent | Rejects the selected student for the applied SA position |
+
 
 #### 2.2.2.5 Error Routes
 

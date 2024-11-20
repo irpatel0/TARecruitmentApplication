@@ -5,9 +5,9 @@
 List team members and their GitHub usernames
 
 * `Sai Teja Sunku`,`ssunku`
-* `Achintya Sanjay`,`<username2>`
-* `Ishaan Patel`,`<username3>`
-* `Jake Grier`,`<username4>`
+* `Achintya Sanjay`,`asanjay3`
+* `Ishaan Patel`,`irpatel0`
+* `Jake Grier`,`JDGrier`
 
 ---
 **Course** : CS 3733 - Software Engineering
@@ -17,37 +17,45 @@ List team members and their GitHub usernames
 ----
 ## 1. Schedule
 
- * What is your team's weekly schedule of meetings outside of regular class times? 
- * Monday, Wednesday, Thursday at 5PM and meeting lasts until required
+ Monday, Wednesday, Thursday at 5PM and meeting lasts until required
 
 ----
 ## 2. Iteration 1 - Summary
 
- * Include as summary of your `Iteration-1` accomplishments. 
- * List the user stories completed in `Iteration-1`. Mention who worked on those user stories. 
+#### Summary of Iteration1
+- Implemented the registration and login/logout for students and instructors
+- Implemented restrictions for pages that students and instructors could access
+- Created models for the following: User, Student, Instructor, Course, Course Section, and Position
+- Used inheritance between User and Student/Instructor
+- Created an association table between student and course, for courses that the student has taught for
+- Displayed open positions on the student page
+- Made a create course section form for instructors
+- Made a create position form for instructors
+- Displayed courses sections on the instructor page
+
 #### Completed User Stories
 1. As a Student, I want to be able to login to the site so that I can use the site [Email & Password] - Sai Teja Sunku, Achintya Sanjay
 2. As a Professor, I want to be able to login to the site so that I can use the site [Email & Password] - Sai Teja Sunku, Achintya Sanjay
 3. As a Professor, I want to create course sections so that students can view the course information - Ishaan Patel, Jake Grier
 4. As a Professor, I want to create SA positions for a particular course so that students can apply for a particular course - Ishaan Patel, Jake Grier
 
+
+
+
 ----
 ## 3. Iteration 1 - Sprint Retrospective
 
- * Include the outcome of your `Iteration-1 Scrum retrospective meetings`. 
- * Mention the changes the team will be doing to improve itself as a result of the Scrum reflections.
-
+ The scrum retrospective meetings were efficient and allowed us to effectibvely communicate what was going well and what needed improvement on the project. Typically in our scrum retrospective meetings, we delegate the work amongst team members for the upcoming scrum, and create subgroups if necessary. We also discussed any bugs that needed to be resolved and any improvements to be made to the project. During the scrum meetings, we also discuss strategies to implement complex tasks, such as creating databases, models, and relationships. 
+ Going forward, we want to utilize GitHub issues to track and report issues that need to be resolved, and any use cases or tasks that have been completed. This will help us to better understand where the team and the project is currently at and what needs improvement.
+ 
 ----
 ## 4. Product Backlog refinement
 
- * Have you made any changes to your `product backlog` after `Iteration-1`? If so, please explain the changes here. 
+ No, we did not make any changed to the product backlog during iteration1.
 
 ----
 ## 5. Iteration 2 - Sprint Backlog
 
-Include a draft of your `Iteration-2 spring backlog`. 
- * List the user stories you plan to complete in `Iteration-2`. Make sure to break down the larger user stories into smaller size stories. Mention the team member(s) who will work on each user story. 
- * Make sure to update the "issues" on your GitHub repo accordingly.
 #### User Stories
 1. As a Student, I want to view all the details of every open SA position so that I know if I can meet the qualifications - Jake Grier
 2. As a Student, I want to apply for the open SA positions - Ishaan Patel
@@ -63,3 +71,4 @@ Include a draft of your `Iteration-2 spring backlog`.
 7. [Implementation] Develop a route and a view to see details of every open SA position - Jake Grier
 8. [Testing] Create unit tests for routes - Sai Teja Sunku, Achintya Sanjay
 9. [Testing] Create unit tests for new models - Sai Teja Sunku, Achintya Sanjay
+
