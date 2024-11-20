@@ -91,7 +91,7 @@ All the subsystems fit together as the flow starts from Auth for logging-in, the
 
 #### UML Component Diagram
 <kbd>
-      <img src="images/CS3733_Subsystems_Diagram.drawio.png"  border="2">
+      <img src="images/CS3733_DesignDraftFinal_ComponentDiagram.png"  border="2">
 </kbd>
 
 ### 2.2.2 Interfaces
