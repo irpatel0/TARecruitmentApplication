@@ -100,6 +100,6 @@ class Position(db.Model):
     min_grade : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(2), default='A')
     course_section = db.relationship('CourseSection', backref='positions')
     def __repr__(self):
-        course_number = self.course_section.course.number
+        course_number = self.course_section.course_number
         course_term = self.course_section.term
         return f'{course_number} - {self.course_section.section} - {course_term}'
