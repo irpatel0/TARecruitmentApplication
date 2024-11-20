@@ -72,7 +72,7 @@ def login():
             user = db.session.scalars(query).first()
 
             if (user is None) or(user.get_password(lform.password.data) == False):
-                flash('Invalid username or password')
+                flash('Invalid username or password!')
                 return redirect(url_for('auth.login'))
             login_user(user, remember=lform.remember_me.data)
             if current_user.user_type=='Student':
