@@ -5,14 +5,17 @@ from app.instructor import instructor_blueprint as bp_instructor
 from flask_login import current_user, login_required
 from app.main.models import Course, Student, Instructor, CourseSection, Position
 from app.instructor.instructor_forms import CourseForm, PositionForm
+from app.decorators import role_required
 
 
 @bp_instructor.route('/instructor', methods=['GET'])
+@role_required('Instructor')
 def index():
     return "CSASSIST-Instructor"
 
 @bp_instructor.route('/instructor/create_course', methods=['GET', 'POST'])
 @login_required
+@role_required('Instructor')
 def create_course():
     cform = CourseForm()
     if cform.validate_on_submit():
@@ -28,6 +31,7 @@ def create_course():
 
 @bp_instructor.route('/instructor/create_position', methods=['GET', 'POST'])
 @login_required
+@role_required('Instructor')
 def create_position():
     pform = PositionForm()
     if pform.validate_on_submit():
@@ -44,15 +48,18 @@ def create_position():
     return render_template('createposition.html', form=pform)
 
 @bp_instructor.route('/instructor/student', methods=['GET'])
+@role_required('Instructor')
 def view_students():
     return "Student"
 
 @bp_instructor.route('/instructor/student/<student_id>', methods=['GET'])
+@role_required('Instructor')
 def student_profile(student_id):
     student = db.session.get(Student, student_id)
     return render_template('student_profile.html', student = student)
 
 
 @bp_instructor.route('/instructor/student/assign', methods=['GET', 'POST'])
+@role_required('Instructor')
 def assign_student():
     return "Assign Student"
