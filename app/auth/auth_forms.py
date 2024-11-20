@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms.validators import Length, DataRequired, Email, EqualTo, ValidationError
+from wtforms.validators import Length, DataRequired, Email, EqualTo, ValidationError, Regexp
 from wtforms import StringField, SubmitField, TextAreaField, PasswordField, BooleanField, IntegerField, FloatField
 from wtforms_sqlalchemy.fields import QuerySelectField, QuerySelectMultipleField
 from wtforms.widgets import ListWidget, CheckboxInput
@@ -12,8 +12,8 @@ class StudentRegistrationForm(FlaskForm):
     first_name = StringField('First Name', validators=[DataRequired()])
     last_name = StringField('Last Name', validators=[DataRequired()])
     email = StringField('Email', validators=[DataRequired(), Email()])
-    wpi_id = StringField('WPI ID', validators=[DataRequired(), Length(9)])
-    phone = StringField('Phone Number', validators=[DataRequired(), Length(10)])
+    wpi_id = StringField('WPI ID', validators=[DataRequired(), Length(9), Regexp(r'^\d+$', message="Please input a valid ID number")])
+    phone = StringField('Phone Number', validators=[DataRequired(), Length(10), Regexp(r'^\d+$', message="Please input a valid phone number")])
     username = StringField('Username', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
     password2 = PasswordField('Confirm Password', validators=[DataRequired(), EqualTo('password')])
@@ -51,9 +51,9 @@ class StudentRegistrationForm(FlaskForm):
 class InstructorRegistrationForm(FlaskForm):
     first_name = StringField('First Name', validators=[DataRequired()])
     last_name = StringField('Last Name', validators=[DataRequired()])
-    wpi_id = StringField('WPI ID', validators=[DataRequired(), Length(9)])
+    wpi_id = StringField('WPI ID', validators=[DataRequired(), Length(9), Regexp(r'^\d+$', message="Please input a valid ID number")])
     email = StringField('Email', validators=[DataRequired(), Email()])
-    phone = StringField('Phone Number', validators=[DataRequired(), Length(10)])
+    phone = StringField('Phone Number', validators=[DataRequired(), Length(10), Regexp(r'^\d+$', message="Please input a valid phone number")])
     username = StringField('Username', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
     password2 = PasswordField('Confirm Password', validators=[DataRequired(), EqualTo('password')])
