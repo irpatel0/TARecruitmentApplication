@@ -2,13 +2,14 @@
 {% import 'bootstrap_wtf.html' as wtf %}
 
 {% block content %}
-
-    <h1>Welcome to Student Page</h1>
-    <!-- Display the number and title of every item in the Course table -->
-    <h2>Open Positions</h2>
-    <ul>
-        {% for position in positions %}
-            <li>{{position}}</li>
-        {% endfor %}
-    </ul>
+    <div style="min-height: 80vh;">
+              <h1>Welcome to Student Page</h1>
+            <!-- Display the number and title of every item in the Course table -->
+            <h2>Open Positions</h2>
+            <ul>
+                {% for position in positions %}
+                    <li>{{position}}</li>
+                {% endfor %}
+            </ul>
+            </div>
 {% endblock %}
