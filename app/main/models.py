@@ -43,5 +43,41 @@ class Student(User):
 class Instructor(User):
     __tablename__ = 'instructor'
     id: sqlo.Mapped[int] = sqlo.mapped_column(sqla.ForeignKey(User.id), primary_key=True)
+    course_sections : sqlo.Mapped['CourseSection'] = sqlo.relationship(back_populates='professor')
 
     __mapper_args__ = {'polymorphic_identity': 'Instructor'}
+
+class Course(db.Model):
+    number: sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(7), primary_key=True)
+    title : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(120))
+
+
+class CourseSection(db.Model):
+    id : sqlo.Mapped[int] = sqlo.mapped_column(sqla.Integer, primary_key=True)
+    course_number : sqlo.Mapped[str] = sqlo.mapped_column(sqla.ForeignKey(Course.number))
+    section : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(5))
+    instructor_id : sqlo.Mapped[int] = sqlo.mapped_column(sqla.ForeignKey(Instructor.id))
+    term : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(5))
+    position : sqlo.Mapped['Position'] = sqlo.relationship(back_populates='course_section')
+    #relations
+    professor : sqlo.Mapped['Instructor'] = sqlo.relationship(back_populates='course_sections')
+    course = db.relationship('Course', backref='course_sections')
+
+    def hasPosition(self):
+        return self.position is not None
+    
+    def __repr__(self):
+        return f'{self.course_number} - {self.section} - {self.term}'
+
+class Position(db.Model):
+    id : sqlo.Mapped[int] = sqlo.mapped_column(sqla.Integer, primary_key=True)
+    section_id : sqlo.Mapped[int] = sqlo.mapped_column(sqla.ForeignKey(CourseSection.id))
+    num_SAs : sqlo.Mapped[int] = sqlo.mapped_column(sqla.Integer)
+    available : sqlo.Mapped[bool] = sqlo.mapped_column(sqla.Boolean, default=True)
+    min_GPA : sqlo.Mapped[float] = sqlo.mapped_column(sqla.Float, default=0)
+    min_grade : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(2), default='A')
+    course_section = db.relationship('CourseSection', backref='positions')
+    def __repr__(self):
+        course_number = self.course_section.course.number
+        course_term = self.course_section.term
+        return f'{course_number} - {self.course_section.section} - {course_term}'
