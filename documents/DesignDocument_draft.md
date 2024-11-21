@@ -98,52 +98,52 @@ All the subsystems fit together as the flow starts from Auth for logging-in, the
 
 #### 2.2.2.1 Student Routes
 
-|   | Methods           | URL Path   | Description  |
-|:--|:------------------|:-----------|:-------------|
-|1. |view_positions()   |/student/viewpositions |  Student can view open positions for SA                    
-|2. |view_recommend()   | /student/viewrecommend           |  Students can view recommended positions to apply for based on their credentials            |
-|3. |view_SA_details()  |  /student/viewsadetails          |   Students can check the details of each SA position           |
-|4. |check_app_status() |  /student/checkappstatus          |  Students can check status of submitted SA application(s)            |
-|5. | withdraw_app()    |  /student/withdrawapp          |  Students can withdraw existing submitted applications            |
+|   | Methods           | URL Path                                | Description                                                                                     |
+|:--|:------------------|:----------------------------------------|:------------------------------------------------------------------------------------------------|
+|1. |view_positions()   | /positions                              | Student can view open positions for SA                                                          
+|2. |view_recommend()   | /positions/recommendations              | Students can view recommended positions to apply for based on their credentials                 |
+|3. |view_SA_details()  | /positions/<position_id>/details        | Students can check the details of each SA position based on position id                         |
+|4. |check_app_status() | /applications/<application_id>/status   | Students can check status of submitted SA application(s) based on application id                |
+|5. | withdraw_app()    | /applications/<application_id>/withdraw | Students can withdraw existing submitted applications that they created based on application id |
 
 
 #### 2.2.2.2 Main Routes
 
-|   | Methods           | URL Path   | Description                         |
-|:--|:------------------|:-----------|:------------------------------------|
-|1. | student_index()           |  /studentindex    | Home Page for Student |
-|2. | instructor_index()           |  /instructorindex    | Home Page for Instructor |
+|   | Methods           | URL Path          | Description                         |
+|:--|:------------------|:------------------|:------------------------------------|
+|1. | student_index()           | /student/index    | Home Page for Student |
+|2. | instructor_index()           | /instructor/index | Home Page for Instructor |
 
 
 #### 2.2.2.3 Auth Routes
 
-|    | Methods     | URL Path       | Description                                                                                                                                                                                                                       |
-|:---|:------------|:---------------|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| 1. | login()     | /user/login    | Authenticates the user based on username and password and redirects to homepage according to their role on success. If the validation fails because of wrong credentials or user does not exist, then error message is displayed. |
-| 2. | logout()    | /user/logout   | Logs out the user from the session and redirect back to the login page.                                                                                                                                                           |
-| 3. | login_sso() | /user/loginsso | Allows user to login using Azure SSO instead of email and password.                                                                                                                                                               |
-|4. | instructor_register()    | /instructor/register                 | Create instructor profile with username, password, name, WPI ID, email, and phone number. After submitting the data is stored into database and the username and password can be used for logging-in. |
-|5. |   student_register()                |   /student/register         |  Students can create student profiles to access SA positions information and application pages            |
+|    | Methods     | URL Path                  | Description                                                                                                                                                                                                                       |
+|:---|:------------|:--------------------------|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 1. | login()     | /user/login               | Authenticates the user based on username and password and redirects to homepage according to their role on success. If the validation fails because of wrong credentials or user does not exist, then error message is displayed. |
+| 2. | logout()    | /user/logout              | Logs out the user from the session and redirect back to the login page.                                                                                                                                                           |
+| 3. | login_sso() | /user/loginsso            | Allows user to login using Azure SSO instead of email and password.                                                                                                                                                               |
+|4. | instructor_register()    | /user/instructor/register | Create instructor profile with username, password, name, WPI ID, email, and phone number. After submitting the data is stored into database and the username and password can be used for logging-in. |
+|5. |   student_register()                | /user/student/register    |  Students can create student profiles to access SA positions information and application pages            |
 
 #### 2.2.2.4 Instructor Routes
 
-|   | Methods                  | URL Path                             | Description                                                                                                                                                                                           |
-|:--|:-------------------------|:-------------------------------------|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-|1. | add_student(student_id)  | /instructor/<student_id>/addstudent  | Adds the selected student to the open SA position only if the student is unassigned, else throws an error. Saves the student for that position and mark as assigned.                                  |
-|2. | view_student(student_id) | /instructor/<student_id>/viewstudent | Displays the student information and qualifications for the positions.                                                                                                                                |
-|3. | view_allstudents()       | /instructor/viewallstudents          | Displays all the students who applied for every SA position that the instructor created.                                                                                                              |
-|4. | create_position()        | /instructor/createposition           | Create a SA position for the course that the instructor created and save the data in database. SA position form includes course section, number of SAs, and qualifications information.               |
-|5. | create_course()          | /instructor/createcourse             | Create course section by selecting course from course catalog, course section, and the term. After submitting the course is saved into database.                                                      |
-|6. | accept_student() | /instructor/<student_id>/acceptstudent | Accepts the selected student for the applied SA position |
-|7. | reject_student() | /instructor/<student_id>/rejectstudent | Rejects the selected student for the applied SA position |
+|   | Methods                  | URL Path                                             | Description                                                                                                                                                                             |
+|:--|:-------------------------|:-----------------------------------------------------|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|1. | add_student(student_id)  | /positions/<position_id>/student/<student_id>        | Adds the selected student to the open SA position based on id's only if the student is unassigned, else throws an error. Saves the student for that position and mark as assigned.      |
+|2. | view_student(student_id) | /applications/student/<student_id>                   | Displays the student information and qualifications for the positions.                                                                                                                  |
+|3. | view_allstudents()       | /applications                                        | Displays all the students who applied for every SA position that the instructor created.                                                                                                |
+|4. | create_position()        | /positions/<course_section_id>                       | Create a SA position for the course that the instructor created and save the data in database. SA position form includes course section, number of SAs, and qualifications information. |
+|5. | create_course()          | /course_section                                      | Create course section by selecting course from course catalog, course section, and the term. After submitting the course is saved into database.                                        |
+|6. | accept_student() | /positions/<position_id>/student/<student_id>/accept | Accepts the selected student for the applied SA position                                                                                                                                |
+|7. | reject_student() | /positions/<position_id>/student/<student_id>/reject | Rejects the selected student for the applied SA position                                                                                                                                |
 
 
 #### 2.2.2.5 Error Routes
 
-|    | Methods           | URL Path       | Description                                                         |
-|:---|:------------------|:---------------|:--------------------------------------------------------------------|
-| 1. | not_found_error() | 404            | Displays 404 error template                                         |
-| 2. | internal_error()  | 500            | Displays 500 error template                                         |
+|    | Methods           | URL Path | Description                                                         |
+|:---|:------------------|:---------|:--------------------------------------------------------------------|
+| 1. | not_found_error() | /404     | Displays 404 error template                                         |
+| 2. | internal_error()  | /500     | Displays 500 error template                                         |
 
 
 
