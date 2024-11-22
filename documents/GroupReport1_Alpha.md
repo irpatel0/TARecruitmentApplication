@@ -4,7 +4,7 @@
 
 List team members and their GitHub usernames
 
-* `Sai Teja Sunku`,`ssunku`
+* `Sai Teja Sunku`,`ssunku6`
 * `Achintya Sanjay`,`asanjay3`
 * `Ishaan Patel`,`irpatel0`
 * `Jake Grier`,`JDGrier`
