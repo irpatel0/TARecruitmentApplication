@@ -42,8 +42,8 @@ class Student(User):
     __tablename__ = 'student'
     id : sqlo.Mapped[int] = sqlo.mapped_column(sqla.ForeignKey(User.id), primary_key=True)
     gpa : sqlo.Mapped[float] = sqlo.mapped_column(sqla.Float, default=0)
-    # TODO: courses taught
     graduation_date : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(4))
+    assigned : sqlo.Mapped[bool] = sqlo.mapped_column(sqla.Boolean, default=False)
 
     __mapper_args__ = {'polymorphic_identity': 'Student'}
 
