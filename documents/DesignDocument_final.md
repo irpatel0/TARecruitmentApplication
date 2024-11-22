@@ -31,12 +31,15 @@ Prepared by:
 
 ### Document Revision History
 
-| Name       | Date       | Changes                                          | Version |
-|------------|------------|--------------------------------------------------|---------|
-| Revision 1 | 2024-11-12 | Initial draft for section 1, 2.1, 2.2, 2.3       | 1.0     |
-| Revision 2 | 2024-11-13 | Added information to section 2.2                 | 2.0     |
-| Revision 3 | 2024-11-14 | Revised section 2.2 and added additional details | 3.0     |
-| Revision 4 | 2024-11-15 | Added UML design for section 2.1                 | 4.0     |
+| Name       | Date       | Changes                                                          | Version |
+|------------|------------|------------------------------------------------------------------|---------|
+| Revision 1 | 2024-11-12 | Initial draft for section 1, 2.1, 2.2, 2.3                       | 1.0     |
+| Revision 2 | 2024-11-13 | Added information to section 2.2                                 | 2.0     |
+| Revision 3 | 2024-11-14 | Revised section 2.2 and added additional details                 | 3.0     |
+| Revision 4 | 2024-11-15 | Added UML design for section 2.1                                 | 4.0     |
+| Revision 5 | 2024-11-20 | Edited the UML Component diagram                                 | 5.0     |
+| Revision 6 | 2024-11-21 | Edited the Subsystem routes to follow REST API naming convention | 6.0     |
+| Revision 7 | 2024-11-22 | Updated the UML database design in section 2.1                   | 7.0     |
 
 
 # 1. Introduction
@@ -45,8 +48,9 @@ This Design Document aims to explain software design of CSAssist web application
 1. Database Model
 2. Subsystems and Interfaces
 3. Subsystem Routes
-4. User Interfaces
-The database model provide information about the tables involved, fields in each table, foreign and primary keys, any association table, and multiplicity and interactions between tables.
+4. User Interfaces 
+
+The database model provides information about the tables involved, fields in each table, foreign and primary keys, any association table, and multiplicity and interactions between tables.
 The subsystem and interfaces provide information on how the web application is divided into different components and any dependencies between components. The subsystem is designed to have low coupling and high cohesion.
 The subsystem routes gives information about the routes, decorator functions and their purpose. The user interfaces provide high level overview of how the web application looks and features present for user to interact with.
 
@@ -149,8 +153,6 @@ All the subsystems fit together as the flow starts from Auth for logging-in, the
 
 ### 2.3 User Interface Design 
 
-Provide a list of the page templates you plan to create and supplement your description with UI sketches or screenshots. Make sure to mention which user-stories in your “Requirements and Use Cases" document will utilize these interfaces for user interaction. 
-
 1. Student sign in page<br>This page includes a form for students to sign into their account, a button to switch to instructor sign in, and a button to register.<br>
 User story: 1
   <kbd>      
@@ -214,11 +216,9 @@ User Story: 11
 
 # 3. References
 
-Cite your references here.
-
-For the papers you cite give the authors, the title of the article, the journal name, journal volume number, date of publication and inclusive page numbers. Giving only the URL for the journal is not appropriate.
-
-For the websites, give the title, author (if applicable) and the website URL.
+1. Draw.io - free flowchart maker and diagrams online. Flowchart Maker & Online Diagram Software. (n.d.). https://app.diagrams.net/ 
+2. Gupta, L. (2023, November 4). REST API URI naming conventions and best practices. REST API Tutorial. https://restfulapi.net/resource-naming/ 
+3. Pethiyagoda, N. (2022, September 26). REST API naming conventions and best practices. Medium. https://medium.com/@nadinCodeHat/rest-api-naming-conventions-and-best-practices-1c4e781eb6a5 
 
 ----
 # Appendix: Grading Rubric
