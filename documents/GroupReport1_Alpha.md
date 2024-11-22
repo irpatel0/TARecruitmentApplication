@@ -45,13 +45,13 @@ List team members and their GitHub usernames
 ----
 ## 3. Iteration 1 - Sprint Retrospective
 
- The scrum retrospective meetings were efficient and allowed us to effectibvely communicate what was going well and what needed improvement on the project. Typically in our scrum retrospective meetings, we delegate the work amongst team members for the upcoming scrum, and create subgroups if necessary. We also discussed any bugs that needed to be resolved and any improvements to be made to the project. During the scrum meetings, we also discuss strategies to implement complex tasks, such as creating databases, models, and relationships. 
+ The scrum retrospective meetings were efficient and allowed us to effectively communicate what was going well and what needed improvement on the project. Typically in our scrum retrospective meetings, we delegate the work amongst team members for the upcoming scrum, and create subgroups if necessary. We also discussed any bugs that needed to be resolved and any improvements to be made to the project. During the scrum meetings, we also discuss strategies to implement complex tasks, such as creating databases, models, and relationships. 
  Going forward, we want to utilize GitHub issues to track and report issues that need to be resolved, and any use cases or tasks that have been completed. This will help us to better understand where the team and the project is currently at and what needs improvement.
  
 ----
 ## 4. Product Backlog refinement
 
- No, we did not make any changed to the product backlog during iteration1.
+ No, we did not make any changes to the product backlog during iteration1.
 
 ----
 ## 5. Iteration 2 - Sprint Backlog
