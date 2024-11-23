@@ -7,13 +7,12 @@ from app import db
 import sqlalchemy as sqla
 from app.main.models import Student, User, Course
 
-
 class StudentRegistrationForm(FlaskForm):
     first_name = StringField('First Name', validators=[DataRequired()])
     last_name = StringField('Last Name', validators=[DataRequired()])
     email = StringField('Email', validators=[DataRequired(), Email()])
-    wpi_id = StringField('WPI ID', validators=[DataRequired(), Regexp(r'^\d+$', message="Please input a valid ID number"), Length(9)])
-    phone = StringField('Phone Number', validators=[DataRequired(), Regexp(r'^\d+$', message="Please input a valid phone number"), Length(10)])
+    wpi_id = StringField('WPI ID', validators=[DataRequired()])
+    phone = StringField('Phone Number', validators=[DataRequired()])
     username = StringField('Username', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
     password2 = PasswordField('Confirm Password', validators=[DataRequired(), EqualTo('password')])
@@ -28,6 +27,10 @@ class StudentRegistrationForm(FlaskForm):
     submit = SubmitField('Register')
 
     def validate_wpi_id(self, wpi_id):
+        if not str(wpi_id.data).isnumeric():
+            raise ValidationError('Please enter valid WPI ID with all numeric digits')
+        if len(str(wpi_id.data)) != 9:
+            raise ValidationError('Please enter valid WPI ID of 9 digits')
         query = sqla.select(User).where(User.wpi_id == wpi_id.data)
         student = db.session.scalars(query).first()
         if student is not None:
@@ -40,6 +43,10 @@ class StudentRegistrationForm(FlaskForm):
             raise ValidationError('the email already exists!')
 
     def validate_phone(self, phone):
+        if not str(phone.data).isnumeric():
+            raise ValidationError('Please enter valid phone number with all numeric digits')
+        if len(str(phone.data)) != 10:
+            raise ValidationError('Please enter valid phone number of 10 digits')
         query = sqla.select(User).where(User.phone == phone.data)
         student = db.session.scalars(query).first()
         if student is not None:
@@ -55,15 +62,19 @@ class StudentRegistrationForm(FlaskForm):
 class InstructorRegistrationForm(FlaskForm):
     first_name = StringField('First Name', validators=[DataRequired()])
     last_name = StringField('Last Name', validators=[DataRequired()])
-    wpi_id = StringField('WPI ID', validators=[DataRequired(), Length(9), Regexp(r'^\d+$', message="Please input a valid ID number")])
+    wpi_id = StringField('WPI ID', validators=[DataRequired()])
     email = StringField('Email', validators=[DataRequired(), Email()])
-    phone = StringField('Phone Number', validators=[DataRequired(), Length(10), Regexp(r'^\d+$', message="Please input a valid phone number")])
+    phone = StringField('Phone Number', validators=[DataRequired()])
     username = StringField('Username', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
     password2 = PasswordField('Confirm Password', validators=[DataRequired(), EqualTo('password')])
     submit = SubmitField('Register')
 
     def validate_wpi_id(self, wpi_id):
+        if not str(wpi_id.data).isnumeric():
+            raise ValidationError('Please enter valid WPI ID with all numeric digits')
+        if len(str(wpi_id.data)) != 9:
+            raise ValidationError('Please enter valid WPI ID of 9 digits')
         query = sqla.select(User).where(User.wpi_id == wpi_id.data)
         instructor = db.session.scalars(query).first()
         if instructor is not None:
@@ -76,6 +87,10 @@ class InstructorRegistrationForm(FlaskForm):
             raise ValidationError('the email already exists!')
 
     def validate_phone(self, phone):
+        if not str(phone.data).isnumeric():
+            raise ValidationError('Please enter valid phone number with all numeric digits')
+        if len(str(phone.data)) != 10:
+            raise ValidationError('Please enter valid phone number of 10 digits')
         query = sqla.select(User).where(User.phone == phone.data)
         instructor = db.session.scalars(query).first()
         if instructor is not None:
