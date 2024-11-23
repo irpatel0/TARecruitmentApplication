@@ -6,10 +6,43 @@
               <h1>Welcome to Student Page</h1>
             <!-- Display the number and title of every item in the Course table -->
             <h2>Open Positions</h2>
-            <ul>
+            <ul class="courseSections">
                 {% for position in positions %}
-                    <li>{{position}}</li>
+                    <li>{{position}} <button onclick="show_position_details()">Show Details</button> </li>
                 {% endfor %}
             </ul>
+            <div style="display: none" class="courseSections" id="show_position">
+                <ul class="courseSections">
+                {% for position in positions %}
+                    <li><strong>Number of SAs needed:</strong> {{position.num_SAs}}</li>
+                    <li><strong>Availability:</strong> {{position.available}}</li>
+                    <li><strong>Minimum GPA required:</strong> {{position.min_GPA}}</li>
+                    <li><strong>Minimum Grade required:</strong>{{position.min_grade}}</li>
+                {% endfor %}
+                </ul>
+                <button onclick="close_div()">Close</button>
             </div>
+            </div>
+
+
+{% block script %}
+<script>
+
+    function show_position_details(){
+        let position_div = document.getElementById('show_position');
+        if (position_div.style.display === 'block'){
+            position_div.style.display = 'none';
+        }
+        else{
+            position_div.style.display = 'block'
+        }
+    }
+
+    function close_div(){
+        document.getElementById('show_position').style.display = 'none';
+    }
+
+</script>
+{% endblock %}
+
 {% endblock %}

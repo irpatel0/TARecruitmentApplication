@@ -16,7 +16,7 @@ def index():
 @login_required
 @role_required('Student')
 def student_index():
-    positions = db.session.query(Position).all()
+    positions = db.session.scalars(sqla.select(Position)).all()
     return render_template('student_index.html', positions = positions)
 
 @bp_main.route('/instructor_index', methods=['GET'])

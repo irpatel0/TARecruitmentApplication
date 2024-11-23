@@ -33,7 +33,6 @@
   width: 70%;
   padding: 20px;
 
-
 }
 
 
@@ -69,43 +68,47 @@
   background-color: #f9f9f9;
   list-style-type: none;
   font-family: Arial, Helvetica, sans-serif;
-
-
 }
+
 .courseSections li{
-display: flex;
-justify-content: space-between;
-}
-.indexHeader{
-display: flex;
-justify-content: space-between;
-margin-left: 40vw;
-margin-right: 10px;
+  display: flex;
+  justify-content: space-between;
 }
 
+.indexHeader{
+  display: flex;
+  justify-content: space-between;
+  margin-left: 40vw;
+  margin-right: 10px;
+}
 
 .button{
-border: 1px solid black;
-padding: 2px 5px;
-text-decoration: none;
-color: black;
-border-radius: 5px;
+  border: 1px solid black;
+  padding: 2px 5px;
+  text-decoration: none;
+  color: black;
+  border-radius: 5px;
 }
+
 .button:hover{
-background-color: #CCC;
-cursor: pointer;
+  background-color: #CCC;
+  cursor: pointer;
 }
+
 .view{
-background-color: white;
+  background-color: white;
 }
+
 .view:hover{
-background-color: #CCC;
+  background-color: #CCC;
 }
+
 .create{
-background-color: #f0aeae;
-color: black;
+  background-color: #f0aeae;
+  color: black;
 }
+
 .filled{
-background-color: #b9ffb9;
-color: black;
+  background-color: #b9ffb9;
+  color: black;
 }
