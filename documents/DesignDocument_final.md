@@ -84,10 +84,10 @@ The subsystem routes gives information about the routes, decorator functions and
 #### Subsystem Overview
 The subsystems involved in this web application are:
 1. Main - handles homepage/index page for both the user roles: Student and Instructor
-2. Auth - handles the login, logout, and authentication logic for both users roles Student and Instructor and redirects accordingly. 
+2. Auth - handles the login, logout, registering Student and Instructor profile, and authentication logic for both users roles Student and Instructor and redirects accordingly. 
 3. Errors - displays error templates when some part of the app fails.
-4. Student - handles all the operations for a Student user like applying for SA position, viewing open positions, registering profile, providing recommendations, and application management. 
-5. Instructor - handles all the operations for a Instructor user like creating course section and SA position, registering profile, application management, and viewing student.  
+4. Student - handles all the operations for a Student user like applying for SA position, viewing open positions, providing recommendations, and application management. 
+5. Instructor - handles all the operations for a Instructor user like creating course section and SA position, application management, and viewing student.  
 
 All the subsystems fit together as the flow starts from Auth for logging-in, then Main for homepage, then Student or Instructor subsystem to handle main parts of the web app, finally Auth again manages logout. All the subsystems can throw errors through Error subsystem.
 
