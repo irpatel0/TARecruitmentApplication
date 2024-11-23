@@ -2,10 +2,10 @@
 {% import 'bootstrap_wtf.html' as wtf %}
 
 {% block content %}
+    <div style="min-height: 80vh;">
+        <h1>Welcome to create position</h1>
 
-    <h1>Welcome to create position</h1>
-
-    {% if form %}
+        {% if form %}
         <form action="" method="post">
             {{ form.hidden_tag() }}
 
@@ -16,7 +16,9 @@
             {{wtf.form_field(form.submit)}}
 
         </form>
-    {% endif %}
+        {% endif %}
+    </div>
+
 
 
 {% endblock %}

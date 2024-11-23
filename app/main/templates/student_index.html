@@ -8,29 +8,60 @@
             <h2>Open Positions</h2>
             <ul class="courseSections">
                 {% for position in positions %}
-                    <li>{{position}} <button onclick="show_position_details()">Show Details</button> </li>
+                    <li>{{position}} <button onclick="show_position_details({{ position.id }})">Show Details</button> </li>
                 {% endfor %}
             </ul>
-            <div style="display: none" class="courseSections" id="show_position">
-                <ul class="courseSections">
-                {% for position in positions %}
-                    <li><strong>Number of SAs needed:</strong> {{position.num_SAs}}</li>
-                    <li><strong>Availability:</strong> {{position.available}}</li>
-                    <li><strong>Minimum GPA required:</strong> {{position.min_GPA}}</li>
-                    <li><strong>Minimum Grade required:</strong>{{position.min_grade}}</li>
-                {% endfor %}
-                </ul>
+            {% for position in positions %}
+            <div style="display: none" class="courseSections" id="position-{{position.id}}">
+
                 <button onclick="close_div()">Close</button>
             </div>
+        {% endfor %}
             </div>
 
 
 {% block script %}
 <script>
 
-    function show_position_details(){
-        let position_div = document.getElementById('show_position');
+    async function show_position_details(position_id) {
+        const url = "{{ url_for('student.view_SA_details', position_id = 'position_id') }}".replace("position_id", position_id);
+        try {
+            const response = await fetch(url)
+            if (!response.ok) {
+                throw new Error('Response status: $(response.status)');
+            }
+            const json = await response.json();
+            console.log(json);
+            fill_details(position_id, json);
+        } catch (error) {
+            console.log(error.message);
+        }
+    }
+
+    function fill_details(position_id, data){
+        let position_div = document.getElementById(`position-${position_id}`);
+        console.log(data);
+        const new_list = document.createElement("ul");
+        const li1 = document.createElement("li");
+        li1.textContent = `Number of SAs needed: ${data['num_SAs']}`
+        new_list.appendChild(li1);
+
+        const li2 = document.createElement("li");
+        li2.textContent = `Availability: ${data['available']}`
+        new_list.appendChild(li2);
+
+        const li3 = document.createElement("li");
+        li3.textContent = `Minimum GPA required: ${data['min_GPA']}`
+        new_list.appendChild(li3);
+
+        const li4 = document.createElement("li");
+        li4.textContent = `Minimum grade required: ${data['min_grade']}`
+        new_list.appendChild(li4);
+
+        position_div.appendChild(new_list);
+        console.log(position_div);
         if (position_div.style.display === 'block'){
+            position_div.textContent = '';
             position_div.style.display = 'none';
         }
         else{

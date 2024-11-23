@@ -2,30 +2,32 @@
 {% import 'bootstrap_wtf.html' as wtf %}
 
 {% block content %}
+    <div style="min-height: 80vh;">
+        <h1 class="text-center">Welcome to CSAssist!</h1>
 
-    <h1 class="text-center">Welcome to CSAssist!</h1>
+        <div class="container">
+            <div class="row align-items-center justify-content-center" style="height: 500px !important;">
+                <div class="col-sm-8 col-md-6 col-lg-4 bg-white rounded p-4 shadow">
+                    <div class="row justify-content-center mb-4">
+                        <h2 class="text-center">Sign In</h2>
+                    </div>
+                    {% if form %}
+                    <form action="" method="post">
+                        {{ form.hidden_tag() }}
 
-    <div class="container">
-        <div class="row align-items-center justify-content-center" style="height: 500px !important;">
-            <div class="col-sm-8 col-md-6 col-lg-4 bg-white rounded p-4 shadow">
-                <div class="row justify-content-center mb-4">
-                    <h2 class="text-center">Sign In</h2>
+                        {{ wtf.form_field(form.username) }}
+                        {{ wtf.form_field(form.password) }}
+                        {{ wtf.form_field(form.remember_me) }}
+                        {{ form.submit(class='btn btn-outline-success w-100') }}
+
+                    </form>
+                    {% endif %}
+                    <p class="mb-0 text-center">New Student? &nbsp;<a href="{{ url_for('auth.student_register') }}">Click to Student Register!</a></p>
+                    <p class="mb-0 text-center">New Instructor? &nbsp;<a href="{{ url_for('auth.instructor_register') }}">Click to Instructor Register!</a></p>
                 </div>
-                <form action="" method="post">
-                    {{ form.hidden_tag() }}
-
-                    {{ wtf.form_field(form.username) }}
-                    {{ wtf.form_field(form.password) }}
-                    {{ wtf.form_field(form.remember_me) }}
-                    {{ form.submit(class='btn btn-outline-success w-100') }}
-
-
-                </form>
-                <p class="mb-0 text-center">New Student? &nbsp;<a href="{{ url_for('auth.student_register') }}">Click to Student Register!</a></p>
-                <p class="mb-0 text-center">New Instructor? &nbsp;<a href="{{ url_for('auth.instructor_register') }}">Click to Instructor Register!</a></p>
             </div>
-        </div>
 
+        </div>
     </div>
 
 

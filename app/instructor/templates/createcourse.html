@@ -2,20 +2,22 @@
 {% import 'bootstrap_wtf.html' as wtf %}
 
 {% block content %}
+    <div style="min-height: 80vh;">
+        <h1>Welcome to create course</h1>
 
-    <h1>Welcome to create course</h1>
-    
-    {% if form %}
-        <form action="" method="post">
-            {{ form.hidden_tag() }}
+        {% if form %}
+            <form action="" method="post">
+                {{ form.hidden_tag() }}
 
-            {{wtf.form_field(form.course_number)}}
-            {{wtf.form_field(form.section)}}
-            {{wtf.form_field(form.term)}}
-            {{wtf.form_field(form.submit)}}
+                {{wtf.form_field(form.course_number)}}
+                {{wtf.form_field(form.section)}}
+                {{wtf.form_field(form.term)}}
+                {{wtf.form_field(form.submit)}}
 
-        </form>
-    {% endif %}
+            </form>
+        {% endif %}
+    </div>
+
 
 
 {% endblock %}
