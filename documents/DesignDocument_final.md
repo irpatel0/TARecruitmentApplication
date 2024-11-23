@@ -25,7 +25,6 @@ Prepared by:
     - [2.2.2 Interfaces](#222-interfaces)
     - [2.3 User Interface Design](#23-view-and-user-interface-design)
 - [3. References](#3-references)
-- [Appendix: Grading Rubric](#appendix-grading-rubric)
 
 <a name="revision-history"> </a>
 
@@ -56,8 +55,6 @@ The subsystem routes gives information about the routes, decorator functions and
 
 # 2. Software Design
 
-(**Note**: For all subsections of Section-2: You should describe the design for the end product (completed application) - not only your iteration1 version. You will revise this document and add more details later.)
-
 ## 2.1 Database Model
 1. Student
     *   This database model will maintain information about students, and will maintain information about past SA roles.
@@ -73,7 +70,7 @@ The subsystem routes gives information about the routes, decorator functions and
     * Courses will have a relationship with Position, to show open SA positions for the course
 4. Position
     * This database model will maintain information about the SA positions of a course. It will maintain information about the course it is assigned to, the SA applicants, and the current SAs of the course.
-    * Position will have a relatinoship with Course, to show the course that the postion is associated with
+    * Position will have a relationship with Course, to show the course that the position is associated with
 
 
 <kbd>      
@@ -90,7 +87,8 @@ The subsystems involved in this web application are:
 2. Auth - handles the login, logout, and authentication logic for both users roles Student and Instructor and redirects accordingly. 
 3. Errors - displays error templates when some part of the app fails.
 4. Student - handles all the operations for a Student user like applying for SA position, viewing open positions, registering profile, providing recommendations, and application management. 
-5. Instructor - handles all the operations for a Instructor user like creating course section and SA position, registering profile, application management, and viewing student.
+5. Instructor - handles all the operations for a Instructor user like creating course section and SA position, registering profile, application management, and viewing student.  
+
 All the subsystems fit together as the flow starts from Auth for logging-in, then Main for homepage, then Student or Instructor subsystem to handle main parts of the web app, finally Auth again manages logout. All the subsystems can throw errors through Error subsystem.
 
 #### UML Component Diagram
@@ -221,29 +219,3 @@ User Story: 11
 3. Pethiyagoda, N. (2022, September 26). REST API naming conventions and best practices. Medium. https://medium.com/@nadinCodeHat/rest-api-naming-conventions-and-best-practices-1c4e781eb6a5 
 
 ----
-# Appendix: Grading Rubric
-(Please remove this part in your final submission)
-
- * You will first  submit a draft version of this document:
-    * "Project 3 : Project Design Document - draft" (5pts). 
-* We will provide feedback on your document and you will revise and update it.
-    * "Project 5 : Project Design Document - final" (80pts) 
-
-Below is the grading rubric that we will use to evaluate the final version of your document. 
-
-|**MaxPoints**| **Design** |
-|:---------:|:-------------------------------------------------------------------------|
-|           | Are all parts of the document in agreement with the product requirements? |
-| 8         | Is the architecture of the system ([2.2.1 Overview](#221-overview)) described well, with the major components and their interfaces?         
-| 8        | Is the database model (i.e., [2.1 Database Model](#21-database-model)) explained well with sufficient detail? Do the team clearly explain the purpose of each table included in the model?| 
-|          | Is the document making good use of semi-formal notation (i.e., UML diagrams)? Does the document provide a clear UML class diagram visualizing the DB model of the system? |
-| 18        | Is the UML class diagram complete? Does it include all classes (tables) and does it clearly mark the PK and FKs for each table? Does it clearly show the associations between them? Are the multiplicities of the associations shown correctly? ([2.1 Database Model](#21-database-model)) |
-| 25        | Are all major interfaces (i.e., the routes) listed? Are the routes explained in sufficient detail? ([2.2.2 Interfaces](#222-interfaces)) |
-| 13        | Is the view and the user interfaces explained well? Did the team provide the screenshots of the interfaces they built so far.  ([2.3 User Interface Design](#23-user-interface-design)) |
-|           | **Clarity** |
-|           | Is the solution at a fairly consistent and appropriate level of detail? Is the solution clear enough to be turned over to an independent group for implementation and still be understood? |
-| 5         | Is the document carefully written, without typos and grammatical errors?  |
-| 3         | Is the document well formatted? (Make sure to check your document on GitHub. You will loose points if there are formatting issues in your document.  )  |
-|           |  |
-| 80         | **Total** |
-|           |  |
