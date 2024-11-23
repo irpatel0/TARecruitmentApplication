@@ -57,7 +57,7 @@ The subsystem routes gives information about the routes, decorator functions and
 
 ## 2.1 Database Model
 1. User
-    Student and Insturctor inherit from this
+    * Student and Instructor inherit from this
     * id: the primary key
     * first name: the user's first name
     * last name: the user's last name
@@ -68,14 +68,14 @@ The subsystem routes gives information about the routes, decorator functions and
     * password_hash: the user's hashed password
     * user_type: the type of user (Student or Instructor)
 2. Student
-    Student maintains information about students and inherits from the User class
+    * Student maintains information about students and inherits from the User class
     * id: identifier, both a primary key and a foreign key
     * GPA: the GPA of the student, expressed as a floating point
     * graduation_date: a string representing the graduation date of the student
     * assigned: a boolean value indicating if the student is assigned a SA position
     * taught: a relationship between Student and pastEnrollments, one-to-many, represents the courses a student has been an SA for previously
 3. Instructor
-    Instructor maintains information about instructors and inherits from the User class
+    * Instructor maintains information about instructors and inherits from the User class
     * id: identifier, both a primary key and a foreign key
     * course_sections: a relationship between Instructors and Course sections, one-to-many, represents the course sections that a instructor teaches
 4. CourseSection
@@ -83,7 +83,7 @@ The subsystem routes gives information about the routes, decorator functions and
     * id: identifier, a primary key
     * course_number: a string including the major and number of the course, example CS1001
     * section: and integer representing the course section number
-    * insturctor_id: a foreign key, the id of the insturctor that created the course section
+    * instructor_id: a foreign key, the id of the instructor that created the course section
     * term: a string representing the year and term the course will take place, example 2024B
     * positions: a relationship between Position and CourseSection, one-to-many, represents all the positions made under that course section
     * instructor: a relationship between CourseSection and Instructor, one-to-many, represents the instructor teaching the course
@@ -97,20 +97,20 @@ The subsystem routes gives information about the routes, decorator functions and
     * num_SAs: an integer, the number of SAs the instructor wants for the course
     * available: a boolean showing if the course is available
     * min_GPA: the minimum GPA needed to SA for the position
-    * min_grade: the minimum grade aquired in the course to SA for the position
+    * min_grade: the minimum grade acquired in the course to SA for the position
     * SA_experience: a boolean, true if the course required a student with prior SA experience
     * course_section: a relationship between Position and CourseSection, one-to-many, represents the Course that this position belongs to
     * Position will have a relationship with Course, to show the course that the position is associated with
-  6. Application
-    This model holds the information for applications created by students
-    * This has a relationship with Student, which represents the student who created the Application
-    * Has a relationship with Position, which represents the position the application is for
-  7. Course
-    * This model holds the information for courses, including the course number and title
-    * Has a relationship with with CourseSection, which represents the course sections made for this course
-    * Has a many to many relationship with Student, which represents the students whio have taken the course
-  8. pastEnrollments
-    * An interjection table between Course and Student, represents the students who have taken a course, and the courses a student has taken
+6. Application  
+   * This model holds the information for applications created by students
+   * This has a relationship with Student, which represents the student who created the Application
+   * Has a relationship with Position, which represents the position the application is for
+7. Course
+   * This model holds the information for courses, including the course number and title
+   * Has a relationship with CourseSection, which represents the course sections made for this course
+   * Has a many to many relationship with Student, which represents the students who have taken the course
+8. pastEnrollments
+   * An interjection table between Course and Student, represents the students who have taken a course, and the courses a student has taken
 
 
 <kbd>      
