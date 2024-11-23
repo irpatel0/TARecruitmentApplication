@@ -68,7 +68,7 @@ List team members and their GitHub usernames
 4. [Database Model] Update Student model to have an "assigned" boolean field - Sai Teja Sunku, Achintya Sanjay
 5. [Implementation] Develop a form to apply for the selected open SA position - Ishaan Patel
 6. [Implementation] Develop a route to view all students applied for each SA position created - Sai Teja Sunku, Achintya Sanjay
-7. [Implementation] Develop a route and a view to see details of every open SA position - Jake Grier
+7. [Implementation] Develop a route and a view to see details of every open SA position - Sai Teja Sunku, Achintya Sanjay
 8. [Testing] Create unit tests for routes - Sai Teja Sunku, Achintya Sanjay
 9. [Testing] Create unit tests for new models - Sai Teja Sunku, Achintya Sanjay
 
