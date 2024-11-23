@@ -57,8 +57,8 @@ List team members and their GitHub usernames
 ## 5. Iteration 2 - Sprint Backlog
 
 #### User Stories
-1. As a Student, I want to view all the details of every open SA position so that I know if I can meet the qualifications - Jake Grier
-2. As a Student, I want to apply for the open SA positions - Ishaan Patel
+1. As a Student, I want to view all the details of every open SA position so that I know if I can meet the qualifications - Sai Teja Sunku, Achintya Sanjay
+2. As a Student, I want to apply for the open SA positions - Ishaan Patel, Jake Grier
 3. As a Professor, I want to view all students applied for a SA position - Sai Teja Sunku, Achintya Sanjay
 
 #### Smaller Stories
