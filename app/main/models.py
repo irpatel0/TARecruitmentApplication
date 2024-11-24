@@ -53,7 +53,7 @@ class Student(User):
             primaryjoin=(pastEnrollments.c.student_id == id),
             back_populates='taught_by',
         )
-    applications : sqlo.Mapped['Application'] = sqlo.relationship(back_populates='applicant')
+    student_applications : sqlo.WriteOnlyMapped['Application'] = sqlo.relationship(back_populates='applicant')
 
 class Instructor(User):
     __tablename__ = 'instructor'
@@ -83,7 +83,6 @@ class CourseSection(db.Model):
     instructor_id : sqlo.Mapped[int] = sqlo.mapped_column(sqla.ForeignKey(Instructor.id))
     term : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(5))
     #relations
-    applications : sqlo.Mapped['Application'] = sqlo.relationship(back_populates='applied_to')
     position : sqlo.Mapped['Position'] = sqlo.relationship(back_populates='course_section')
     professor : sqlo.Mapped['Instructor'] = sqlo.relationship(back_populates='course_sections')
     course = db.relationship('Course', backref='course_sections')
@@ -102,6 +101,7 @@ class Position(db.Model):
     min_GPA : sqlo.Mapped[float] = sqlo.mapped_column(sqla.Float, default=0)
     min_grade : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(2), default='A')
     course_section = db.relationship('CourseSection', backref='positions')
+    applications : sqlo.WriteOnlyMapped['Application'] = sqlo.relationship(back_populates='applied_to')
     def __repr__(self):
         course_number = self.course_section.course_number
         course_term = self.course_section.term
@@ -110,12 +110,14 @@ class Position(db.Model):
 
 class Application(db.Model):
     id : sqlo.Mapped[int] = sqlo.mapped_column(sqla.Integer, primary_key=True)
+    student_id : sqlo.Mapped[int] = sqlo.mapped_column(sqla.ForeignKey('student.id'))
+    position_id : sqlo.Mapped[int] = sqlo.mapped_column(sqla.ForeignKey('position.id'))
     grade_aquired : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(2), default='A')
     term_taken : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(5))
     course_term : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(5))
     status : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(20), default='Pending')
 
     #relations
-    applicant : sqlo.Mapped['Student'] = sqlo.relationship(back_populates='applications')
-    applied_to : sqlo.Mapped['Position'] = sqlo.relationship(back_populates='applications')
+    applicant : sqlo.Mapped[Student] = sqlo.relationship(back_populates='student_applications')
+    applied_to : sqlo.Mapped[Position] = sqlo.relationship(back_populates='applications')
 
