@@ -8,13 +8,13 @@
             <h2>Open Positions</h2>
             <ul class="courseSections">
                 {% for position in positions %}
-                    <li>{{position}} <button onclick="show_position_details({{ position.id }})">Show Details</button> </li>
+                    <li>{{position}} <button onclick="show_position_details({{ position.id }})" id="show-details-{{position.id}}">Show Details</button> </li>
                 {% endfor %}
             </ul>
             {% for position in positions %}
             <div style="display: none" class="courseSections" id="position-{{position.id}}">
 
-                <button onclick="close_div()">Close</button>
+
             </div>
         {% endfor %}
             </div>
@@ -61,16 +61,14 @@
         position_div.appendChild(new_list);
         console.log(position_div);
         if (position_div.style.display === 'block'){
+            document.getElementById(`show-details-${position_id}`).textContent = 'Show Details';
             position_div.textContent = '';
             position_div.style.display = 'none';
         }
         else{
-            position_div.style.display = 'block'
+            document.getElementById(`show-details-${position_id}`).textContent = 'Hide Details';
+            position_div.style.display = 'block';
         }
-    }
-
-    function close_div(){
-        document.getElementById('show_position').style.display = 'none';
     }
 
 </script>
