@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% import 'bootstrap_wtf.html' as wtf %}
+
+{% block content %}
+    <div style="min-height: 80vh;">
+        <h1>Applying for position </h1>
+
+        {% if form %}
+            <form action="" method="post">
+                {{ form.hidden_tag() }}
+
+                {{wtf.form_field(form.grade)}}
+                {{wtf.form_field(form.taken_term)}}
+                {{wtf.form_field(form.course_term)}}
+                {{wtf.form_field(form.submit)}}
+
+            </form>
+        {% endif %}
+    </div>
+
+{% endblock %}
