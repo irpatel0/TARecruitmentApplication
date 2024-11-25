@@ -41,6 +41,8 @@ class StudentRegistrationForm(FlaskForm):
         student = db.session.scalars(query).first()
         if student is not None:
             raise ValidationError('the email already exists!')
+        if "wpi.edu" not in email.data:
+            raise ValidationError('Please enter valid WPI email address')
 
     def validate_phone(self, phone):
         if not str(phone.data).isnumeric():
@@ -57,6 +59,12 @@ class StudentRegistrationForm(FlaskForm):
         student = db.session.scalars(query).first()
         if student is not None:
             raise ValidationError('the username already exists!')
+        
+    def validate_graduation_date(self, graduation_date):
+        if not str(graduation_date.data).isnumeric():
+            raise ValidationError('Please enter valid graduation date with all numeric digits')
+        if len(str(graduation_date.data)) != 4:
+            raise ValidationError('Please enter valid graduation date with 4 digit year')
 
 
 class InstructorRegistrationForm(FlaskForm):
@@ -85,6 +93,8 @@ class InstructorRegistrationForm(FlaskForm):
         instructor = db.session.scalars(query).first()
         if instructor is not None:
             raise ValidationError('the email already exists!')
+        if "wpi.edu" not in email.data:
+            raise ValidationError('Please enter valid WPI email address')
 
     def validate_phone(self, phone):
         if not str(phone.data).isnumeric():
