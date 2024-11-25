@@ -6,9 +6,12 @@
 
    <!-- Display everything in courses -->
     <div style="min-height: 80vh;">
+        <h1>Welcome to Instructor Page</h1>
         <div class="indexHeader">
        <h4 style="text-align: center;">Course Sections</h4>
+
        <a href="{{url_for('instructor.create_course')}}" class="button">Create Course</a>
+            <hr class="mb-4">
    </div>
 
    <ul class = "courseSections">
@@ -19,7 +22,8 @@
                    <a class = "button"  id = "button-{{course.id}}" onclick="showInfo({{course.id}})">View Details</a>
                    {%if course.hasPosition()%}
                        {%if course.position.available%}
-                           <a href="#" class = "button view">View Applicants</a>
+                            <button id="view-applicants-${course.position.id}" onclick="get_applicants({{course.position.id}})">View Applicants</button>
+<!--                           <a href="#" class = "button view">View Applicants</a>-->
                        {%else%}
                            <a href="#" class = "button filled">Filled</a>
                        {%endif%}
@@ -41,11 +45,13 @@
                    <p>No Position Created</p>
                {%endif%}
 
-
-
-
            </div>
            <hr>
+            <div id = "application-{{course.position.id}}" style="display: none;">
+               <hr>
+
+            </div>
+       <hr>
 
 
        {% endfor %}
@@ -53,7 +59,7 @@
     </div>
 
 
-
+{% block script %}
    <script>
        function showInfo(id){
            var x = document.getElementById(id);
@@ -66,7 +72,43 @@
                document.getElementById('button-' + id).textContent = "View Details";
            }
        }
-   </script>
 
+       async function get_applicants(position_id){
+           const url = "{{ url_for('instructor.view_allstudents', position_id = 'position_id') }}".replace("position_id", position_id);
+           try {
+            const response = await fetch(url)
+            if (!response.ok) {
+                throw new Error('Response status: $(response.status)');
+            }
+            const json = await response.json();
+            console.log(json);
+            fill_applications(position_id, json);
+            } catch (error) {
+                console.log(error.message);
+            }
+       }
+
+       function fill_applications(position_id, data){
+           let applications_div = document.getElementById(`application-${position_id}`);
+           console.log(data);
+           applications_div.textContent = data;
+           for (let i = 0; i<data.length; i++){
+
+           }
+
+           if (applications_div.style.display === 'block'){
+                document.getElementById(`view-applicants-${position_id}`).textContent = 'View Applicants';
+                applications_div.textContent = '';
+                applications_div.style.display = 'none';
+           }
+           else{
+                document.getElementById(`view-applicants-${position_id}`).textContent = 'Hide Applicants';
+                applications_div.style.display = 'block';
+           }
+
+       }
+
+   </script>
+{% endblock %}
 
 {% endblock %}

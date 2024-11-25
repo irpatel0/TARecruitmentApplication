@@ -9,6 +9,7 @@ from app.main.models import Course, Position,  CourseSection
 
 @bp_main.route('/', methods=['GET'])
 @bp_main.route('/index', methods=['GET'])
+@login_required
 def index():
     return redirect(url_for('auth.login'))
 

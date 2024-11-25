@@ -63,3 +63,10 @@ def student_profile(student_id):
 @role_required('Instructor')
 def assign_student():
     return "Assign Student"
+
+@bp_instructor.route('/applications/<position_id>', methods=['GET', 'POST'])
+@login_required
+@role_required('Instructor')
+def view_allstudents(position_id):
+    applicants = db.session.get(Position, position_id)
+    return jsonify(applicants.get_applications())

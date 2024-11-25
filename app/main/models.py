@@ -100,8 +100,13 @@ class Position(db.Model):
     available : sqlo.Mapped[bool] = sqlo.mapped_column(sqla.Boolean, default=True)
     min_GPA : sqlo.Mapped[float] = sqlo.mapped_column(sqla.Float, default=0)
     min_grade : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(2), default='A')
+    # relationships
     course_section = db.relationship('CourseSection', backref='positions')
     applications : sqlo.WriteOnlyMapped['Application'] = sqlo.relationship(back_populates='applied_to')
+
+    def get_applications(self):
+        return db.session.scalars(self.applications.select()).all()
+
     def __repr__(self):
         course_number = self.course_section.course_number
         course_term = self.course_section.term
