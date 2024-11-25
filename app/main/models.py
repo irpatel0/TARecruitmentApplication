@@ -5,6 +5,8 @@ import sqlalchemy as sqla
 import sqlalchemy.orm as sqlo
 from flask_login import UserMixin
 from app import login
+from datetime import datetime, timezone
+
 
 @login.user_loader
 def load_user(id):
@@ -103,7 +105,7 @@ class Position(db.Model):
     # relationships
     course_section = db.relationship('CourseSection', backref='positions')
     applications : sqlo.WriteOnlyMapped['Application'] = sqlo.relationship(back_populates='applied_to')
-    
+    timestamp : sqlo.Mapped[Optional[datetime]] = sqlo.mapped_column(default = lambda : datetime.now(timezone.utc))
 
     def get_applications(self):
         return db.session.scalars(self.applications.select()).all()
