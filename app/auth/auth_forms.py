@@ -18,7 +18,7 @@ class StudentRegistrationForm(FlaskForm):
     password2 = PasswordField('Confirm Password', validators=[DataRequired(), EqualTo('password')])
     GPA = FloatField('GPA', validators=[DataRequired()])
     courses_taught = QuerySelectMultipleField('Courses Taught',
-                query_factory = lambda: db.session.scalars(sqla.select(Course).order_by(sqla.text('Course.number'))),
+                query_factory = lambda: db.session.scalars(sqla.select(Course).order_by(Course.number)),
                 get_label = lambda theCourse : f"{theCourse.number} - {theCourse.title}",
                 widget=ListWidget(prefix_label=False),
                 option_widget=CheckboxInput()
