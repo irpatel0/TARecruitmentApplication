@@ -11,7 +11,10 @@ from app.main.models import Course, Position,  CourseSection
 @role_required('Student')
 def view_SA_details(position_id):
     thePosition = db.session.get(Position, position_id)
-    return jsonify({'num_SAs': thePosition.num_SAs, 'available': thePosition.available, 'min_GPA': thePosition.min_GPA, 'min_grade': thePosition.min_grade, 'data_posted': thePosition.timestamp})
+    courseSectionID = thePosition.section_id
+    theCourseSection = db.session.get(CourseSection, courseSectionID)
+    instructor = theCourseSection.instructor_id
+    return jsonify({'num_SAs': thePosition.num_SAs, 'available': thePosition.available, 'min_GPA': thePosition.min_GPA, 'min_grade': thePosition.min_grade, 'date_posted': thePosition.timestamp, 'instructor' : instructor})
 
 
 

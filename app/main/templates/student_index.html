@@ -81,8 +81,14 @@
         new_list.appendChild(li4);
 
         const li5 = document.createElement("li");
-        li5.textContent = `Date posted: ${data['date_posted']}`
+        // li5.textContent = `Date posted: ${data['date_posted']}`
+        li5.textContent = `Date posted: ${utc_to_local(data['date_posted'])}`
         new_list.appendChild(li5);
+
+        const li6 = document.createElement("li");
+        // li5.textContent = `Date posted: ${data['date_posted']}`
+        li6.textContent = `Instructor: ${data['instructor']}`
+        new_list.appendChild(li6);
 
         position_div.appendChild(new_list);
         console.log(position_div);
@@ -96,6 +102,11 @@
             position_div.style.display = 'block';
         }
     }
+
+    function utc_to_local(utcdate) {
+    var d = new Date(utcdate);
+    return d.toLocaleString();
+}
 
 </script>
 {% endblock %}

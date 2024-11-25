@@ -102,10 +102,10 @@ class Position(db.Model):
     available : sqlo.Mapped[bool] = sqlo.mapped_column(sqla.Boolean, default=True)
     min_GPA : sqlo.Mapped[float] = sqlo.mapped_column(sqla.Float, default=0)
     min_grade : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(2), default='A')
+    timestamp : sqlo.Mapped[datetime] = sqlo.mapped_column(default = lambda : datetime.now(timezone.utc))
     # relationships
     course_section = db.relationship('CourseSection', backref='positions')
     applications : sqlo.WriteOnlyMapped['Application'] = sqlo.relationship(back_populates='applied_to')
-    timestamp : sqlo.Mapped[Optional[datetime]] = sqlo.mapped_column(default = lambda : datetime.now(timezone.utc))
 
     def get_applications(self):
         return db.session.scalars(self.applications.select()).all()
