@@ -74,6 +74,7 @@ class Course(db.Model):
             primaryjoin=(pastEnrollments.c.course_id == id),
             back_populates='taught',
     )
+    sections : sqlo.WriteOnlyMapped['CourseSection'] = sqlo.relationship(back_populates='course')
 
 
 class CourseSection(db.Model):
@@ -83,9 +84,9 @@ class CourseSection(db.Model):
     instructor_id : sqlo.Mapped[int] = sqlo.mapped_column(sqla.ForeignKey(Instructor.id))
     term : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(5))
     #relations
-    position : sqlo.Mapped['Position'] = sqlo.relationship(back_populates='course_section')
+    position : sqlo.WriteOnlyMapped['Position'] = sqlo.relationship(back_populates='course_section')
     professor : sqlo.Mapped['Instructor'] = sqlo.relationship(back_populates='course_sections')
-    course = db.relationship('Course', backref='course_sections')
+    course : sqlo.Mapped['Course'] = sqlo.relationship(back_populates='sections')
 
     def hasPosition(self):
         return self.position is not None
@@ -101,7 +102,7 @@ class Position(db.Model):
     min_GPA : sqlo.Mapped[float] = sqlo.mapped_column(sqla.Float, default=0)
     min_grade : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(2), default='A')
     # relationships
-    course_section = db.relationship('CourseSection', backref='positions')
+    course_section : sqlo.Mapped['CourseSection'] = sqlo.relationship(back_populates='position')
     applications : sqlo.WriteOnlyMapped['Application'] = sqlo.relationship(back_populates='applied_to')
 
     def get_applications(self):
