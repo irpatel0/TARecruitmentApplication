@@ -103,6 +103,7 @@ class Position(db.Model):
     # relationships
     course_section = db.relationship('CourseSection', backref='positions')
     applications : sqlo.WriteOnlyMapped['Application'] = sqlo.relationship(back_populates='applied_to')
+    
 
     def get_applications(self):
         return db.session.scalars(self.applications.select()).all()
