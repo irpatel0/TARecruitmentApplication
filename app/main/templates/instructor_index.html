@@ -19,10 +19,10 @@
            <li>
                {{course}}
                <div>
-                   <a class = "button"  id = "button-{{course.id}}" onclick="showInfo({{course.id}})">View Details</a>
+                   <button class = "btn btn-outline-dark"  id = "button-{{course.id}}" onclick="showInfo({{course.id}})">View Details</button>
                    {%if course.hasPosition()%}
                        {%if course.position.available%}
-                            <button id="view-applicants-${course.position.id}" onclick="get_applicants({{course.position.id}})">View Applicants</button>
+                            <button class="btn btn-outline-primary" id="view-applicants-{{course.position.id}}" onclick="get_applicants({{course.position.id}})">View Applicants</button>
 <!--                           <a href="#" class = "button view">View Applicants</a>-->
                        {%else%}
                            <a href="#" class = "button filled">Filled</a>
@@ -50,8 +50,24 @@
             <div id = "application-{{course.position.id}}" style="display: none;">
                <hr>
 
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>student id</th>
+                            <th>grade acquired</th>
+                            <th>term taken</th>
+                            <th>course term</th>
+                            <th>status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="instructor-table" >
+
+                    </tbody>
+                </table>
+
             </div>
-       <hr>
+
 
 
        {% endfor %}
@@ -90,16 +106,44 @@
 
        function fill_applications(position_id, data){
            let applications_div = document.getElementById(`application-${position_id}`);
-           console.log(data);
-           applications_div.textContent = data;
+
+
+           let table = document.getElementById('instructor-table');
            for (let i = 0; i<data.length; i++){
+               let tr = document.createElement('tr');
+
+               let td1 = document.createElement('td');
+               td1.textContent = i+1;
+               tr.appendChild(td1);
+
+               let td2 = document.createElement('td');
+               td2.textContent = data[i]['student_id'];
+               tr.appendChild(td2);
+
+               let td3 = document.createElement('td');
+               td3.textContent = data[i]['grade_acquired'];
+               tr.appendChild(td3);
+
+               let td4 = document.createElement('td');
+               td4.textContent = data[i]['term_taken'];
+               tr.appendChild(td4);
+
+               let td5 = document.createElement('td');
+               td5.textContent = data[i]['course_term'];
+               tr.appendChild(td5);
+
+               let td6 = document.createElement('td');
+               td6.textContent = data[i]['status'];
+               tr.appendChild(td6);
+
+               table.appendChild(tr);
 
            }
 
            if (applications_div.style.display === 'block'){
-                document.getElementById(`view-applicants-${position_id}`).textContent = 'View Applicants';
-                applications_div.textContent = '';
-                applications_div.style.display = 'none';
+               document.getElementById(`view-applicants-${position_id}`).textContent = 'View Applicants';
+               table.textContent = '';
+               applications_div.style.display = 'none';
            }
            else{
                 document.getElementById(`view-applicants-${position_id}`).textContent = 'Hide Applicants';

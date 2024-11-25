@@ -69,4 +69,12 @@ def assign_student():
 @role_required('Instructor')
 def view_allstudents(position_id):
     applicants = db.session.get(Position, position_id)
-    return jsonify(applicants.get_applications())
+    data = []
+    for applicant in applicants.get_applications():
+        data.append({'student_id': applicant.student_id,
+                     'grade_acquired': applicant.grade_aquired,
+                     'term_taken': applicant.term_taken,
+                     'course_term': applicant.course_term,
+                     'status': applicant.status})
+    print(applicants.get_applications())
+    return jsonify(data)
