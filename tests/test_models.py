@@ -144,3 +144,6 @@ def test_application_model(self):
     self.assertEqual(application.status, 'Pending')
     self.assertEqual(application.applicant.id, student.id)
     self.assertEqual(application.applied_to.id, position.id)
+
+#python -m unittest -v tests//test_models.py
+#pytest -v tests//test_routes.py
