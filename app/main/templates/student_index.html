@@ -5,17 +5,39 @@
     <div style="min-height: 80vh;">
               <h1>Welcome to Student Page</h1>
             <!-- Display the number and title of every item in the Course table -->
-            <h2>Open Positions</h2>
-            <ul class="courseSections">
-                {% for position in positions %}
-                    <li>{{position}} <button onclick="show_position_details({{ position.id }})">Show Details</button> </li>
-                {% endfor %}
-            </ul>
-            {% for position in positions %}
-            <div style="display: none" class="courseSections" id="position-{{position.id}}">
+            <h2 style="text-align: center">Open Positions</h2>
+            <hr class="mb-4">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Course Section</th>
+                        <th>Details</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for position in positions %}
+                        <tr>
+                            <td>
+                                {{loop.index}}
+                            </td>
+                            <td>
+                                {{position}}
+                                <div class="card text-bg-light mb-3" style="display: none" id="position-{{position.id}}">
 
-                <button onclick="close_div()">Close</button>
-            </div>
+
+                                </div>
+                            </td>
+                            <td>
+                                <button onclick="show_position_details({{ position.id }})" id="show-details-{{position.id}}">Show Details</button>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            {% for position in positions %}
+
         {% endfor %}
             </div>
 
@@ -61,16 +83,14 @@
         position_div.appendChild(new_list);
         console.log(position_div);
         if (position_div.style.display === 'block'){
+            document.getElementById(`show-details-${position_id}`).textContent = 'Show Details';
             position_div.textContent = '';
             position_div.style.display = 'none';
         }
         else{
-            position_div.style.display = 'block'
+            document.getElementById(`show-details-${position_id}`).textContent = 'Hide Details';
+            position_div.style.display = 'block';
         }
-    }
-
-    function close_div(){
-        document.getElementById('show_position').style.display = 'none';
     }
 
 </script>
