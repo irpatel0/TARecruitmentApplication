@@ -84,7 +84,7 @@ class CourseSection(db.Model):
     instructor_id : sqlo.Mapped[int] = sqlo.mapped_column(sqla.ForeignKey(Instructor.id))
     term : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(5))
     #relations
-    position : sqlo.WriteOnlyMapped['Position'] = sqlo.relationship(back_populates='course_section')
+    position : sqlo.Mapped['Position'] = sqlo.relationship(back_populates='course_section')
     professor : sqlo.Mapped['Instructor'] = sqlo.relationship(back_populates='course_sections')
     course : sqlo.Mapped['Course'] = sqlo.relationship(back_populates='sections')
 
