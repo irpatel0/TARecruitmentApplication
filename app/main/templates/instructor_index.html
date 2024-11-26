@@ -63,7 +63,7 @@
                             <th>Approve/Reject</th>
                         </tr>
                     </thead>
-                    <tbody id="instructor-table" >
+                    <tbody id="instructor-table-{{course.position.id}}" >
 
                     </tbody>
                 </table>
@@ -108,7 +108,7 @@
 
        function fill_applications(position_id, data){
            let applications_div = document.getElementById(`application-${position_id}`);
-           let table = document.getElementById('instructor-table');
+           let table = document.getElementById(`instructor-table-${position_id}`);
 
            if (data.length === 0){
                let p = document.createElement('p');

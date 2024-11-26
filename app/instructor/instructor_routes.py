@@ -82,7 +82,7 @@ def view_allstudents(position_id):
     for applicant in applicants.get_applications():
         student_name = applicant.get_student().firstname + " " + applicant.get_student().lastname
         availability = ""
-        if applicant.get_only_student():
+        if applicant.get_only_student().assigned:
             availability = "Assigned"
         else:
             availability = "Unassigned"
