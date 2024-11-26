@@ -21,7 +21,8 @@ def view_SA_details(position_id):
 def apply_course(position_id):
     aform = ApplyForm()
     course_position = sqla.select(Position).where(Position.id == position_id)
-    check_applied = sqla.select(Application).where(Application.student_id == current_user.id, Application.position_id == position_id)
+    check_applied = db.session.scalars(sqla.select(Application).where(Application.student_id == current_user.id, Application.position_id == position_id)).first()
+    print(check_applied)
     if (check_applied is not None):
         flash('You have already applied for this course!')
         return redirect(url_for('main.index'))
