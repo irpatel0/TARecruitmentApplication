@@ -3,13 +3,11 @@
 
 {% block content %}
     <div style="min-height: 80vh;">
-        <h1>Welcome to create position</h1>
+        <h1>Create Position for {{section}}</h1>
 
         {% if form %}
         <form action="" method="post">
             {{ form.hidden_tag() }}
-
-            {{wtf.form_field(form.course_section)}}
             {{wtf.form_field(form.num_SAs)}}
             {{wtf.form_field(form.min_GPA)}}
             {{wtf.form_field(form.min_grade)}}

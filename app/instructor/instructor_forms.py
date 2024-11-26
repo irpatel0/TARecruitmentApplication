@@ -23,10 +23,10 @@ class CourseForm(FlaskForm):
     submit = SubmitField('Post')
 
 class PositionForm(FlaskForm):
-    course_section = QuerySelectField('Course Section',
-                query_factory = lambda: db.session.scalars(sqla.select(CourseSection).where(CourseSection.instructor_id == current_user.id)),
-                get_label = lambda theCourseSection : f"{theCourseSection.course_number}-{theCourseSection.section} ({theCourseSection.term})"
-    )
+    # course_section = QuerySelectField('Course Section',
+    #             query_factory = lambda: db.session.scalars(sqla.select(CourseSection).where(CourseSection.instructor_id == current_user.id)),
+    #             get_label = lambda theCourseSection : f"{theCourseSection.course_number}-{theCourseSection.section} ({theCourseSection.term})"
+    # )
     num_SAs = IntegerField('Number of SAs', validators=[DataRequired()])
     min_GPA = FloatField('Min GPA', validators=[DataRequired()])
     min_grade = StringField('Min Grade', validators=[DataRequired(), Length(max=2)])

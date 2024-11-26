@@ -29,14 +29,15 @@ def create_course():
         return redirect(url_for('main.index'))
     return render_template('createcourse.html', form=cform)
 
-@bp_instructor.route('/instructor/create_position', methods=['GET', 'POST'])
+@bp_instructor.route('/instructor/create_position/<section_id>', methods=['GET', 'POST'])
 @login_required
 @role_required('Instructor')
-def create_position():
+def create_position(section_id):
     pform = PositionForm()
+    section = db.session.get(CourseSection, section_id)
     if pform.validate_on_submit():
         new_position = Position(
-            section_id=pform.course_section.data.id,
+            section_id = section_id,
             num_SAs=pform.num_SAs.data,
             min_GPA=pform.min_GPA.data,
             min_grade=pform.min_grade.data
@@ -45,7 +46,7 @@ def create_position():
         db.session.commit()
         flash('The new position has been successfully added!')
         return redirect(url_for('main.index'))
-    return render_template('createposition.html', form=pform)
+    return render_template('createposition.html', form=pform, section = section)
 
 @bp_instructor.route('/instructor/student', methods=['GET'])
 @role_required('Instructor')
