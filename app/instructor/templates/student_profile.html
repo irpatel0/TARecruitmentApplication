@@ -4,9 +4,18 @@
 {% block content %}
     <h1>Viewing Student Profile {{student.firstname}} {{student.lastname}}</h1>
     <hr>
-    <p>Student ID: {{student.id}}</p>
-    <p>Student Email: {{student.email}}</p>
-    <p>Student Phone: {{student.phone}}</p>
-    <p>Student GPA: {{student.gpa}}</p>
-    <p>Student Graduation Date: {{student.graduation_date}}</p>
+    <div class="card text-bg-light mb-3">
+    <div class="card-header"></div>
+    <div class="card-body">
+        <h5 class="card-title">Student ID: {{student.id}}</h5>
+        <p class="card-text">Student WPI ID: {{student.wpi_id}}</p>
+        <p class="card-text">Student Email: {{student.email}}</p>
+        <p class="card-text">Student Phone: {{student.phone}}</p>
+        <p class="card-text">Student GPA: {{student.gpa}}</p>
+        <p class="card-text">Student Graduation Date: {{student.graduation_date}}</p>
+
+    </div>
+    </div>
+
+
 {% endblock %}

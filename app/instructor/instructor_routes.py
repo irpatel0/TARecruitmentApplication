@@ -72,11 +72,17 @@ def view_allstudents(position_id):
     data = []
     for applicant in applicants.get_applications():
         student_name = applicant.get_student().firstname + " " + applicant.get_student().lastname
+        availability = ""
+        if applicant.get_only_student():
+            availability = "Assigned"
+        else:
+            availability = "Unassigned"
         data.append({'student_id': applicant.student_id,
                      'student_name': student_name,
                      'grade_acquired': applicant.grade_aquired,
                      'term_taken': applicant.term_taken,
                      'course_term': applicant.course_term,
-                     'status': applicant.status})
+                     'status': applicant.status,
+                     'availability': availability})
 
     return jsonify(data)

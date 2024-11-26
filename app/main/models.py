@@ -129,3 +129,6 @@ class Application(db.Model):
 
     def get_student(self):
         return db.session.scalars(sqla.select(User).where(User.id == self.student_id)).first()
+
+    def get_only_student(self):
+        return db.session.scalars(sqla.select(Student).where(Student.id == self.student_id)).first()
