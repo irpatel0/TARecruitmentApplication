@@ -7,19 +7,18 @@ from app import db
 import sqlalchemy as sqla
 from app.main.models import Student, User, Course
 
-
 class StudentRegistrationForm(FlaskForm):
     first_name = StringField('First Name', validators=[DataRequired()])
     last_name = StringField('Last Name', validators=[DataRequired()])
     email = StringField('Email', validators=[DataRequired(), Email()])
-    wpi_id = StringField('WPI ID', validators=[DataRequired(), Length(9), Regexp(r'^\d+$', message="Please input a valid ID number")])
-    phone = StringField('Phone Number', validators=[DataRequired(), Length(10), Regexp(r'^\d+$', message="Please input a valid phone number")])
+    wpi_id = StringField('WPI ID', validators=[DataRequired()])
+    phone = StringField('Phone Number', validators=[DataRequired()])
     username = StringField('Username', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
     password2 = PasswordField('Confirm Password', validators=[DataRequired(), EqualTo('password')])
     GPA = FloatField('GPA', validators=[DataRequired()])
     courses_taught = QuerySelectMultipleField('Courses Taught',
-                query_factory = lambda: db.session.scalars(sqla.select(Course).order_by(sqla.text('Course.number'))),
+                query_factory = lambda: db.session.scalars(sqla.select(Course).order_by(Course.number)),
                 get_label = lambda theCourse : f"{theCourse.number} - {theCourse.title}",
                 widget=ListWidget(prefix_label=False),
                 option_widget=CheckboxInput()
@@ -28,6 +27,10 @@ class StudentRegistrationForm(FlaskForm):
     submit = SubmitField('Register')
 
     def validate_wpi_id(self, wpi_id):
+        if not str(wpi_id.data).isnumeric():
+            raise ValidationError('Please enter valid WPI ID with all numeric digits')
+        if len(str(wpi_id.data)) != 9:
+            raise ValidationError('Please enter valid WPI ID of 9 digits')
         query = sqla.select(User).where(User.wpi_id == wpi_id.data)
         student = db.session.scalars(query).first()
         if student is not None:
@@ -38,8 +41,14 @@ class StudentRegistrationForm(FlaskForm):
         student = db.session.scalars(query).first()
         if student is not None:
             raise ValidationError('the email already exists!')
+        if "wpi.edu" not in email.data:
+            raise ValidationError('Please enter valid WPI email address')
 
     def validate_phone(self, phone):
+        if not str(phone.data).isnumeric():
+            raise ValidationError('Please enter valid phone number with all numeric digits')
+        if len(str(phone.data)) != 10:
+            raise ValidationError('Please enter valid phone number of 10 digits')
         query = sqla.select(User).where(User.phone == phone.data)
         student = db.session.scalars(query).first()
         if student is not None:
@@ -50,20 +59,30 @@ class StudentRegistrationForm(FlaskForm):
         student = db.session.scalars(query).first()
         if student is not None:
             raise ValidationError('the username already exists!')
+        
+    def validate_graduation_date(self, graduation_date):
+        if not str(graduation_date.data).isnumeric():
+            raise ValidationError('Please enter valid graduation date with all numeric digits')
+        if len(str(graduation_date.data)) != 4:
+            raise ValidationError('Please enter valid graduation date with 4 digit year')
 
 
 class InstructorRegistrationForm(FlaskForm):
     first_name = StringField('First Name', validators=[DataRequired()])
     last_name = StringField('Last Name', validators=[DataRequired()])
-    wpi_id = StringField('WPI ID', validators=[DataRequired(), Length(9), Regexp(r'^\d+$', message="Please input a valid ID number")])
+    wpi_id = StringField('WPI ID', validators=[DataRequired()])
     email = StringField('Email', validators=[DataRequired(), Email()])
-    phone = StringField('Phone Number', validators=[DataRequired(), Length(10), Regexp(r'^\d+$', message="Please input a valid phone number")])
+    phone = StringField('Phone Number', validators=[DataRequired()])
     username = StringField('Username', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
     password2 = PasswordField('Confirm Password', validators=[DataRequired(), EqualTo('password')])
     submit = SubmitField('Register')
 
     def validate_wpi_id(self, wpi_id):
+        if not str(wpi_id.data).isnumeric():
+            raise ValidationError('Please enter valid WPI ID with all numeric digits')
+        if len(str(wpi_id.data)) != 9:
+            raise ValidationError('Please enter valid WPI ID of 9 digits')
         query = sqla.select(User).where(User.wpi_id == wpi_id.data)
         instructor = db.session.scalars(query).first()
         if instructor is not None:
@@ -74,8 +93,14 @@ class InstructorRegistrationForm(FlaskForm):
         instructor = db.session.scalars(query).first()
         if instructor is not None:
             raise ValidationError('the email already exists!')
+        if "wpi.edu" not in email.data:
+            raise ValidationError('Please enter valid WPI email address')
 
     def validate_phone(self, phone):
+        if not str(phone.data).isnumeric():
+            raise ValidationError('Please enter valid phone number with all numeric digits')
+        if len(str(phone.data)) != 10:
+            raise ValidationError('Please enter valid phone number of 10 digits')
         query = sqla.select(User).where(User.phone == phone.data)
         instructor = db.session.scalars(query).first()
         if instructor is not None:

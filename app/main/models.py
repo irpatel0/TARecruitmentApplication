@@ -5,6 +5,8 @@ import sqlalchemy as sqla
 import sqlalchemy.orm as sqlo
 from flask_login import UserMixin
 from app import login
+from datetime import datetime, timezone
+
 
 @login.user_loader
 def load_user(id):
@@ -101,6 +103,7 @@ class Position(db.Model):
     available : sqlo.Mapped[bool] = sqlo.mapped_column(sqla.Boolean, default=True)
     min_GPA : sqlo.Mapped[float] = sqlo.mapped_column(sqla.Float, default=0)
     min_grade : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(2), default='A')
+    timestamp : sqlo.Mapped[datetime] = sqlo.mapped_column(default = lambda : datetime.now(timezone.utc))
     # relationships
     course_section : sqlo.Mapped['CourseSection'] = sqlo.relationship(back_populates='position')
     applications : sqlo.WriteOnlyMapped['Application'] = sqlo.relationship(back_populates='applied_to')
