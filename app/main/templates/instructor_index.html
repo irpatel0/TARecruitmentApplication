@@ -40,6 +40,7 @@
                    <p>Number of SAs: {{course.position.num_SAs}}</p>
                    <p>Minimum GPA: {{course.position.min_GPA}}</p>
                    <p>Minimum Grade: {{course.position.min_grade}}</p>
+                   <p>Date Posted: {{ moment(course.position.timestamp).format('LLL') }}</p>
                {%else%}
                    <p>No Position Created</p>
                {%endif%}
@@ -108,59 +109,65 @@
 
        function fill_applications(position_id, data){
            let applications_div = document.getElementById(`application-${position_id}`);
-
-
            let table = document.getElementById('instructor-table');
-           for (let i = 0; i<data.length; i++){
-               let tr = document.createElement('tr');
 
-               let td1 = document.createElement('td');
-               td1.textContent = i+1;
-               tr.appendChild(td1);
+           if (data.length === 0){
+               let p = document.createElement('p');
+               p.textContent = 'No Applicants Available';
+               table.appendChild(p);
+           }
+           else {
+               for (let i = 0; i<data.length; i++){
+                   let tr = document.createElement('tr');
 
-               let td2 = document.createElement('td');
-               td2.textContent = data[i]['student_id'];
-               tr.appendChild(td2);
+                   let td1 = document.createElement('td');
+                   td1.textContent = i+1;
+                   tr.appendChild(td1);
 
-               let td7 = document.createElement('td');
-               let td7a = document.createElement('a');
-               const url = "{{ url_for('instructor.student_profile', student_id = 'student_id') }}".replace("student_id", data[i]['student_id']);
-               td7a.setAttribute('href', url);
-               td7a.textContent = data[i]['student_name'];
-               td7.appendChild(td7a);
-               tr.appendChild(td7);
+                   let td2 = document.createElement('td');
+                   td2.textContent = data[i]['student_id'];
+                   tr.appendChild(td2);
 
-               let td3 = document.createElement('td');
-               td3.textContent = data[i]['grade_acquired'];
-               tr.appendChild(td3);
+                   let td7 = document.createElement('td');
+                   let td7a = document.createElement('a');
+                   const url = "{{ url_for('instructor.student_profile', student_id = 'student_id') }}".replace("student_id", data[i]['student_id']);
+                   td7a.setAttribute('href', url);
+                   td7a.textContent = data[i]['student_name'];
+                   td7.appendChild(td7a);
+                   tr.appendChild(td7);
 
-               let td4 = document.createElement('td');
-               td4.textContent = data[i]['term_taken'];
-               tr.appendChild(td4);
+                   let td3 = document.createElement('td');
+                   td3.textContent = data[i]['grade_acquired'];
+                   tr.appendChild(td3);
 
-               let td5 = document.createElement('td');
-               td5.textContent = data[i]['course_term'];
-               tr.appendChild(td5);
+                   let td4 = document.createElement('td');
+                   td4.textContent = data[i]['term_taken'];
+                   tr.appendChild(td4);
 
-               let td6 = document.createElement('td');
-               td6.textContent = data[i]['status'];
-               tr.appendChild(td6);
+                   let td5 = document.createElement('td');
+                   td5.textContent = data[i]['course_term'];
+                   tr.appendChild(td5);
 
-               let td8 = document.createElement('td');
-               td8.textContent = data[i]['availability'];
-               tr.appendChild(td8);
+                   let td6 = document.createElement('td');
+                   td6.textContent = data[i]['status'];
+                   tr.appendChild(td6);
 
-               let td9 = document.createElement('td');
-               let btn = document.createElement('button');
-               btn.textContent = 'Assign';
-               if (data[i]['availability'] === 'Assigned'){
-                   btn.setAttribute('disabled', 'disabled');
+                   let td8 = document.createElement('td');
+                   td8.textContent = data[i]['availability'];
+                   tr.appendChild(td8);
+
+                   let td9 = document.createElement('td');
+                   let btn = document.createElement('button');
+                   btn.textContent = 'Assign';
+                   if (data[i]['availability'] === 'Assigned'){
+                       btn.setAttribute('disabled', 'disabled');
+                   }
+                   td9.appendChild(btn);
+                   tr.appendChild(td9);
+
+                   table.appendChild(tr);
+
                }
-               td9.appendChild(btn);
-               tr.appendChild(td9);
-
-               table.appendChild(tr);
-
            }
 
            if (applications_div.style.display === 'block'){
