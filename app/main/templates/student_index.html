@@ -13,6 +13,7 @@
                         <th>#</th>
                         <th>Course Section</th>
                         <th>Details</th>
+                        <th>Apply</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -31,6 +32,14 @@
                             <td>
                                 <button class="btn btn-outline-primary" onclick="show_position_details({{ position.id }})" id="show-details-{{position.id}}">Show Details</button>
                             </td>
+                            {% if position.id in applied %}
+                            <td>
+                                <a class = "btn btn-outline-secondary">Pending</a>                            
+                            {% else %}
+                            <td>
+                                <a href="{{url_for('student.apply_course', position_id=position.id)}}" class="btn btn-outline-success">Apply</a>
+                            </td>
+                            {% endif %}
                         </tr>
                     {% endfor %}
                 </tbody>

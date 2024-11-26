@@ -19,6 +19,14 @@ def index():
 def create_course():
     cform = CourseForm()
     if cform.validate_on_submit():
+        check_created = db.session.scalars(sqla.select(CourseSection).where(CourseSection.course_number == cform.course_number.data.number)
+                                                                .where(CourseSection.section == cform.section.data)
+                                                                .where(CourseSection.term == cform.term.data)
+                                                                .where(CourseSection.instructor_id == current_user.id)
+                                                                ).first()
+        if (check_created is not None):
+            flash('This course has already been created!')
+            return redirect(url_for('main.index'))
         new_course = CourseSection(course_number = cform.course_number.data.number,
                             section = cform.section.data,
                             instructor_id = current_user.id,
@@ -29,14 +37,15 @@ def create_course():
         return redirect(url_for('main.index'))
     return render_template('createcourse.html', form=cform)
 
-@bp_instructor.route('/instructor/create_position', methods=['GET', 'POST'])
+@bp_instructor.route('/instructor/<section_id>/create_position', methods=['GET', 'POST'])
 @login_required
 @role_required('Instructor')
-def create_position():
+def create_position(section_id):
     pform = PositionForm()
+    course_section = db.session.get(CourseSection, section_id)
     if pform.validate_on_submit():
         new_position = Position(
-            section_id=pform.course_section.data.id,
+            section_id=section_id,
             num_SAs=pform.num_SAs.data,
             min_GPA=pform.min_GPA.data,
             min_grade=pform.min_grade.data
@@ -45,7 +54,7 @@ def create_position():
         db.session.commit()
         flash('The new position has been successfully added!')
         return redirect(url_for('main.index'))
-    return render_template('createposition.html', form=pform)
+    return render_template('createposition.html', form=pform, section=course_section)
 
 @bp_instructor.route('/instructor/student', methods=['GET'])
 @role_required('Instructor')

@@ -27,7 +27,7 @@
                            <a href="#" class = "button filled">Filled</a>
                        {%endif%}
                    {%else%}
-                       <a href="{{url_for('instructor.create_position', course_id = course.id)}}" class = "button create">Create Position</a>
+                       <a href="{{url_for('instructor.create_position', section_id = course.id)}}" class = "btn btn-outline-warning">Create Position</a>
                    {%endif%}
                </div>
            </li>

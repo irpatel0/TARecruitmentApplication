@@ -18,13 +18,14 @@ def index():
 @role_required('Student')
 def student_index():
     positions = db.session.scalars(sqla.select(Position)).all()
-    return render_template('student_index.html', positions = positions)
+    applied_positions = {position.id for position in positions if current_user.applied_to(position.id)}
+    return render_template('student_index.html', positions = positions, applied=applied_positions)
 
 @bp_main.route('/instructor_index', methods=['GET'])
 @login_required
 @role_required('Instructor')
 def instructor_index():
-    coursesections = db.session.query(CourseSection).all()
+    coursesections = db.session.query(CourseSection).where(CourseSection.instructor_id == current_user.id).all()
     positions = db.session.query(Position).all()
     return render_template('instructor_index.html', positions = positions, coursesections = coursesections)
 
