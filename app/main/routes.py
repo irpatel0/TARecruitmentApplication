@@ -24,7 +24,7 @@ def student_index():
 @login_required
 @role_required('Instructor')
 def instructor_index():
-    coursesections = db.session.query(CourseSection).all()
+    coursesections = db.session.query(CourseSection).where(CourseSection.instructor_id == current_user.id).all()
     positions = db.session.query(Position).all()
     return render_template('instructor_index.html', positions = positions, coursesections = coursesections)
 
