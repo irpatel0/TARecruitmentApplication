@@ -121,7 +121,11 @@
                tr.appendChild(td2);
 
                let td7 = document.createElement('td');
-               td7.textContent = data[i]['student_name'];
+               let td7a = document.createElement('a');
+               const url = "{{ url_for('instructor.student_profile', student_id = 'student_id') }}".replace("student_id", data[i]['student_id']);
+               td7a.setAttribute('href', url);
+               td7a.textContent = data[i]['student_name'];
+               td7.appendChild(td7a);
                tr.appendChild(td7);
 
                let td3 = document.createElement('td');

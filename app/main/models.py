@@ -128,4 +128,4 @@ class Application(db.Model):
     applied_to : sqlo.Mapped[Position] = sqlo.relationship(back_populates='applications')
 
     def get_student(self):
-        return db.session.scalars(sqla.select(Student).where(Student.id == self.student_id)).first()
+        return db.session.scalars(sqla.select(User).where(User.id == self.student_id)).first()
