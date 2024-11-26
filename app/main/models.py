@@ -115,8 +115,8 @@ class Position(db.Model):
 
 class Application(db.Model):
     id : sqlo.Mapped[int] = sqlo.mapped_column(sqla.Integer, primary_key=True)
-    student_id : sqlo.Mapped[int] = sqlo.mapped_column(sqla.ForeignKey('student.id'))
-    position_id : sqlo.Mapped[int] = sqlo.mapped_column(sqla.ForeignKey('position.id'))
+    student_id : sqlo.Mapped[int] = sqlo.mapped_column(sqla.ForeignKey(Student.id))
+    position_id : sqlo.Mapped[int] = sqlo.mapped_column(sqla.ForeignKey(Position.id))
     grade_aquired : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(2), default='A')
     term_taken : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(5))
     course_term : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(5))
@@ -126,3 +126,5 @@ class Application(db.Model):
     applicant : sqlo.Mapped[Student] = sqlo.relationship(back_populates='student_applications')
     applied_to : sqlo.Mapped[Position] = sqlo.relationship(back_populates='applications')
 
+    def get_student(self):
+        return db.session.scalars(sqla.select(Student).where(Student.id == self.student_id)).first()

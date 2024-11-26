@@ -23,7 +23,6 @@
                    {%if course.hasPosition()%}
                        {%if course.position.available%}
                             <button class="btn btn-outline-primary" id="view-applicants-{{course.position.id}}" onclick="get_applicants({{course.position.id}})">View Applicants</button>
-<!--                           <a href="#" class = "button view">View Applicants</a>-->
                        {%else%}
                            <a href="#" class = "button filled">Filled</a>
                        {%endif%}
@@ -55,6 +54,7 @@
                         <tr>
                             <th>#</th>
                             <th>student id</th>
+                            <th>student name</th>
                             <th>grade acquired</th>
                             <th>term taken</th>
                             <th>course term</th>
@@ -119,6 +119,10 @@
                let td2 = document.createElement('td');
                td2.textContent = data[i]['student_id'];
                tr.appendChild(td2);
+
+               let td7 = document.createElement('td');
+               td7.textContent = data[i]['student_name'];
+               tr.appendChild(td7);
 
                let td3 = document.createElement('td');
                td3.textContent = data[i]['grade_acquired'];

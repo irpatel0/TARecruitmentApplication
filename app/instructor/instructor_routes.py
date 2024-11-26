@@ -71,10 +71,12 @@ def view_allstudents(position_id):
     applicants = db.session.get(Position, position_id)
     data = []
     for applicant in applicants.get_applications():
+        #student_name = applicant.get_student().firstname
         data.append({'student_id': applicant.student_id,
+                     #'student_name': student_name,
                      'grade_acquired': applicant.grade_aquired,
                      'term_taken': applicant.term_taken,
                      'course_term': applicant.course_term,
                      'status': applicant.status})
-    print(applicants.get_applications())
+
     return jsonify(data)
