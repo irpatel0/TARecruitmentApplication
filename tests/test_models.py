@@ -104,46 +104,46 @@ class TestModels(unittest.TestCase):
         self.assertEqual(position.min_GPA, 3.0)
         self.assertEqual(position.min_grade, 'B')
 
-def test_application_model(self):
-    # Create a student
-    student = Student(username='student1', firstname='John', lastname='Doe', wpi_id='123456789', email='john.doe@example.com', phone='1234567890')
-    student.set_password('password')
-    db.session.add(student)
-    db.session.commit()
+    def test_application_model(self):
+        # Create a student
+        student = Student(username='student1', firstname='John', lastname='Doe', wpi_id='123456789', email='john.doe@example.com', phone='1234567890', graduation_date='2026')
+        student.set_password('password')
+        db.session.add(student)
+        db.session.commit()
 
-    # Create an instructor
-    instructor = Instructor(username='instructor1', firstname='Jane', lastname='Smith', wpi_id='987654321', email='jane.smith@example.com', phone='0987654321')
-    instructor.set_password('password')
-    db.session.add(instructor)
-    db.session.commit()
+        # Create an instructor
+        instructor = Instructor(username='instructor1', firstname='Jane', lastname='Smith', wpi_id='987654321', email='jane.smith@example.com', phone='0987654321')
+        instructor.set_password('password')
+        db.session.add(instructor)
+        db.session.commit()
 
-    # Create a course
-    course = Course(number='CS101', title='Introduction to Computer Science')
-    db.session.add(course)
-    db.session.commit()
+        # Create a course
+        course = Course(number='CS101', title='Introduction to Computer Science')
+        db.session.add(course)
+        db.session.commit()
 
-    # Create a course section
-    course_section = CourseSection(course_number=course.id, section='A01', instructor_id=instructor.id, term='2023A')
-    db.session.add(course_section)
-    db.session.commit()
+        # Create a course section
+        course_section = CourseSection(course_number=course.id, section='A01', instructor_id=instructor.id, term='2023A')
+        db.session.add(course_section)
+        db.session.commit()
 
-    # Create a position
-    position = Position(section_id=course_section.id, num_SAs=2, available=True, min_GPA=3.0, min_grade='B')
-    db.session.add(position)
-    db.session.commit()
+        # Create a position
+        position = Position(section_id=course_section.id, num_SAs=2, available=True, min_GPA=3.0, min_grade='B')
+        db.session.add(position)
+        db.session.commit()
 
-    # Create an application
-    application = Application(grade_aquired='A', term_taken='2022A', course_term='2023A', status='Pending', applicant=student, applied_to=position)
-    db.session.add(application)
-    db.session.commit()
+        # Create an application
+        application = Application(grade_aquired='A', term_taken='2022A', course_term='2023A', status='Pending', applicant=student, applied_to=position)
+        db.session.add(application)
+        db.session.commit()
 
-    # Verify the application attributes
-    self.assertEqual(application.grade_aquired, 'A')
-    self.assertEqual(application.term_taken, '2022A')
-    self.assertEqual(application.course_term, '2023A')
-    self.assertEqual(application.status, 'Pending')
-    self.assertEqual(application.applicant.id, student.id)
-    self.assertEqual(application.applied_to.id, position.id)
+        # Verify the application attributes
+        self.assertEqual(application.grade_aquired, 'A')
+        self.assertEqual(application.term_taken, '2022A')
+        self.assertEqual(application.course_term, '2023A')
+        self.assertEqual(application.status, 'Pending')
+        self.assertEqual(application.applicant.id, student.id)
+        self.assertEqual(application.applied_to.id, position.id)
 
 #python -m unittest -v tests//test_models.py
 #pytest -v tests//test_routes.py

@@ -1,7 +1,7 @@
 import os
 import pytest
 from app import create_app, db
-from app.main.models import User, Student, Instructor
+from app.main.models import User, Student, Instructor, Course
 from config import Config
 import sqlalchemy as sqla
 
@@ -38,15 +38,32 @@ def new_user(uname, uemail, passwd, firstname, lastname, wpi_id, phone):
     user.set_password(passwd)
     return user
 
+def new_instructor(uname, uemail, passwd, firstname, lastname, wpi_id, phone):
+    instructor = Instructor(username=uname, email=uemail, firstname=firstname, lastname=lastname, wpi_id=wpi_id, phone=phone)
+    instructor.set_password(passwd)
+    return instructor
+
+def init_courses():
+    count = db.session.scalar(db.select(db.func.count(Course.id)))
+    if count == 0:
+        courses = ['CS1001', 'CS2002', 'CS3003', 'CS4004']
+        titles = ['Intro to CS', 'Data Structures', 'Algorithms', 'Software Engineering']
+        for i in range(len(courses)):
+            db.session.add(Course(number=courses[i], title=titles[i]))
+        db.session.commit()
+    return None
 
 @pytest.fixture
 def init_database():
     # Create the database and the database table
     db.create_all()
+    init_courses()
     #add a user
     user1 = new_user(uname='snow', uemail='snow@wpi.edu',passwd='1234', firstname='snow', lastname='snow', wpi_id='234234567', phone='8908907892')
+    instructor1 = new_instructor(uname='test', uemail='test@wpi.edu',passwd='1234', firstname='test', lastname='test', wpi_id='234234568', phone='8908907893')
     # Insert user data
     db.session.add(user1)
+    db.session.add(instructor1)
     # Commit the changes for the users
     db.session.commit()
 
@@ -54,7 +71,7 @@ def init_database():
 
     db.drop_all()
 
-def test_instructor_register_page(test_client):
+def test_instructor_register_page(test_client, init_database):
     """
     GIVEN a Flask application configured for testing
     WHEN the '/user/register' page is requested (GET)
@@ -65,7 +82,7 @@ def test_instructor_register_page(test_client):
     assert response.status_code == 200
     assert b"Register" in response.data
 
-def test_student_register_page(test_client):
+def test_student_register_page(test_client, init_database):
     """
     GIVEN a Flask application configured for testing
     WHEN the '/user/register' page is requested (GET)
@@ -111,3 +128,49 @@ def test_invalidlogin(test_client,init_database):
                           follow_redirects = True)
     assert response.status_code == 200
     assert b"Invalid username or password!" in response.data
+
+def do_login(test_client, path , username, passwd):
+    response = test_client.post(path,
+                          data=dict(username= username, password=passwd, remember_me=False),
+                          follow_redirects = True)
+    assert response.status_code == 200
+    #Students should update this assertion condition according to their own page content
+    assert b"Welcome to CSAssist" in response.data
+
+def do_logout(test_client, path):
+    response = test_client.get(path,
+                          follow_redirects = True)
+    assert response.status_code == 200
+    # Assuming the application re-directs to login page after logout.
+    #Students should update this assertion condition according to their own page content
+    assert b"Sign In" in response.data
+    assert b"Welcome to CSAssist" in response.data
+# ------------------------------------
+
+def test_login_logout(request,test_client,init_database):
+    """
+    GIVEN a Flask application configured for testing
+    WHEN the '/user/login' form is submitted (POST) with correct credentials
+    THEN check that the response is valid and login is succesfull
+    """
+    do_login(test_client, path = '/user/login', username = 'test', passwd = '1234')
+
+    do_logout(test_client, path = '/user/logout')
+
+def test_create_coursection(test_client,init_database):
+    do_login(test_client, path='/user/login', username='test', passwd='1234')
+
+    response = test_client.get('/instructor/create_course')
+    assert response.status_code == 200
+    assert b"Welcome to create course" in response.data
+
+    response = test_client.post('/instructor/create_course',
+                                data=dict(course_number='CS1001', section='BL02',
+                                          term='2024B'),
+                                follow_redirects=True)
+
+    assert response.status_code == 200
+    assert b"Welcome to CSAssist" in response.data
+    #assert b"The new course has successfully posted!" in response.data
+
+    do_logout(test_client, path='/user/logout')
