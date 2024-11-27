@@ -84,7 +84,7 @@ class Course(db.Model):
 
 class CourseSection(db.Model):
     id : sqlo.Mapped[int] = sqlo.mapped_column(sqla.Integer, primary_key=True)
-    course_number : sqlo.Mapped[str] = sqlo.mapped_column(sqla.ForeignKey(Course.id))
+    course_number : sqlo.Mapped[str] = sqlo.mapped_column(sqla.ForeignKey(Course.number))
     section : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(5))
     instructor_id : sqlo.Mapped[int] = sqlo.mapped_column(sqla.ForeignKey(Instructor.id))
     term : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(5))
