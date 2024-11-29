@@ -41,6 +41,19 @@
                 <li class="nav-item px-2 ms-2">
                   <span class="nav-link text-white">Current user is: <span class="useritem">{{ current_user.username }}</span></span>
               </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Actions</a>
+                <ul class="dropdown-menu">
+                    {% if current_user.user_type == 'Student' %}
+                    <li><a href="{{url_for('main.student_index')}}" class="dropdown-item text-white">Dashboard</a></li>
+                    <li><a class="dropdown-item text-white" href="{{url_for('main.student_edit_profile')}}">Edit Profile</a></li>
+                    {% else %}
+                    <li><a href="{{url_for('main.instructor_index')}}" class="dropdown-item text-white">Dashboard</a></li>
+                    <li><a class="dropdown-item text-white" href="{{url_for('main.instructor_edit_profile')}}">Edit Profile</a></li>
+                    <li><a href="{{url_for('instructor.create_course')}}" class="dropdown-item text-white">Create Course</a></li>
+                    {% endif %}
+                </ul>
+              </li>
               <li class="nav-item border border-light px-2 ms-2">
                 <a class="nav-link nav-text" aria-current="page" href="{{ url_for('auth.logout') }}">Logout</a>
               </li>
@@ -92,7 +105,11 @@
                         <a class="text-white" href="{{ url_for('main.index') }}">Home</a>
                     </p>
                     <p>
-                        <a class="text-white">Edit Profile</a>
+                        {% if current_user.user_type == 'Student' %}
+                            <a class="text-white" href="{{url_for('main.student_edit_profile')}}">Edit Profile</a>
+                        {% else %}
+                            <a class="text-white" href="{{url_for('main.instructor_edit_profile')}}">Edit Profile</a>
+                        {% endif %}
                     </p>
                 </div>
 
