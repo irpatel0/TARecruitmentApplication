@@ -185,4 +185,16 @@ def test_create_coursection(test_client,init_database):
 def test_apply_course(test_client, init_database):
     do_login(test_client, path='/user/login', username='gatorade', passw='1234')
 
-    response = test_client.get('')    
+    response = test_client.get('/positions/<position_id>/apply')
+    assert response.status_code == 200
+    assert b"Applying for position" in response.data
+
+    response = test_client.post('/positions/<position_id>/apply', 
+                                data=dict(grade_aquired='A', term_taken='A23', 
+                                          course_term='A24'),
+                                follow_redirects=True)
+    
+    assert response.status_code == 200
+    assert b"Welcome to Student Page" in response.data
+
+    do_logout(test_client, path='/user/logout')
