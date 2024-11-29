@@ -186,6 +186,8 @@ def test_create_position(test_client,init_database):
     assert response.status_code == 200
 
     # create position
+    db.session.add(CourseSection(course_number='CS1001', section='BL01', instructor_id=1, term='2024A'))
+    db.session.commit()
     course = db.session.scalars(sqla.select(CourseSection).where(CourseSection.course_number == 'CS1001')).first()
     assert course is not None
     response = test_client.post('/instructor/'+str(course.id)+'/create_position',
