@@ -38,6 +38,11 @@ def new_user(uname, uemail, passwd, firstname, lastname, wpi_id, phone):
     user.set_password(passwd)
     return user
 
+def new_student(uname, uemail, passwd, firstname, lastname, wpi_id, phone, gpa, graduation_date):
+    student = Student(username=uname, email=uemail, firstname=firstname, lastname=lastname, wpi_id=wpi_id, phone=phone, gpa=gpa, graduation_date=graduation_date)
+    student.set_password(passwd)
+    return student
+
 def new_instructor(uname, uemail, passwd, firstname, lastname, wpi_id, phone):
     instructor = Instructor(username=uname, email=uemail, firstname=firstname, lastname=lastname, wpi_id=wpi_id, phone=phone)
     instructor.set_password(passwd)
@@ -60,6 +65,7 @@ def init_database():
     init_courses()
     #add a user
     user1 = new_user(uname='snow', uemail='snow@wpi.edu',passwd='1234', firstname='snow', lastname='snow', wpi_id='234234567', phone='8908907892')
+    student1 = new_student(uname='gatorade', uemail='gatorade@wpi.edu', passwd='1234', firstname='gatorade', lastname='gatorade', wpi_id='123456789', phone='1234567890', gpa='2.0', graduation_date='2025')
     instructor1 = new_instructor(uname='test', uemail='test@wpi.edu',passwd='1234', firstname='test', lastname='test', wpi_id='234234568', phone='8908907893')
     # Insert user data
     db.session.add(user1)
@@ -174,3 +180,9 @@ def test_create_coursection(test_client,init_database):
     #assert b"The new course has successfully posted!" in response.data
 
     do_logout(test_client, path='/user/logout')
+
+
+def test_apply_course(test_client, init_database):
+    do_login(test_client, path='/user/login', username='gatorade', passw='1234')
+
+    response = test_client.get('')    
