@@ -57,8 +57,13 @@ class Student(User):
         )
     student_applications : sqlo.WriteOnlyMapped['Application'] = sqlo.relationship(back_populates='applicant')
 
+
     def applied_to(self, position_id):
         return db.session.scalars(sqla.select(Application).where(Application.student_id == self.id).where(Application.position_id == position_id)).first() is not None
+
+    def get_taught(self):
+        return db.session.scalars(self.taught.select()).all()
+
 
 class Instructor(User):
     __tablename__ = 'instructor'
