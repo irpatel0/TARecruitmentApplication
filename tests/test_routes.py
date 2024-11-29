@@ -1,7 +1,7 @@
 import os
 import pytest
 from app import create_app, db
-from app.main.models import User, Student, Instructor, Course
+from app.main.models import User, Student, Instructor, CourseSection, Course
 from config import Config
 import sqlalchemy as sqla
 
@@ -174,3 +174,26 @@ def test_create_coursection(test_client,init_database):
     #assert b"The new course has successfully posted!" in response.data
 
     do_logout(test_client, path='/user/logout')
+
+def test_create_position(test_client,init_database):
+    do_login(test_client, path='/user/login', username='test', passwd='1234')
+    # create course section
+    response = test_client.post('/instructor/create_course',
+                                data=dict(course_number='CS1001', section='BL02',
+                                          term='2024B'),
+                                follow_redirects=True)
+
+    assert response.status_code == 200
+
+    # create position
+    course = db.session.scalars(sqla.select(CourseSection).where(CourseSection.course_number == 'CS1001')).first()
+    assert course is not None
+    response = test_client.post('/instructor/'+str(course.id)+'/create_position',
+                                data=dict(num_SAs=5, min_GPA=3.2,
+                                          min_grade='B'),
+                                follow_redirects=True)
+    assert response.status_code == 200
+    assert b"The new position has been successfully added!" in response.data
+
+    do_logout(test_client, path='/user/logout')
+
