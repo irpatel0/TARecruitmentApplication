@@ -1,7 +1,7 @@
 import os
 import pytest
 from app import create_app, db
-from app.main.models import User, Student, Instructor, CourseSection, Course
+from app.main.models import User, Student, Instructor, CourseSection, Course, Position
 from config import Config
 import sqlalchemy as sqla
 
@@ -207,19 +207,35 @@ def test_create_position(test_client,init_database):
 
 
 def test_apply_course(test_client, init_database):
-    do_login(test_client, path='/user/login', username='gatorade', passw='1234')
+    do_login(test_client, path='/user/login', username='gatorade', passwd='1234')
 
     response = test_client.get('/positions/<position_id>/apply')
     assert response.status_code == 200
     assert b"Applying for position" in response.data
 
-    response = test_client.post('/positions/<position_id>/apply', 
-                                data=dict(grade_aquired='A', term_taken='A23', 
+    response = test_client.post('/positions/<position_id>/apply',
+                                data=dict(grade_aquired='A', term_taken='A23',
                                           course_term='A24'),
                                 follow_redirects=True)
-    
+
     assert response.status_code == 200
     assert b"Welcome to Student Page" in response.data
+
+    do_logout(test_client, path='/user/logout')
+
+def test_applications(test_client, init_database):
+    do_login(test_client, path='/user/login', username='test', passwd='1234')
+
+    db.session.add(CourseSection(course_number='CS1001', section='BL01', instructor_id=1, term='2024A'))
+    db.session.add(Position(section_id=1, num_SAs=4, min_GPA=4.5, min_grade='A'))
+    db.session.commit()
+    pos = db.session.get(Position, 1)
+    response = test_client.post('/applications/'+str(pos.id))
+    assert response.status_code == 200
+
+    data = eval(response.data)
+    assert len(data) == 0
+
 
     do_logout(test_client, path='/user/logout')
 
