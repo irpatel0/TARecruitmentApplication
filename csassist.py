@@ -26,7 +26,8 @@ def add_classes(*args, **kwargs):
 def initDB(*args, **kwargs):
     if app._got_first_request:
         db.create_all()
-        add_classes()
+        #add_classes()
+        add_classes(*args, **kwargs) 
 
 
 if __name__ == "__main__":
