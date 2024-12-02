@@ -3,9 +3,9 @@
 # import sqlalchemy as sqla
 
 from flask_wtf import FlaskForm
-from wtforms.validators import  Length, DataRequired, Email, EqualTo, ValidationError
-from wtforms import StringField, SubmitField, TextAreaField, PasswordField, BooleanField, IntegerField, FloatField, SelectMultipleField
-from wtforms_sqlalchemy.fields import QuerySelectField, QuerySelectMultipleField 
+from wtforms.validators import  Length, DataRequired, Email, EqualTo, ValidationError, NumberRange, Regexp
+from wtforms import StringField, SubmitField, TextAreaField, PasswordField, BooleanField, IntegerField, FloatField, SelectField
+from wtforms_sqlalchemy.fields import QuerySelectField, QuerySelectMultipleField
 from wtforms.widgets import ListWidget, CheckboxInput
 from app import db
 import sqlalchemy as sqla
@@ -19,7 +19,7 @@ class CourseForm(FlaskForm):
                 get_label = lambda theCourse : f"{theCourse.number} - {theCourse.title}"
     )
     section =  StringField('Section', validators=[Length(min=1, max=5)])
-    term = StringField('Term', validators=[Length(min=1, max=5)])
+    term = StringField('Term', validators=[Length(min=1, max=5), Regexp('^\d{4}[ABCDFS]$', message='Term should be a year followed by a term letter (Ex. 2024B).')])
     submit = SubmitField('Post')
 
 class PositionForm(FlaskForm):
@@ -27,7 +27,7 @@ class PositionForm(FlaskForm):
     #             query_factory = lambda: db.session.scalars(sqla.select(CourseSection).where(CourseSection.instructor_id == current_user.id)),
     #             get_label = lambda theCourseSection : f"{theCourseSection.course_number}-{theCourseSection.section} ({theCourseSection.term})"
     # )
-    num_SAs = IntegerField('Number of SAs', validators=[DataRequired()])
-    min_GPA = FloatField('Min GPA', validators=[DataRequired()])
-    min_grade = StringField('Min Grade', validators=[DataRequired(), Length(max=2)])
+    num_SAs = IntegerField('Number of SAs', validators=[DataRequired(), NumberRange(min=0)])
+    min_GPA = FloatField('Min GPA', validators=[DataRequired(), NumberRange(0, 4)])
+    min_grade = SelectField('Min Grade', choices = [('A', 'A'), ('B', 'B'), ('C', 'C'), ('D', 'D'), ('F', 'F'), ('NR', 'NR')], validators=[DataRequired()])
     submit = SubmitField('Post')

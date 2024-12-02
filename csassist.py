@@ -21,6 +21,32 @@ def add_classes(*args, **kwargs):
             db.session.add(Course(number=courses[i], title=titles[i]))
         db.session.commit()
 
+#Adds Insturctor with username: teacher and password: 123
+#Adds Student with username: student and password: 123
+def add_users(*args, **kwargs):
+    query = sqla.select(User)
+    if db.session.scalars(query).first() is None:
+        instructor = Instructor(username = "teacher",
+                            firstname = "John",
+                            lastname = "Doe",
+                            wpi_id = "123123123",
+                            email = "teacher@wpi.edu",
+                            phone = "1234567890",
+                            user_type = "Instructor")
+        instructor.set_password("123")
+        student = Student(username = "student",
+                            firstname = "Little",
+                            lastname = "Bob",
+                            wpi_id = "321321321",
+                            email = "student@wpi.edu",
+                            phone = "0987654321",
+                            user_type = "Student",
+                            gpa = 4.0,
+                            graduation_date = "2025")
+        student.set_password("123")
+        db.session.add(instructor)
+        db.session.add(student)
+        db.session.commit()
 
 @app.before_request
 def initDB(*args, **kwargs):
@@ -28,6 +54,7 @@ def initDB(*args, **kwargs):
         db.create_all()
         #add_classes()
         add_classes(*args, **kwargs) 
+        add_users(*args, **kwargs)
 
 
 if __name__ == "__main__":

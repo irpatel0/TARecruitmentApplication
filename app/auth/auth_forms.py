@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms.validators import Length, DataRequired, Email, EqualTo, ValidationError, Regexp
+from wtforms.validators import Length, DataRequired, Email, EqualTo, ValidationError, Regexp, NumberRange
 from wtforms import StringField, SubmitField, TextAreaField, PasswordField, BooleanField, IntegerField, FloatField, SelectMultipleField
 from wtforms_sqlalchemy.fields import QuerySelectField, QuerySelectMultipleField
 from wtforms.widgets import ListWidget, CheckboxInput
@@ -16,7 +16,7 @@ class StudentRegistrationForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
     password2 = PasswordField('Confirm Password', validators=[DataRequired(), EqualTo('password')])
-    GPA = FloatField('GPA', validators=[DataRequired()])
+    GPA = FloatField('GPA', validators=[DataRequired(message="Enter a valid GPA between 0 and 4.00"), NumberRange(0, 4)])
     courses_taught = QuerySelectMultipleField('Courses Taught',
                 query_factory = lambda: db.session.scalars(sqla.select(Course).order_by(Course.number)),
                 get_label = lambda theCourse : f"{theCourse.number} - {theCourse.title}",
