@@ -30,7 +30,7 @@ def add_users(*args, **kwargs):
                             firstname = "John",
                             lastname = "Doe",
                             wpi_id = "123123123",
-                            email = "teacher@example.com",
+                            email = "teacher@wpi.edu",
                             phone = "1234567890",
                             user_type = "Instructor")
         instructor.set_password("123")
@@ -38,7 +38,7 @@ def add_users(*args, **kwargs):
                             firstname = "Little",
                             lastname = "Bob",
                             wpi_id = "321321321",
-                            email = "student@example.com",
+                            email = "student@wpi.edu",
                             phone = "0987654321",
                             user_type = "Student",
                             gpa = 4.0,

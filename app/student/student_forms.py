@@ -3,7 +3,7 @@
 # import sqlalchemy as sqla
 
 from flask_wtf import FlaskForm
-from wtforms.validators import  Length, DataRequired, Email, EqualTo, ValidationError
+from wtforms.validators import  Length, DataRequired, Email, EqualTo, ValidationError, Regexp
 from wtforms import StringField, SubmitField, TextAreaField, PasswordField, BooleanField, IntegerField, FloatField, SelectMultipleField, SelectField
 from wtforms_sqlalchemy.fields import QuerySelectField, QuerySelectMultipleField 
 from wtforms.widgets import ListWidget, CheckboxInput
@@ -14,7 +14,7 @@ from flask_login import current_user
 from app.main.models import Course, CourseSection
 
 class ApplyForm(FlaskForm):
-    grade = SelectField('Grade earned in the course',choices = [(5, 'A'), (4, 'B'), (3, 'C'), (2, 'P'), (1, 'NR')], validators=[DataRequired()])
-    taken_term = StringField('Year and Term you took the course (Ex. 2024B)', validators=[Length(min=1, max=5)])
-    course_term = StringField('Year and Term you are applying for (Ex. 2024B)', validators=[Length(min=1, max=5)])
+    grade = SelectField('Grade earned in the course',choices = [(6, 'A'), (5, 'B'), (4, 'C'), (3, 'D'), (2, 'F'), (1, 'NR')], validators=[DataRequired()])
+    taken_term = StringField('Term you took the course', validators=[Length(min=1, max=5), Regexp('^\d{4}[ABCDFS]$', message='Term should be a year followed by a term letter (Ex. 2024B).')])
+    course_term = StringField('Term you are applying for', validators=[Length(min=1, max=5), Regexp('^\d{4}[ABCDFS]$', message='Term should be a year followed by a term letter (Ex. 2024B).')])
     submit = SubmitField('Apply')
