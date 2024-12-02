@@ -29,5 +29,5 @@ class PositionForm(FlaskForm):
     # )
     num_SAs = IntegerField('Number of SAs', validators=[DataRequired(), NumberRange(min=0)])
     min_GPA = FloatField('Min GPA', validators=[DataRequired(), NumberRange(0, 4)])
-    min_grade = SelectField('Min Grade', choices = [(6, 'A'), (5, 'B'), (4, 'C'), (3, 'D'), (2, 'F'), (1, 'NR')], validators=[DataRequired()])
+    min_grade = SelectField('Min Grade', choices = [('A', 'A'), ('B', 'B'), ('C', 'C'), ('D', 'D'), ('F', 'F'), ('NR', 'NR')], validators=[DataRequired()])
     submit = SubmitField('Post')
