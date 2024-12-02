@@ -1,7 +1,7 @@
 import os
 import pytest
 from app import create_app, db
-from app.main.models import User, Student, Instructor, CourseSection, Course
+from app.main.models import User, Student, Instructor, CourseSection, Course, Position
 from config import Config
 import sqlalchemy as sqla
 
@@ -69,6 +69,7 @@ def init_database():
     instructor1 = new_instructor(uname='test', uemail='test@wpi.edu',passwd='1234', firstname='test', lastname='test', wpi_id='234234568', phone='8908907893')
     # Insert user data
     db.session.add(user1)
+    db.session.add(student1)
     db.session.add(instructor1)
     # Commit the changes for the users
     db.session.commit()
@@ -207,19 +208,25 @@ def test_create_position(test_client,init_database):
 
 
 def test_apply_course(test_client, init_database):
-    do_login(test_client, path='/user/login', username='gatorade', passw='1234')
+    do_login(test_client, path='/user/login', username='gatorade', passwd='1234')
 
-    response = test_client.get('/positions/<position_id>/apply')
+    db.session.add(CourseSection(course_number='CS1001', section='BL01', instructor_id=1, term='2024A'))
+    db.session.add(Position(section_id=1, num_SAs=2))
+    db.session.commit()
+    position = db.session.scalars(sqla.select(Position).where(Position.section_id == 1)).first()
+    assert position is not None
+
+    response = test_client.get('/positions/'+str(position.id)+'/apply')
     assert response.status_code == 200
     assert b"Applying for position" in response.data
 
-    response = test_client.post('/positions/<position_id>/apply', 
+    response = test_client.post('/positions/'+str(position.id)+'/apply', 
                                 data=dict(grade_aquired='A', term_taken='A23', 
                                           course_term='A24'),
                                 follow_redirects=True)
     
     assert response.status_code == 200
-    assert b"Welcome to Student Page" in response.data
+    assert b"Welcome to CSAssist" in response.data
 
     do_logout(test_client, path='/user/logout')
 
