@@ -45,19 +45,19 @@ List team members and their GitHub usernames
 ## 4. Iteration 3 - Sprint Backlog
 
 #### User Stories
-1. As a Student, I want to be able to login to the site so that I can use the site(SSO)
-2. As a Professor, I want to be able to login to the site so that I can use the site(SSO)
-3. As a Student, I want to be recommended SA Positions that match my profile
-4. As a Student, I want to check the status of my applications so that I know which of my applications have been approved, rejected, or are still pending.
-5. As A Student, I want to withdraw pending applications so that I'm not in the system for positions I'm no longer interested in.
-
+1. As a Student, I want to be able to login to the site so that I can use the site(SSO) - Sai Teja Sunku, Achintya Sanjay
+2. As a Professor, I want to be able to login to the site so that I can use the site(SSO) - Sai Teja Sunku, Achintya Sanjay
+3. As a Student, I want to be recommended SA Positions that match my profile - Jake Grier, Ishaan Patel
+4. As a Student, I want to check the status of my applications so that I know which of my applications have been approved, rejected, or are still pending. - Jake Grier, Ishaan Patel
+5. As A Student, I want to withdraw pending applications so that I'm not in the system for positions I'm no longer interested in. - Jake Grier, Ishaan Patel
+6. As a Professor, I want to add a student to the SA position so that I can register students who haven't been assigned a position. - Sai Teja Sunku, Achintya Sanjay
 #### Tasks
-1. [Implementation] Create logic to mark the course section as closed if number of SAs required if fulfilled
-2. [Implementation] Develop a route for switching the sort category
-3. [Implementation] Display all assigned students on instructor page
-4. [Implementation] Develop a route for students withdrawing an application
-5. [Implementation] Develop route to assign a position to a student
-6. Add notes to the course positions, so students can see criteria that they meet at a glance 
-7. [Implementation] Create logic to use Azure SSO for login and signup
-8. Develop an algorithm to produce a weighted score for each position, based on student information
-9. [Database Model] Create One-to-Many relationship between "Student" model and "SA Position" model for assigned courses
+1. [Implementation] Create logic to mark the course section as closed if number of SAs required if fulfilled - Sai Teja Sunku, Achintya Sanjay
+2. [Implementation] Develop a route for switching the sort category - Jake Grier, Ishaan Patel
+3. [Implementation] Display all assigned students on instructor page - Sai Teja Sunku, Achintya Sanjay
+4. [Implementation] Develop a route for students withdrawing an application - Jake Grier, Ishaan Patel
+5. [Implementation] Develop route to assign a position to a student - Sai Teja Sunku, Achintya Sanjay
+6. Add notes to the course positions, so students can see criteria that they meet at a glance - Jake Grier, Ishaan Patel
+7. [Implementation] Create logic to use Azure SSO for login and signup - Sai Teja Sunku, Achintya Sanjay
+8. Develop an algorithm to produce a weighted score for each position, based on student information - Jake Grier, Ishaan Patel
+9. [Database Model] Create One-to-Many relationship between "Student" model and "SA Position" model for assigned courses - Sai Teja Sunku, Achintya Sanjay
