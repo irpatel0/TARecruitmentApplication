@@ -22,7 +22,6 @@ def create_course():
         check_created = db.session.scalars(sqla.select(CourseSection).where(CourseSection.course_number == cform.course_number.data.number)
                                                                 .where(CourseSection.section == cform.section.data)
                                                                 .where(CourseSection.term == cform.term.data)
-                                                                .where(CourseSection.instructor_id == current_user.id)
                                                                 ).first()
         if (check_created is not None):
             flash('This course has already been created!')

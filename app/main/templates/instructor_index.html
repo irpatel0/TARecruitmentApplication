@@ -10,7 +10,7 @@
         <div class="indexHeader">
        <h4 style="text-align: center;">Course Sections</h4>
         
-       <a href="{{url_for('instructor.create_course')}}" class="btn btn-outline-dark createButton">Create Course</a>
+       <a href="{{url_for('instructor.create_course')}}" class="btn btn-outline-dark createButton">Create Course Section</a>
             <hr class="mb-4">
    </div>
 
@@ -36,7 +36,7 @@
                <hr>
                {%if course.hasPosition()%}
                    <h5>Position Details</h5>
-                   <p>Position: {{course.position}}</p>
+                   <p>Course Section: {{course.position}}</p>
                    <p>Available: {{course.position.available}}</p>
                    <p>Number of SAs: {{course.position.num_SAs}}</p>
                    <p>Minimum GPA: {{course.position.min_GPA}}</p>
