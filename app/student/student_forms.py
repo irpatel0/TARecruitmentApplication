@@ -14,7 +14,7 @@ from flask_login import current_user
 from app.main.models import Course, CourseSection
 
 class ApplyForm(FlaskForm):
-    grade = SelectField('Grade earned in the course',choices = [(6, 'A'), (5, 'B'), (4, 'C'), (3, 'D'), (2, 'F'), (1, 'NR')], validators=[DataRequired()])
+    grade = SelectField('Grade earned in the course',choices = [('A', 'A'), ('B', 'B'), ('C', 'C'), ('D', 'D'), ('F', 'F'), ('NR', 'NR')], validators=[DataRequired()])
     taken_term = StringField('Term you took the course', validators=[Length(min=1, max=5), Regexp('^\d{4}[ABCDFS]$', message='Term should be a year followed by a term letter (Ex. 2024B).')])
     course_term = StringField('Term you are applying for', validators=[Length(min=1, max=5), Regexp('^\d{4}[ABCDFS]$', message='Term should be a year followed by a term letter (Ex. 2024B).')])
     submit = SubmitField('Apply')
