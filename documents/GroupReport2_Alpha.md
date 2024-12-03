@@ -17,14 +17,15 @@ List team members and their GitHub usernames
 ----
 ## 1. Iteration 2 - Summary
 
- * Include a summary of your `Iteration-2` accomplishments. 
+#### Summary of Iteration2
  * Implemented apply feature for students to apply for open positions, and they can apply for each position only once. If already applied, the status of their application is displayed.
  * Implemented viewing applications feature where instructors can view all the applications applied for the position created by them. The table also displays if the student is assigned or unassigned and assignment disables if already assigned.
  * The instructor can also view student details from the applications table.
  * The student can view the open positions and its details
  * Created the applications table with relationships to Student and Position tables
  * Extra credit - Implemented edit profile feature for students and instructors
- * List the user stories completed in `Iteration-2`. Mention who worked on those user stories. 
+
+#### Completed User Stories 
  * As a Professor, I want to view all students applied for a SA position - Sai Teja Sunku, Achintya Sanjay
  * As a Student, I want to apply for the open SA positions - Ishaan Patel, Jake Grier
  * As a Student, I want to view all open SA positions so that I decide which ones I am interested in - Jake Grier
