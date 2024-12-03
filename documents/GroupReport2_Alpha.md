@@ -44,6 +44,20 @@ Our scrum retrospective meetings for iteration-2 went similarly to the previous 
 ----
 ## 4. Iteration 3 - Sprint Backlog
 
-Include a draft of your `Iteration-3 sprint backlog`. 
- * List the user stories you plan to complete in `Iteration-3`. Make sure to break down the larger user stories into smaller size stories. Mention the team member(s) who will work on each user story. 
- * Make sure to update the "issues" on your GitHub repo accordingly.  
+#### User Stories
+1. As a Student, I want to be able to login to the site so that I can use the site(SSO)
+2. As a Professor, I want to be able to login to the site so that I can use the site(SSO)
+3. As a Student, I want to be recommended SA Positions that match my profile
+4. As a Student, I want to check the status of my applications so that I know which of my applications have been approved, rejected, or are still pending.
+5. As A Student, I want to withdraw pending applications so that I'm not in the system for positions I'm no longer interested in.
+
+#### Tasks
+1. [Implementation] Create logic to mark the course section as closed if number of SAs required if fulfilled
+2. [Implementation] Develop a route for switching the sort category
+3. [Implementation] Display all assigned students on instructor page
+4. [Implementation] Develop a route for students withdrawing an application
+5. [Implementation] Develop route to assign a position to a student
+6. Add notes to the course positions, so students can see criteria that they meet at a glance 
+7. [Implementation] Create logic to use Azure SSO for login and signup
+8. Develop an algorithm to produce a weighted score for each position, based on student information
+9. [Database Model] Create One-to-Many relationship between "Student" model and "SA Position" model for assigned courses
