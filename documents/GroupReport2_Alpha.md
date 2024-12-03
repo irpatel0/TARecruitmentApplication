@@ -33,13 +33,13 @@ List team members and their GitHub usernames
 ----
 ## 2. Iteration 2 - Sprint Retrospective
 
- * Include the outcome of your `Iteration-2 Scrum retrospective meetings`. 
- * Mention the changes the team will be doing to improve itself as a result of the Scrum reflections.
+Our scrum retrospective meetings for iteration-2 went similarly to the previous iteration. We delegated the work for the upcoming sprint and created subgroups. We created issues for any bugs that needed to be patched, and discussed possible improvements for the application. Moving forward, we want to user test our application with other students and gather information about possible improvements, or discover new bugs to fix. 
 
 ----
 ## 3. Product Backlog refinement
 
- * Have you made any changes to your `product backlog` after `Iteration-2`? If so, please explain the changes here. 
+ We decided to add a sort feature to our backlog. This feature would allow students to sort the open positions by different course details, such as term, mininmum grade, etc.
+ We also want to add functionality for deleting course sections and positions. This feature will allow the insturctors to remove course sections and positions that have passed
 
 ----
 ## 4. Iteration 3 - Sprint Backlog
