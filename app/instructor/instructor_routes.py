@@ -19,6 +19,7 @@ def index():
 def create_course():
     cform = CourseForm()
     if cform.validate_on_submit():
+        print('inside validate')
         check_created = db.session.scalars(sqla.select(CourseSection).where(CourseSection.course_number == cform.course_number.data.number)
                                                                 .where(CourseSection.section == cform.section.data)
                                                                 .where(CourseSection.term == cform.term.data)
@@ -31,7 +32,12 @@ def create_course():
                             instructor_id = current_user.id,
                             term = cform.term.data)
         db.session.add(new_course)
+        print('new course added')
         db.session.commit()
+        course = db.session.scalars(sqla.select(CourseSection).where(CourseSection.course_number == 'CS1001')).first()
+        #.where(
+        #     CourseSection.instructor_id == 1)).first()
+        print("****",course)
         flash('The new course has successfully posted!')
         return redirect(url_for('main.index'))
     return render_template('createcourse.html', form=cform)

@@ -122,7 +122,7 @@ def test_register(test_client, init_database):
     assert s.user_type == 'Instructor'
     assert s.wpi_id == '123908765'
     assert b"Welcome to CSAssist" in response.data
-    #assert b"Please log in to access this page." in response.data
+    assert b"Please log in to access this page." in response.data
 
 def test_invalidlogin(test_client,init_database):
     """
@@ -169,16 +169,27 @@ def test_create_coursection(test_client,init_database):
 
     response = test_client.get('/instructor/create_course')
     assert response.status_code == 200
-    assert b"Welcome to create course" in response.data
+    assert b"Create a course section" in response.data
+
+    all_courses = db.session.scalars(sqla.select(Course)).all()
+    print(all_courses)
+    course = list( map(lambda t: t.id, all_courses[:1]))
+    print(course)
+
+    faculty = db.session.scalars(sqla.select(User).where(User.username == 'test')).first()
 
     response = test_client.post('/instructor/create_course',
-                                data=dict(course_number='CS1001', section='BL02',
+                                data=dict(course_number=course, section='BL02', instructor_id=faculty.id,
                                           term='2024B'),
                                 follow_redirects=True)
 
+
     assert response.status_code == 200
-    assert b"Welcome to CSAssist" in response.data
-    #assert b"The new course has successfully posted!" in response.data
+    #assert b"Welcome to CSAssist" in response.data
+    course = db.session.scalars(sqla.select(CourseSection).where(CourseSection.course_number == 'CS1001').where(CourseSection.instructor_id == faculty.id)).first()
+    print(course)
+    assert course is not None
+    assert b"The new course has successfully posted!" in response.data
 
     do_logout(test_client, path='/user/logout')
 
