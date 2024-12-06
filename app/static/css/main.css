@@ -114,3 +114,17 @@
   background-color: #b9ffb9;
   color: black;
 }
+
+/*.hr-text {*/
+/*  border: 0;*/
+/*  font-size: 14px;*/
+/*  height: 1.5em;*/
+/*  line-height: 1em;*/
+/*  position: relative;*/
+/*  text-align: center;*/
+/*}*/
+
+/*.hr-text::after {*/
+/*    color: #000;*/
+/*    content: attr(data-content);*/
+/*}*/

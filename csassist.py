@@ -4,8 +4,14 @@ from app import create_app, db
 import sqlalchemy as sqla
 import sqlalchemy.orm as sqlo
 from app.main.models import User, Student, Instructor, Course, Application, Position, CourseSection
+from werkzeug.middleware.proxy_fix import ProxyFix
+import identity.web
+
 
 app = create_app(Config)
+
+app.jinja_env.globals.update(Auth=identity.web.Auth)  # Useful in template for B2C
+app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1)
 
 @app.shell_context_processor
 def make_shell_context():
