@@ -32,6 +32,13 @@
                    {%endif%}
                </div>
            </li>
+           <div>
+            <div> Student Assistants: </div> 
+            <!-- <br> -->
+            {% for course in coursesections %}
+            <div>to be completed</div>
+            {% endfor %}
+           </div>
            <div id = "{{course.id}}" style="display: none;">
                <hr>
                {%if course.hasPosition()%}
@@ -162,17 +169,30 @@
                    tr.appendChild(td8);
 
                    let td9 = document.createElement('td');
-                   let btn = document.createElement('button');
-                   btn.textContent = 'Assign';
+                   let td9a = document.createElement('button');
+                   let td9b= document.createElement('button');
+                   const assign_url = "{{ url_for('instructor.accept_student', student_id = 'student_id', position_id = 'position_id') }}".replace("student_id", data[i]['student_id']).replace("position_id", position_id);
+                   td9a.setAttribute('href', assign_url)    //SET HERE ROUTE FOR ASSIGNED_STUDENTS (IN INSTRUCTOR ROUTES)??
+                   td9a.addEventListener('click', () => {
+                   window.location.href = assign_url; });
+                   td9a.textContent = 'Assign'; 
+                   td9b.textContent = 'Reject';
                    if (data[i]['availability'] === 'Assigned'){
-                       btn.setAttribute('disabled', 'disabled');
+                       td9a.setAttribute('disabled', 'disabled');
+                       td9b.setAttribute('disabled', 'disabled');
                    }
-                   td9.appendChild(btn);
+                   td9a.style.marginRight = '12px'; 
+                   td9.appendChild(td9a);
+                   td9.appendChild(td9b); 
                    tr.appendChild(td9);
 
                    table.appendChild(tr);
 
                }
+           }
+
+           function assign_student(position_id, data) {
+
            }
 
            if (applications_div.style.display === 'block'){

@@ -6,6 +6,7 @@ import sqlalchemy.orm as sqlo
 from flask_login import UserMixin
 from app import login
 from datetime import datetime, timezone
+from sqlalchemy.dialects.postgresql import ARRAY
 
 
 @login.user_loader
@@ -46,7 +47,8 @@ class Student(User):
     gpa : sqlo.Mapped[float] = sqlo.mapped_column(sqla.Float, default=0)
     graduation_date : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(4))
     assigned : sqlo.Mapped[bool] = sqlo.mapped_column(sqla.Boolean, default=False)
-
+    #MAKE a an Attribute called --> assigned_terms : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(5)) --> used for referencing terms
+    #assigned_terms : sqlo.Mapped[list[str]] = sqlo.mapped_column(ARRAY(str), default=list)
     __mapper_args__ = {'polymorphic_identity': 'Student'}
 
     #relationships
@@ -108,6 +110,7 @@ class Position(db.Model):
     id : sqlo.Mapped[int] = sqlo.mapped_column(sqla.Integer, primary_key=True)
     section_id : sqlo.Mapped[int] = sqlo.mapped_column(sqla.ForeignKey(CourseSection.id))
     num_SAs : sqlo.Mapped[int] = sqlo.mapped_column(sqla.Integer)
+    num_Assigned : sqlo.Mapped[int] = sqlo.mapped_column(sqla.Integer, default=0) #sqlo.mapped_collection(sqla.Integer) --> WAS PREVIOUSLY THIS
     available : sqlo.Mapped[bool] = sqlo.mapped_column(sqla.Boolean, default=True)
     min_GPA : sqlo.Mapped[float] = sqlo.mapped_column(sqla.Float, default=0)
     min_grade : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(2), default='A')
@@ -115,6 +118,7 @@ class Position(db.Model):
     # relationships
     course_section : sqlo.Mapped['CourseSection'] = sqlo.relationship(back_populates='position')
     applications : sqlo.WriteOnlyMapped['Application'] = sqlo.relationship(back_populates='applied_to')
+    ##MAKE a new relationship with Student --> assigned_Students --> student page can reference....or wait check Application's attribute of 'status' 
 
     def get_applications(self):
         return db.session.scalars(self.applications.select()).all()

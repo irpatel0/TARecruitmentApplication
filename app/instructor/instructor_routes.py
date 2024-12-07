@@ -67,10 +67,10 @@ def student_profile(student_id):
     return render_template('student_profile.html', student = student)
 
 
-@bp_instructor.route('/instructor/student/assign', methods=['GET', 'POST'])
-@role_required('Instructor')
-def assign_student():
-    return "Assign Student"
+# @bp_instructor.route('/instructor/student/assign', methods=['GET', 'POST'])
+# @role_required('Instructor')
+# def assign_student():
+#     return "Assign Student"
 
 @bp_instructor.route('/applications/<position_id>', methods=['GET', 'POST'])
 @login_required
@@ -94,3 +94,42 @@ def view_allstudents(position_id):
                      'availability': availability})
 
     return jsonify(data)
+
+
+@bp_instructor.route('/position/<position_id>/student/<student_id>/accept', methods=['GET', 'POST'])
+@login_required
+@role_required('Instructor')
+def accept_student(position_id, student_id):
+
+    position = db.session.get(Position, position_id)
+    student = db.session.get(Student, student_id)
+    course_section = db.session.get(CourseSection, position.section_id)
+    if (position.num_Assigned < position.num_SAs):
+        # if course_section.term in student.assigned_terms:
+        #     flash("Student has already been assigned an SA position in this term")
+        #     return(redirect(url_for('main.instructor_index')))
+        if position.num_Assigned == position.num_SAs - 1:
+            position.available = False; 
+        position.num_Assigned = position.num_Assigned + 1
+        student.assigned = True   #THINKING OF REMOVING THIS ATTRIBUTE?
+        #student.assigned_terms.append(course_section)
+        db.session.commit()
+        flash(student.assigned_terms)
+        return(redirect(url_for('main.instructor_index')))
+    else:
+        flash('This course already has maximum number of SAs!')
+        flash(position.num_Assigned)
+        return(redirect(url_for('main.instructor_index')))
+
+
+@bp_instructor.route('/position/<position_id>/student/<student_id>/reject', methods=['GET', 'POST'])
+@login_required
+@role_required('Instructor')
+def reject_student(student_id):
+    
+    student = db.session.get(Student, student_id)
+    student.assigned = False 
+
+    return (redirect(url_for('main.instructor_index')))
+
+
