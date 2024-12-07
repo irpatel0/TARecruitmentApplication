@@ -114,11 +114,11 @@ def accept_student(position_id, student_id):
         student.assigned = True   #THINKING OF REMOVING THIS ATTRIBUTE?
         #student.assigned_terms.append(course_section)
         db.session.commit()
-        flash(student.assigned_terms)
+        #flash(student.assigned_terms)
         return(redirect(url_for('main.instructor_index')))
     else:
         flash('This course already has maximum number of SAs!')
-        flash(position.num_Assigned)
+        #flash(position.num_Assigned)
         return(redirect(url_for('main.instructor_index')))
 
 
