@@ -3,7 +3,7 @@ import sqlalchemy as sqla
 from app import db
 from app.instructor import instructor_blueprint as bp_instructor
 from flask_login import current_user, login_required
-from app.main.models import Course, Student, Instructor, CourseSection, Position
+from app.main.models import Course, Student, Instructor, CourseSection, Position, Application 
 from app.instructor.instructor_forms import CourseForm, PositionForm
 from app.decorators import role_required
 
@@ -103,22 +103,37 @@ def accept_student(position_id, student_id):
 
     position = db.session.get(Position, position_id)
     student = db.session.get(Student, student_id)
-    course_section = db.session.get(CourseSection, position.section_id)
+    applications = db.session.scalars(sqla.select(Application)).all() #.where(Application.applicant.id == student.id)).first() 
+    approved_application = 0 
+    for application in applications:
+        if application.applicant.id == student.id:
+            approved_application = application
+    section_id = position.section_id
+    course_section = db.session.get(CourseSection, section_id)
     if (position.num_Assigned < position.num_SAs):
-        # if course_section.term in student.assigned_terms:
-        #     flash("Student has already been assigned an SA position in this term")
-        #     return(redirect(url_for('main.instructor_index')))
-        if position.num_Assigned == position.num_SAs - 1:
-            position.available = False; 
+        student_allterms = db.session.scalars(student.assigned_terms.select()).all()
+        #print(student_allterms)
+        student_coursesection_id = 0; 
+        for term in student_allterms:
+            if course_section.term == term.term:
+                student_coursesection_id = course_section.id
+        print(student_coursesection_id)
+        student_coursesection = db.session.get(CourseSection, student_coursesection_id)
+        print(student_coursesection)
+        if student_coursesection is not None: 
+            print('hi' + course_section.term, student_coursesection.term)
+            if course_section.term == student_coursesection.term:
+                flash("Student has already been assigned an SA position in this term")
+                return(redirect(url_for('main.instructor_index')))
         position.num_Assigned = position.num_Assigned + 1
-        student.assigned = True   #THINKING OF REMOVING THIS ATTRIBUTE?
-        #student.assigned_terms.append(course_section)
+        approved_application.status = 'Approved'
+        student.assigned_terms.add(course_section)
+        if position.num_Assigned == position.num_SAs:
+            position.available == False; 
         db.session.commit()
-        #flash(student.assigned_terms)
         return(redirect(url_for('main.instructor_index')))
     else:
         flash('This course already has maximum number of SAs!')
-        #flash(position.num_Assigned)
         return(redirect(url_for('main.instructor_index')))
 
 

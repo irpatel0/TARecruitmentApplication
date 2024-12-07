@@ -13,6 +13,13 @@ from sqlalchemy.dialects.postgresql import ARRAY
 def load_user(id):
     return db.session.get(User, int(id))
 
+assignedTerms = db.Table(
+    'assignedTerms',
+    db.metadata,
+    sqla.Column('student_id', sqla.Integer, sqla.ForeignKey('student.id'), primary_key=True),
+    sqla.Column('coursesection_id', sqla.Integer, sqla.ForeignKey('coursesection.id'), primary_key=True)
+)
+
 pastEnrollments = db.Table(
     'pastEnrollments',
     db.metadata,
@@ -58,6 +65,11 @@ class Student(User):
             back_populates='taught_by',
         )
     student_applications : sqlo.WriteOnlyMapped['Application'] = sqlo.relationship(back_populates='applicant')
+    assigned_terms : sqlo.WriteOnlyMapped['CourseSection'] = sqlo.relationship(
+        secondary = assignedTerms,
+        primaryjoin=(assignedTerms.c.student_id == id),
+        back_populates='assigned_students' ) 
+    
 
 
     def applied_to(self, position_id):
@@ -90,6 +102,7 @@ class Course(db.Model):
 
 
 class CourseSection(db.Model):
+    __tablename__ = 'coursesection'
     id : sqlo.Mapped[int] = sqlo.mapped_column(sqla.Integer, primary_key=True)
     course_number : sqlo.Mapped[str] = sqlo.mapped_column(sqla.ForeignKey(Course.number))
     section : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(5))
@@ -99,6 +112,12 @@ class CourseSection(db.Model):
     position : sqlo.Mapped['Position'] = sqlo.relationship(back_populates='course_section')
     professor : sqlo.Mapped['Instructor'] = sqlo.relationship(back_populates='course_sections')
     course : sqlo.Mapped['Course'] = sqlo.relationship(back_populates='sections')
+
+    assigned_students : sqlo.WriteOnlyMapped['Student'] = sqlo.relationship(
+        secondary = assignedTerms,
+        primaryjoin=(assignedTerms.c.coursesection_id == id),
+        back_populates='assigned_terms',
+        passive_deletes=True ) 
 
     def hasPosition(self):
         return self.position is not None
