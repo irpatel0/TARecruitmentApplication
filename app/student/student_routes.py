@@ -42,3 +42,14 @@ def apply_course(position_id):
         return redirect(url_for('main.index'))
     return render_template('applycourse.html', form=aform, position=course_position)
 
+@bp_student.route('/positions/<position_id>/withdraw', methods=['GET', 'POST'])
+@login_required
+@role_required('Student')
+def withdraw_course(position_id):
+    application = db.session.scalars(sqla.select(Application).where(Application.student_id == current_user.id, Application.position_id == position_id)).first()
+    db.session.delete(application)
+    db.session.commit()
+    flash('You have successfully withdrawn your application.')
+    return redirect(url_for('main.index'))
+
+
