@@ -35,7 +35,9 @@
                             </td>
                             {% if position.id in applied %}
                             <td>
-                                <a class = "btn btn-outline-secondary">Pending</a>  
+                                {% for application in position.get_applications() %}
+                                    <a class = "btn btn-outline-secondary">{{ application.status }}</a>  
+                                {% endfor %}
                             </td>                          
                             {% elif position.available%}
                             <td>

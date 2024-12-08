@@ -172,11 +172,17 @@
                    let td9a = document.createElement('button');
                    let td9b= document.createElement('button');
                    const assign_url = "{{ url_for('instructor.accept_student', student_id = 'student_id', position_id = 'position_id') }}".replace("student_id", data[i]['student_id']).replace("position_id", position_id);
+                   const reject_url = "{{ url_for('instructor.reject_student', student_id = 'student_id', position_id = 'position_id') }}".replace("student_id", data[i]['student_id']).replace("position_id", position_id);
                    td9a.setAttribute('href', assign_url)    //SET HERE ROUTE FOR ASSIGNED_STUDENTS (IN INSTRUCTOR ROUTES)??
-                   td9a.addEventListener('click', () => {
-                   window.location.href = assign_url; });
+                   td9b.setAttribute('href', reject_url)
+                   td9a.addEventListener('click', () => { window.location.href = assign_url; });
+                   td9b.addEventListener('click', () => { window.location.href = reject_url; });
                    td9a.textContent = 'Assign'; 
                    td9b.textContent = 'Reject';
+                   if (data[i]['status'] === 'Rejected'){
+                        td9a.setAttribute('disabled', 'disabled');
+                        td9b.setAttribute('disabled', 'disabled');
+                   }
                    if (data[i]['availability'] === 'Assigned'){
                        td9a.setAttribute('disabled', 'disabled');
                        td9b.setAttribute('disabled', 'disabled');

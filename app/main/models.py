@@ -65,6 +65,8 @@ class Student(User):
             back_populates='taught_by',
         )
     student_applications : sqlo.WriteOnlyMapped['Application'] = sqlo.relationship(back_populates='applicant')
+
+    
     assigned_terms : sqlo.WriteOnlyMapped['CourseSection'] = sqlo.relationship(
         secondary = assignedTerms,
         primaryjoin=(assignedTerms.c.student_id == id),
