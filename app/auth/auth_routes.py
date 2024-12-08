@@ -8,6 +8,7 @@ from flask_login import login_user, current_user, logout_user, login_required
 import identity.web
 import requests
 from flask_session import Session
+from app.decorators import session_required
 from config import Config as appconfig
 
 ssoauth = identity.web.Auth(
@@ -118,6 +119,7 @@ def login_sso():
 
 
 @bp_auth.route('/user/instructor/register/sso', methods=["GET", "POST"])
+@session_required(session)
 def instructor_register_sso():
     if current_user.is_authenticated:
         return redirect(url_for('main.instructor_index'))
@@ -144,6 +146,7 @@ def instructor_register_sso():
 
 
 @bp_auth.route('/user/student/register/sso', methods=["GET", "POST"])
+@session_required(session)
 def student_register_sso():
     if current_user.is_authenticated:
         return redirect(url_for('main.student_index'))
@@ -182,6 +185,7 @@ def logout():
     ssoauth.log_out(url_for("main.index", _external=True))
     logout_user()
     return redirect(url_for('auth.login'))
+
 
 
 

@@ -3,11 +3,11 @@
 
 {% block content %}
 
-    <h2 class="text-center">Hi Instructor, {{name}}!</h2>
-    <h3 class="text-center">Please continue to fill your other details...</h3>
+    <h2 class="text-center mb-4">Hi Instructor, {{name}}!</h2>
+    <h3 class="text-center mb-3">Please continue to fill your other details...</h3>
 
     <h3 class="form-title">Instructor Registration</h3>
-        <div class="register-form">
+        <div class="register-form" style="min-height: 0% !important;">
 
             {% if form %}
             <form action = "{{url_for('auth.instructor_register_sso')}}" method = 'POST'>
@@ -16,7 +16,7 @@
                 {{wtf.form_field(form.wpi_id)}}
                 {{wtf.form_field(form.phone)}}
 
-                <input class="btn btn-primary" type="submit" value="Proceed">
+                {{wtf.form_field(form.submit)}}
 
             </form>
             {% endif %}
