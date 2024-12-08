@@ -129,7 +129,7 @@ def accept_student(position_id, student_id):
     applications = db.session.scalars(sqla.select(Application)).all() #.where(Application.applicant.id == student.id)).first() 
     approved_application = 0 
     for application in applications:
-        if application.applicant.id == student.id:
+        if application.applied_to.id == position.id and application.applicant.id == student.id:
             approved_application = application
     section_id = position.section_id
     course_section = db.session.get(CourseSection, section_id)
@@ -140,8 +140,7 @@ def accept_student(position_id, student_id):
         student_coursesection_id = 0; 
         for term in student_allterms:
             if course_section.term == term.term:
-                if course_section.section == term.section:
-                    student_coursesection_id = course_section.id
+                student_coursesection_id = course_section.id
         #print(student_coursesection_id)
         student_coursesection = db.session.get(CourseSection, student_coursesection_id)
         #print(student_coursesection)
