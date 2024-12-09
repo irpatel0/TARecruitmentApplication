@@ -2,7 +2,7 @@ from flask_wtf import FlaskForm
 from app import db
 import sqlalchemy as sqla
 from wtforms.validators import Length, DataRequired, Email, EqualTo, ValidationError, Regexp, NumberRange
-from wtforms import StringField, SubmitField, TextAreaField, PasswordField, BooleanField, IntegerField, FloatField, SelectMultipleField
+from wtforms import StringField, SubmitField, TextAreaField, PasswordField, BooleanField, IntegerField, FloatField, SelectMultipleField, SelectField
 from wtforms_sqlalchemy.fields import QuerySelectField, QuerySelectMultipleField
 from wtforms.widgets import ListWidget, CheckboxInput
 from app.main.models import Student, User, Course

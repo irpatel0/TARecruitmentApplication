@@ -34,8 +34,7 @@ def apply_course(position_id):
                             student_id = current_user.id,
                             position_id = position_id,
                             grade_aquired = aform.grade.data,
-                            term_taken = aform.taken_term.data,
-                            course_term = aform.course_term.data)
+                            term_taken = aform.year_taken.data + aform.term_taken.data)
         db.session.add(new_application)
         db.session.commit()
         flash('You have successfully applied for the course!')

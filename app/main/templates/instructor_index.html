@@ -59,7 +59,6 @@
                             <th>Student Name</th>
                             <th>Grade Acquired</th>
                             <th>Term Taken</th>
-                            <th>Course Term</th>
                             <th>Status</th>
                             <th>Availability</th>
                             <th>Approve/Reject</th>
@@ -148,10 +147,6 @@
                    let td4 = document.createElement('td');
                    td4.textContent = data[i]['term_taken'];
                    tr.appendChild(td4);
-
-                   let td5 = document.createElement('td');
-                   td5.textContent = data[i]['course_term'];
-                   tr.appendChild(td5);
 
                    let td6 = document.createElement('td');
                    td6.textContent = data[i]['status'];

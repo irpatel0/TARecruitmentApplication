@@ -42,6 +42,44 @@
                 </tbody>
             </table>
 
+            <h2 style="text-align: center">Recommended Positions</h2>
+            <hr class="mb-4">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Course Section</th>
+                        <th>Details</th>
+                        <th>Apply</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for position in recommended %}
+                        {% if position.id not in applied %}
+                        <tr>
+                            <td>
+                                {{loop.index}}
+                                {{position.recommendation_score(current_user)}}
+                            </td>
+                            <td>
+                                {{position}}
+                                <div class="card text-bg-light mb-3" style="display: none" id="position-{{position.id}}">
+
+
+                                </div>
+                            </td>
+                            <td>
+                                <button class="btn btn-outline-primary" onclick="show_position_details({{ position.id }})" id="show-details-{{position.id}}">Show Details</button>
+                            </td>
+                            <td>
+                                <a href="{{url_for('student.apply_course', position_id=position.id)}}" class="btn btn-outline-success">Apply</a>
+                            </td>
+                        </tr>
+                        {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
+
 
             <h2 style="text-align: center">My Applications</h2>
             <hr class="mb-4">

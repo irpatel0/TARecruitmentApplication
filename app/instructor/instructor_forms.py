@@ -18,8 +18,9 @@ class CourseForm(FlaskForm):
                 query_factory = lambda: db.session.scalars(sqla.select(Course).order_by(sqla.text('Course.number'))),
                 get_label = lambda theCourse : f"{theCourse.number} - {theCourse.title}"
     )
-    section =  StringField('Section', validators=[Length(min=1, max=5)])
-    term = StringField('Term', validators=[Length(min=1, max=5), Regexp('^\d{4}[ABCDFS]$', message='Term should be a year followed by a term letter (Ex. 2024B).')])
+    section =  StringField('Section', validators=[Length(min=1, max=5)]) 
+    year = StringField('Year the course is being taught', validators=[Length(min=1, max=4), Regexp('^\d{4}$', message='Please enter a valid 4-digit year')])
+    term = SelectField('Term the course is being taught',choices = [('A', 'A-Term'), ('B', 'B-Term'), ('C', 'C-Term'), ('D', 'D-Term'), ('F', 'Fall Semester'), ('S', 'Spring Semester')], validators=[DataRequired()])
     submit = SubmitField('Post')
 
 class PositionForm(FlaskForm):
