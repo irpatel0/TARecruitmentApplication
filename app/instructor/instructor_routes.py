@@ -4,7 +4,7 @@ from app import db
 from app.instructor import instructor_blueprint as bp_instructor
 from flask_login import current_user, login_required
 from app.main.models import Course, Student, Instructor, CourseSection, Position
-from app.instructor.instructor_forms import CourseForm, PositionForm
+from app.instructor.instructor_forms import CourseForm, PositionForm, UpdateCourseForm
 from app.decorators import role_required
 
 
@@ -100,3 +100,28 @@ def view_allstudents(position_id):
                      'availability': availability})
 
     return jsonify(data)
+
+@bp_instructor.route('/coursesection/<cs_id>', methods=['GET', 'POST'])
+@login_required
+@role_required('Instructor')
+def update_coursesection(cs_id):
+    cs = db.session.get(CourseSection, cs_id)
+    ucf = UpdateCourseForm()
+
+    if request.method == 'POST':
+        if ucf.validate_on_submit():
+            cs.course_number = ucf.course_number.data.number
+            cs.section = ucf.section.data
+            cs.term = ucf.term.data
+            db.session.commit()
+            flash('Your course section has been updated')
+            return redirect(url_for('main.instructor_index'))
+    elif request.method == 'GET':
+        ucf.course_number.data = cs.course
+        ucf.section.data = cs.section
+        ucf.term.data = cs.term
+    else:
+        pass
+    return render_template('update_course_section.html', form=ucf)
+
+

@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% import 'bootstrap_wtf.html' as wtf %}
+
+{% block content %}
+    <div style="min-height: 80vh;">
+        <h1>Update Course Section</h1>
+
+        {% if form %}
+            <form action="" method="post">
+                {{ form.hidden_tag() }}
+
+                {{wtf.form_field(form.course_number)}}
+                {{wtf.form_field(form.section)}}
+                {{wtf.form_field(form.term)}}
+                {{wtf.form_field(form.submit)}}
+
+            </form>
+        {% endif %}
+    </div>
+
+
+
+{% endblock %}

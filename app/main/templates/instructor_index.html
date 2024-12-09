@@ -34,7 +34,10 @@
                            <a href="{{url_for('instructor.create_position', section_id = course.id)}}" class = "btn btn-outline-secondary">Create Position</a>
                        {%endif%}
                    </td>
-
+                    <td>
+                        <a href="{{url_for('instructor.update_coursesection', cs_id = course.id)}}" class="btn btn-outline-info">Update</a>
+                        <a class = "btn btn-outline-danger">Delete</a>
+                    </td>
                </tr>
                <tr id="tr-{{course.id}}" hidden="true">
                     <td colspan="2">
