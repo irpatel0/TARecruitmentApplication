@@ -50,7 +50,7 @@
                     {% else %}
                     <li><a href="{{url_for('main.instructor_index')}}" class="dropdown-item text-white">Dashboard</a></li>
                     <li><a class="dropdown-item text-white" href="{{url_for('main.instructor_edit_profile')}}">Edit Profile</a></li>
-                    <li><a href="{{url_for('instructor.create_course')}}" class="dropdown-item text-white">Create Course</a></li>
+                    <li><a href="{{url_for('instructor.create_course')}}" class="dropdown-item text-white">Create Course Section</a></li>
                     {% endif %}
                 </ul>
               </li>
@@ -84,7 +84,7 @@
                 </div>
 
                 <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mt-3">
-                    <h5 class="text-uppercase mb-4 font-weight-bold text-secondary-emphasis">Features</h5>
+                    <h5 class="text-uppercase mb-4 font-weight-bold text-secondary-emphasis">Student Features</h5>
                     <p>
                         <a class="text-white footer-features">Secured login system</a>
                     </p>
@@ -100,16 +100,18 @@
                 </div>
 
                 <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
-                    <h5 class="text-uppercase mb-4 font-weight-bold text-secondary-emphasis">Quick Links</h5>
+                    <h5 class="text-uppercase mb-4 font-weight-bold text-secondary-emphasis">Instructor Features</h5>
                     <p>
-                        <a class="text-white" href="{{ url_for('main.index') }}">Home</a>
+                        <a class="text-white footer-features">Secured login system</a>
                     </p>
                     <p>
-                        {% if current_user.user_type == 'Student' %}
-                            <a class="text-white" href="{{url_for('main.student_edit_profile')}}">Edit Profile</a>
-                        {% else %}
-                            <a class="text-white" href="{{url_for('main.instructor_edit_profile')}}">Edit Profile</a>
-                        {% endif %}
+                        <a class="text-white footer-features">Create course sections</a>
+                    </p>
+                    <p>
+                        <a class="text-white footer-features">Create positions</a>
+                    </p>
+                    <p>
+                        <a class="text-white footer-features">Approve/Reject applicants</a>
                     </p>
                 </div>
 
