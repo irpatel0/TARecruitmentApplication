@@ -94,7 +94,7 @@ class CourseSection(db.Model):
     instructor_id : sqlo.Mapped[int] = sqlo.mapped_column(sqla.ForeignKey(Instructor.id))
     term : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(5))
     #relations
-    position : sqlo.Mapped['Position'] = sqlo.relationship(back_populates='course_section')
+    position : sqlo.Mapped['Position'] = sqlo.relationship(back_populates='course_section', passive_deletes=True)
     professor : sqlo.Mapped['Instructor'] = sqlo.relationship(back_populates='course_sections')
     course : sqlo.Mapped['Course'] = sqlo.relationship(back_populates='sections')
 
@@ -114,7 +114,7 @@ class Position(db.Model):
     timestamp : sqlo.Mapped[datetime] = sqlo.mapped_column(default = lambda : datetime.now(timezone.utc))
     # relationships
     course_section : sqlo.Mapped['CourseSection'] = sqlo.relationship(back_populates='position')
-    applications : sqlo.WriteOnlyMapped['Application'] = sqlo.relationship(back_populates='applied_to')
+    applications : sqlo.WriteOnlyMapped['Application'] = sqlo.relationship(back_populates='applied_to', passive_deletes=True)
 
     def get_applications(self):
         return db.session.scalars(self.applications.select()).all()

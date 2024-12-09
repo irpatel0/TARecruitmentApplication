@@ -3,7 +3,7 @@ import sqlalchemy as sqla
 from app import db
 from app.instructor import instructor_blueprint as bp_instructor
 from flask_login import current_user, login_required
-from app.main.models import Course, Student, Instructor, CourseSection, Position
+from app.main.models import Course, Student, Instructor, CourseSection, Position, Application
 from app.instructor.instructor_forms import CourseForm, PositionForm, UpdateCourseForm
 from app.decorators import role_required
 
@@ -101,7 +101,7 @@ def view_allstudents(position_id):
 
     return jsonify(data)
 
-@bp_instructor.route('/coursesection/<cs_id>', methods=['GET', 'POST'])
+@bp_instructor.route('/coursesection/<cs_id>/update', methods=['GET', 'POST'])
 @login_required
 @role_required('Instructor')
 def update_coursesection(cs_id):
@@ -124,4 +124,20 @@ def update_coursesection(cs_id):
         pass
     return render_template('update_course_section.html', form=ucf)
 
+@bp_instructor.route('/coursesection/<cs_id>/delete', methods=['GET', 'POST'])
+@login_required
+@role_required('Instructor')
+def delete_coursesection(cs_id):
+    cs = db.session.get(CourseSection, cs_id)
+    if cs:
+        pos = db.session.scalars(sqla.select(Position).where(Position.section_id == cs_id)).first()
+        application = db.session.scalars(sqla.select(Application).where(Application.position_id == pos.id)).first()
+        db.session.delete(application)
+        db.session.commit()
+        db.session.delete(pos)
+        db.session.commit()
+        db.session.delete(cs)
+        db.session.commit()
+        flash('Your course section has been deleted')
+    return redirect(url_for('main.instructor_index'))
 
