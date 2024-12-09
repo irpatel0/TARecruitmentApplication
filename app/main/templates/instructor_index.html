@@ -6,80 +6,158 @@
 
    <!-- Display everything in courses -->
     <div style="min-height: 80vh;">
-        <h1>Welcome to Instructor Page</h1>
+        <h1>Welcome Instructor - {{current_user.firstname}}</h1>
         <div class="indexHeader">
        <h4 style="text-align: center;">Course Sections</h4>
-        
+
        <a href="{{url_for('instructor.create_course')}}" class="btn btn-outline-dark createButton">Create Course Section</a>
-            <hr class="mb-4">
-   </div>
 
-   <ul class = "courseSections">
+        </div>
+
+   <table style="border-spacing: 0 5px; border-collapse: separate;" class="mt-3 table table-light table-hover table-bordered border-3 align-middle">
        {%if coursesections%}
-       {% for course in coursesections %}
-           <li>
-               {{course}}
-               <div>
-                   <button class = "btn btn-outline-dark"  id = "button-{{course.id}}" onclick="showInfo({{course.id}})">View Details</button>
-                   {%if course.hasPosition()%}
-                       {%if course.position.available%}
-                            <button class="btn btn-outline-primary" id="view-applicants-{{course.position.id}}" onclick="get_applicants({{course.position.id}})">View Applicants</button>
+           {% for course in coursesections %}
+               <tr>
+                    <td style="padding: 30px 0 30px 10px; border: 1px solid #c6c7c8;" width="70%">
+                        {{course}}
+                    </td>
+                   <td width=30%" style="border: 1px solid #c6c7c8;">
+                       <button class = "btn btn-outline-dark"  id = "button-{{course.id}}" onclick="showInfo({{course.id}})">View Details</button>
+
+                       {%if course.hasPosition()%}
+                           {%if course.position.available%}
+                                <button class="btn btn-outline-primary" id="view-applicants-{{course.position.id}}" onclick="get_applicants({{course.position.id}})">View Applicants</button>
+                           {%else%}
+                               <a href="#" class = "btn btn-success">Filled</a>
+                           {%endif%}
                        {%else%}
-                           <a href="#" class = "btn btn-outline-success">Filled</a>
+                           <a href="{{url_for('instructor.create_position', section_id = course.id)}}" class = "btn btn-outline-secondary">Create Position</a>
                        {%endif%}
-                   {%else%}
-                       <a href="{{url_for('instructor.create_position', section_id = course.id)}}" class = "btn btn-outline-danger">Create Position</a>
-                   {%endif%}
-               </div>
-           </li>
-           <div id = "{{course.id}}" style="display: none;">
-               <hr>
-               {%if course.hasPosition()%}
-                   <h5>Position Details</h5>
-                   <p>Course Section: {{course.position}}</p>
-                   <p>Available: {{course.position.available}}</p>
-                   <p>Number of SAs: {{course.position.num_SAs}}</p>
-                   <p>Minimum GPA: {{course.position.min_GPA}}</p>
-                   <p>Minimum Grade: {{course.position.min_grade}}</p>
-                   <p>Date Posted: {{ moment(course.position.timestamp).format('LLL') }}</p>
-               {%else%}
-                   <p>No Position Created</p>
-               {%endif%}
+                   </td>
 
-           </div>
-           <hr>
-            <div id = "application-{{course.position.id}}" style="display: none;">
-               <hr>
+               </tr>
+               <tr id="tr-{{course.id}}" hidden="true">
+                    <td colspan="2">
+                        <div id = "{{course.id}}" style="display: none;">
 
-                <table class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Student id</th>
-                            <th>Student Name</th>
-                            <th>Grade Acquired</th>
-                            <th>Term Taken</th>
-                            <th>Course Term</th>
-                            <th>Status</th>
-                            <th>Availability</th>
-                            <th>Approve/Reject</th>
-                        </tr>
-                    </thead>
-                    <tbody id="instructor-table-{{course.position.id}}" >
+                       {%if course.hasPosition()%}
+                           <h5>Position Details</h5>
+                           <p>Course Section: {{course.position}}</p>
+                           <p>Available: {{course.position.available}}</p>
+                           <p>Number of SAs: {{course.position.num_SAs}}</p>
+                           <p>Minimum GPA: {{course.position.min_GPA}}</p>
+                           <p>Minimum Grade: {{course.position.min_grade}}</p>
+                           <p>Date Posted: {{ moment(course.position.timestamp).format('LLL') }}</p>
+                       {%else%}
+                           <p>No Position Created</p>
+                       {%endif%}
+                        </div>
+                    </td>
+               </tr>
+                <tr class="noHover" id="tr-{{course.position.id}}" style="background-color: #fff !important;">
+                    <td colspan="2" style="background-color: #fff !important; border: none;">
+                        <div id = "application-{{course.position.id}}" style="display: none;">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Student id</th>
+                                    <th>Student Name</th>
+                                    <th>Grade Acquired</th>
+                                    <th>Term Taken</th>
+                                    <th>Course Term</th>
+                                    <th>Status</th>
+                                    <th>Availability</th>
+                                    <th>Approve/Reject</th>
+                                </tr>
+                            </thead>
+                            <tbody id="instructor-table-{{course.position.id}}" >
 
-                    </tbody>
-                </table>
+                            </tbody>
+                        </table>
 
-            </div>
+                        </div>
+                    </td>
+                </tr>
 
-
-
-       {% endfor %}
+           {% endfor %}
        {%else%}
         <p style="text-align: center;">You have not created any course sections.</p>
        {%endif%}
+   </table>
+        {% for course in coursesections %}
 
-   </ul>
+
+
+
+
+{% endfor %}
+<!--   <ul class = "courseSections">-->
+<!--       {%if coursesections%}-->
+<!--       {% for course in coursesections %}-->
+<!--           <li>-->
+<!--               {{course}}-->
+<!--               <div>-->
+<!--                   <button class = "btn btn-outline-dark"  id = "button-{{course.id}}" onclick="showInfo({{course.id}})">View Details</button>-->
+<!--                   {%if course.hasPosition()%}-->
+<!--                       {%if course.position.available%}-->
+<!--                            <button class="btn btn-outline-primary" id="view-applicants-{{course.position.id}}" onclick="get_applicants({{course.position.id}})">View Applicants</button>-->
+<!--                       {%else%}-->
+<!--                           <a href="#" class = "btn btn-success">Filled</a>-->
+<!--                       {%endif%}-->
+<!--                   {%else%}-->
+<!--                       <a href="{{url_for('instructor.create_position', section_id = course.id)}}" class = "btn btn-outline-danger">Create Position</a>-->
+<!--                   {%endif%}-->
+<!--               </div>-->
+<!--           </li>-->
+<!--           <div id = "{{course.id}}" style="display: none;">-->
+<!--               <hr>-->
+<!--               {%if course.hasPosition()%}-->
+<!--                   <h5>Position Details</h5>-->
+<!--                   <p>Course Section: {{course.position}}</p>-->
+<!--                   <p>Available: {{course.position.available}}</p>-->
+<!--                   <p>Number of SAs: {{course.position.num_SAs}}</p>-->
+<!--                   <p>Minimum GPA: {{course.position.min_GPA}}</p>-->
+<!--                   <p>Minimum Grade: {{course.position.min_grade}}</p>-->
+<!--                   <p>Date Posted: {{ moment(course.position.timestamp).format('LLL') }}</p>-->
+<!--               {%else%}-->
+<!--                   <p>No Position Created</p>-->
+<!--               {%endif%}-->
+
+<!--           </div>-->
+<!--           <hr>-->
+<!--            <div id = "application-{{course.position.id}}" style="display: none;">-->
+<!--               <hr>-->
+
+<!--                <table class="table table-bordered">-->
+<!--                    <thead>-->
+<!--                        <tr>-->
+<!--                            <th>#</th>-->
+<!--                            <th>Student id</th>-->
+<!--                            <th>Student Name</th>-->
+<!--                            <th>Grade Acquired</th>-->
+<!--                            <th>Term Taken</th>-->
+<!--                            <th>Course Term</th>-->
+<!--                            <th>Status</th>-->
+<!--                            <th>Availability</th>-->
+<!--                            <th>Approve/Reject</th>-->
+<!--                        </tr>-->
+<!--                    </thead>-->
+<!--                    <tbody id="instructor-table-{{course.position.id}}" >-->
+
+<!--                    </tbody>-->
+<!--                </table>-->
+
+<!--            </div>-->
+
+
+
+<!--       {% endfor %}-->
+<!--       {%else%}-->
+<!--        <p style="text-align: center;">You have not created any course sections.</p>-->
+<!--       {%endif%}-->
+
+<!--   </ul>-->
     </div>
 
 
@@ -87,12 +165,15 @@
    <script>
        function showInfo(id){
            var x = document.getElementById(id);
+           let trd = document.getElementById(`tr-${id}`);
            if(x.style.display === "none"){
+               trd.hidden = false;
                x.style.display = "block";
                document.getElementById('button-' + id).textContent = "Hide Details";
            }
            else{
                x.style.display = "none";
+               trd.hidden = true;
                document.getElementById('button-' + id).textContent = "View Details";
            }
        }
@@ -106,6 +187,7 @@
             }
             const json = await response.json();
             console.log(json);
+
             fill_applications(position_id, json);
             } catch (error) {
                 console.log(error.message);
@@ -175,14 +257,18 @@
                }
            }
 
+           let trd = document.getElementById(`tr-${position_id}`);
+
            if (applications_div.style.display === 'block'){
                document.getElementById(`view-applicants-${position_id}`).textContent = 'View Applicants';
-               table.textContent = '';
+               table.innerHTML = '';
                applications_div.style.display = 'none';
+
            }
            else{
                 document.getElementById(`view-applicants-${position_id}`).textContent = 'Hide Applicants';
                 applications_div.style.display = 'block';
+
            }
 
        }

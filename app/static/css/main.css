@@ -115,6 +115,11 @@
   color: black;
 }
 
+.noHover{
+    pointer-events: none;
+}
+
+
 /*.hr-text {*/
 /*  border: 0;*/
 /*  font-size: 14px;*/
