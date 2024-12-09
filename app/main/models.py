@@ -121,6 +121,14 @@ class CourseSection(db.Model):
         back_populates='assigned_terms',
         passive_deletes=True ) 
 
+    def get_assignedStudents(self):
+        assigned_students = db.session.scalars(self.assigned_students.select()).all()
+        if assigned_students is None: 
+            return "This course section has no assigned Student Assistants"
+        else:
+            return assigned_students
+
+
     def hasPosition(self):
         return self.position is not None
     
@@ -130,7 +138,7 @@ class CourseSection(db.Model):
 class Position(db.Model):
     id : sqlo.Mapped[int] = sqlo.mapped_column(sqla.Integer, primary_key=True)
     section_id : sqlo.Mapped[int] = sqlo.mapped_column(sqla.ForeignKey(CourseSection.id))
-    num_SAs : sqlo.Mapped[int] = sqlo.mapped_column(sqla.Integer)
+    num_SAs : sqlo.Mapped[int] = sqlo.mapped_column(sqla.Integer, default=0)
     num_Assigned : sqlo.Mapped[int] = sqlo.mapped_column(sqla.Integer, default=0) #sqlo.mapped_collection(sqla.Integer) --> WAS PREVIOUSLY THIS
     available : sqlo.Mapped[bool] = sqlo.mapped_column(sqla.Boolean, default=True)
     min_GPA : sqlo.Mapped[float] = sqlo.mapped_column(sqla.Float, default=0)

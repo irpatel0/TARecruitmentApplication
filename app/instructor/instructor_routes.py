@@ -152,7 +152,7 @@ def accept_student(position_id, student_id):
         position.num_Assigned = position.num_Assigned + 1
         approved_application.status = 'Approved'
         student.assigned_terms.add(course_section)
-        if position.num_Assigned == position.num_SAs:
+        if position.num_Assigned == position.num_SAs - 1:
             position.available == False; 
         db.session.commit()
         flash('Student successfully assigned to SA position')
@@ -183,6 +183,15 @@ def reject_student(position_id, student_id):
                 db.session.commit()
                 flash('Student application status updated to rejected')
                 return (redirect(url_for('main.instructor_index')))
+            
+
+@bp_instructor.route('/instructor/closedpositions', methods=['GET', 'POST'])
+@login_required
+@role_required('Instructor')
+def view_closedpositions():
+    coursesections = db.session.query(CourseSection).where(CourseSection.instructor_id == current_user.id).all()
+    positions = db.session.query(Position).all()
+    return render_template('closedpositions.html', positions = positions, coursesections = coursesections)
 
 
 
