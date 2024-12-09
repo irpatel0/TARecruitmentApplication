@@ -3,8 +3,8 @@ import sqlalchemy as sqla
 from app import db
 from app.instructor import instructor_blueprint as bp_instructor
 from flask_login import current_user, login_required
-from app.main.models import Course, Student, Instructor, CourseSection, Position
-from app.instructor.instructor_forms import CourseForm, PositionForm
+from app.main.models import Course, Student, Instructor, CourseSection, Position, Application
+from app.instructor.instructor_forms import CourseForm, PositionForm, UpdateCourseForm
 from app.decorators import role_required
 
 
@@ -100,3 +100,47 @@ def view_allstudents(position_id):
                      'availability': availability})
 
     return jsonify(data)
+
+@bp_instructor.route('/coursesection/<cs_id>/update', methods=['GET', 'POST'])
+@login_required
+@role_required('Instructor')
+def update_coursesection(cs_id):
+    cs = db.session.get(CourseSection, cs_id)
+    ucf = UpdateCourseForm()
+
+    if request.method == 'POST':
+        if ucf.validate_on_submit():
+            cs.course_number = ucf.course_number.data.number
+            cs.section = ucf.section.data
+            cs.term = ucf.term.data
+            db.session.commit()
+            flash('Your course section has been updated')
+            return redirect(url_for('main.instructor_index'))
+    elif request.method == 'GET':
+        ucf.course_number.data = cs.course
+        ucf.section.data = cs.section
+        ucf.term.data = cs.term
+    else:
+        pass
+    return render_template('update_course_section.html', form=ucf)
+
+@bp_instructor.route('/coursesection/<cs_id>/delete', methods=['GET', 'POST'])
+@login_required
+@role_required('Instructor')
+def delete_coursesection(cs_id):
+    cs = db.session.get(CourseSection, cs_id)
+    if cs:
+        # for student in db.session.scalars(cs.assigned_students.select()):
+        #     cs.assigned_students.remove(student)
+        #     db.session.commit()
+        pos = db.session.scalars(sqla.select(Position).where(Position.section_id == cs_id)).first()
+        application = db.session.scalars(sqla.select(Application).where(Application.position_id == pos.id)).first()
+        db.session.delete(application)
+        db.session.commit()
+        db.session.delete(pos)
+        db.session.commit()
+        db.session.delete(cs)
+        db.session.commit()
+        flash('Your course section has been deleted')
+    return redirect(url_for('main.instructor_index'))
+

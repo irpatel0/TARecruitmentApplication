@@ -31,3 +31,12 @@ class PositionForm(FlaskForm):
     min_GPA = FloatField('Min GPA', validators=[DataRequired(), NumberRange(0, 4)])
     min_grade = SelectField('Min Grade', choices = [('A', 'A'), ('B', 'B'), ('C', 'C'), ('D', 'D'), ('F', 'F'), ('NR', 'NR')], validators=[DataRequired()])
     submit = SubmitField('Post')
+
+class UpdateCourseForm(FlaskForm):
+    course_number = QuerySelectField('Course Number',
+                query_factory = lambda: db.session.scalars(sqla.select(Course).order_by(sqla.text('Course.number'))),
+                get_label = lambda theCourse : f"{theCourse.number} - {theCourse.title}"
+    )
+    section =  StringField('Section', validators=[Length(min=1, max=5)])
+    term = StringField('Term', validators=[Length(min=1, max=5), Regexp('^\d{4}[ABCDFS]$', message='Term should be a year followed by a term letter (Ex. 2024B).')])
+    submit = SubmitField('Update Course Section')

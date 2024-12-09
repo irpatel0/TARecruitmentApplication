@@ -18,7 +18,7 @@
        {%if coursesections%}
            {% for course in coursesections %}
                <tr>
-                    <td style="padding: 30px 0 30px 10px; border: 1px solid #c6c7c8;" width="70%">
+                    <td style="padding: 30px 0 30px 10px; border: 1px solid #c6c7c8;" width="50%">
                         {{course}}
                     </td>
                    <td width=30%" style="border: 1px solid #c6c7c8;">
@@ -31,13 +31,16 @@
                                <a href="#" class = "btn btn-success">Filled</a>
                            {%endif%}
                        {%else%}
-                           <a href="{{url_for('instructor.create_position', section_id = course.id)}}" class = "btn btn-outline-secondary">Create Position</a>
+                           <a href="{{url_for('instructor.create_position', section_id = course.id)}}" class = "btn btn-outline-primary">Create Position</a>
                        {%endif%}
                    </td>
-
+                    <td width=20%" style="border: 1px solid #c6c7c8;">
+                        <a href="{{url_for('instructor.update_coursesection', cs_id = course.id)}}" class="btn btn-outline-info">Update</a>
+                        <a href="{{url_for('instructor.delete_coursesection', cs_id = course.id)}}" class = "btn btn-outline-danger">Delete</a>
+                    </td>
                </tr>
                <tr id="tr-{{course.id}}" hidden="true">
-                    <td colspan="2">
+                    <td colspan="3">
                         <div id = "{{course.id}}" style="display: none;">
 
                        {%if course.hasPosition()%}
@@ -55,7 +58,7 @@
                     </td>
                </tr>
                 <tr class="noHover" id="tr-{{course.position.id}}" style="background-color: #fff !important;">
-                    <td colspan="2" style="background-color: #fff !important; border: none;">
+                    <td colspan="3" style="background-color: #fff !important; border: none;">
                         <div id = "application-{{course.position.id}}" style="display: none;">
                         <table class="table table-bordered">
                             <thead>
