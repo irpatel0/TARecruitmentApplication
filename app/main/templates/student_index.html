@@ -4,44 +4,8 @@
 {% block content %}
     <div style="min-height: 80vh;">
               <h1>Welcome to Student Page</h1>
+
             <!-- Display the number and title of every item in the Course table -->
-            <h2 style="text-align: center">Open Positions</h2>
-            <hr class="mb-4">
-            <table class="table table-hover">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Course Section</th>
-                        <th>Details</th>
-                        <th>Apply</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for position in positions %}
-                        {% if position.id not in applied %}
-                        <tr>
-                            <td>
-                                {{loop.index}}
-                            </td>
-                            <td>
-                                {{position}}
-                                <div class="card text-bg-light mb-3" style="display: none" id="position-{{position.id}}">
-
-
-                                </div>
-                            </td>
-                            <td>
-                                <button class="btn btn-outline-primary" onclick="show_position_details({{ position.id }})" id="show-details-{{position.id}}">Show Details</button>
-                            </td>
-                            <td>
-                                <a href="{{url_for('student.apply_course', position_id=position.id)}}" class="btn btn-outline-success">Apply</a>
-                            </td>
-                        </tr>
-                        {% endif %}
-                    {% endfor %}
-                </tbody>
-            </table>
-
             <h2 style="text-align: center">Recommended Positions</h2>
             <hr class="mb-4">
             <table class="table table-hover">
@@ -54,12 +18,55 @@
                     </tr>
                 </thead>
                 <tbody>
+                    {% set ns = namespace(hasRecommendations=false) %}
                     {% for position in recommended %}
                         {% if position.id not in applied %}
+                        {% set ns.hasRecommendations = true %}
+                            <tr>
+                                <td>
+                                    {{ loop.index }}
+                                    {{ position.recommendation_score(current_user) }}
+                                </td>
+                                <td>
+                                    {{ position }}
+                                    <div class="card text-bg-light mb-3" style="display: none" id="position-{{ position.id }}"></div>
+                                </td>
+                                <td>
+                                    <button class="btn btn-outline-primary" onclick="show_position_details({{ position.id }})" id="show-details-{{ position.id }}">Show Details</button>
+                                </td>
+                                <td>
+                                    <a href="{{ url_for('student.apply_course', position_id=position.id) }}" class="btn btn-outline-success">Apply</a>
+                                </td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                    {% if not ns.hasRecommendations %}
+                        <tr>
+                            <td colspan="4" style="text-align: center">No recommendations available</td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+
+            <h2 style="text-align: center">Other Open Positions</h2>
+            <hr class="mb-4">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Course Section</th>
+                        <th>Details</th>
+                        <th>Apply</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% set ns = namespace(hasPositions=false) %}
+                    {% for position in positions %}
+                        {% if position.id not in applied and position not in recommended %}
+                        {% set ns.hasPositions = true %}
                         <tr>
                             <td>
                                 {{loop.index}}
-                                {{position.recommendation_score(current_user)}}
                             </td>
                             <td>
                                 {{position}}
@@ -77,9 +84,15 @@
                         </tr>
                         {% endif %}
                     {% endfor %}
+                    {% if not ns.hasPositions %}
+                        <tr>
+                            <td colspan="4" style="text-align: center">No open positions available</td>
+                        </tr>
+                    {% endif %}
                 </tbody>
             </table>
 
+            
 
             <h2 style="text-align: center">My Applications</h2>
             <hr class="mb-4">
