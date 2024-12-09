@@ -16,7 +16,7 @@
   content: '';
   position: absolute;
   height: 3px;
-  width: 120px;
+  width: 150px;
   bottom: 0;
   background: #696969;
   left: 0;
@@ -113,6 +113,33 @@
 .filled{
   background-color: #b9ffb9;
   color: black;
+}
+
+.noHover{
+    pointer-events: none;
+}
+
+.form-group-inline {
+    display: inline-block;
+    position: relative;
+    width: 100%;
+}
+
+.form-group-inline input {
+    display: inline-block;
+    width: calc(100% - 40px);
+}
+
+.form-group-inline button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-30%);
+    padding: 9px;
+    margin-left: 895px;
+}
+
+.form-group-inline label {
+    display: block;
 }
 
 /*.hr-text {*/

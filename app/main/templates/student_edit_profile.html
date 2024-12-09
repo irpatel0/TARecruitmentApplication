@@ -2,7 +2,7 @@
 {% import 'bootstrap_wtf.html' as wtf %}
 
 {% block content %}
-    <h1 class="form-title">Edit Profile</h1>
+    <h1 class="form-title">Profile - {{current_user.username}}</h1>
 
     <div class="register-form">
         {% if eform %}
@@ -10,20 +10,171 @@
             <form action="{{ url_for('main.student_edit_profile') }}" method="POST">
                 {{ eform.hidden_tag() }}
 
-                {{ wtf.form_field(eform.first_name) }}
-                {{ wtf.form_field(eform.last_name) }}
+                <div class="form-group-inline">
+                    {{ wtf.form_field(eform.first_name) }}
+                    <button class="btn btn-outline-secondary" onclick="edit_firstname(event)">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                          <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                          <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
+                        </svg>
+                    </button>
+                </div>
+
+                <div class="form-group-inline">
+                    {{ wtf.form_field(eform.last_name) }}
+                    <button class="btn btn-outline-secondary" onclick="edit_lastname(event)">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                          <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                          <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
+                        </svg>
+                    </button>
+                </div>
+
                 {{ wtf.form_field(eform.email) }}
-                {{ wtf.form_field(eform.wpi_id) }}
-                {{ wtf.form_field(eform.phone) }}
+
+                <div class="form-group-inline">
+                    {{ wtf.form_field(eform.wpi_id) }}
+                    <button class="btn btn-outline-secondary" onclick="edit_wpi_id(event)">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                          <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                          <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
+                        </svg>
+                    </button>
+                </div>
+
+                <div class="form-group-inline">
+                    {{ wtf.form_field(eform.phone) }}
+                    <button class="btn btn-outline-secondary" onclick="edit_phone(event)">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                          <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                          <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
+                        </svg>
+                    </button>
+                </div>
+
+                <div class="form-group-inline">
+                    {{ wtf.form_field(eform.GPA) }}
+                    <button class="btn btn-outline-secondary" onclick="edit_gpa(event)">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                          <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                          <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
+                        </svg>
+                    </button>
+                </div>
+
+                <div class="form-group-inline">
+                    {{ wtf.form_field(eform.graduation_date) }}
+                    <button class="btn btn-outline-secondary" onclick="edit_graduation(event)">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                          <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                          <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
+                        </svg>
+                    </button>
+                </div>
+
+                {{ wtf.form_field(eform.courses_taught) }}
+
                 {{ wtf.form_field(eform.password) }}
                 {{ wtf.form_field(eform.password2) }}
-                {{ wtf.form_field(eform.GPA) }}
-                {{ wtf.form_field(eform.graduation_date) }}
-                {{ wtf.form_field(eform.courses_taught) }}
+
                 {{ wtf.form_field(eform.submit) }}
+                <div>
+                    <a class="btn btn-primary" href="{{ url_for('main.student_index') }}">Go Back</a>
+                </div>
 
             </form>
         {% endif %}
     </div>
+
+{% block script %}
+   <script>
+
+       function edit_firstname(event){
+           event.preventDefault();
+           let firstname = document.getElementById("first_name");
+           if (firstname.hasAttribute("readonly")) {
+                firstname.removeAttribute("readonly");
+                firstname.setAttribute("editable", "editable");
+                firstname.focus();
+           }
+           else {
+                firstname.setAttribute("readonly", "readonly");
+                firstname.removeAttribute("editable");
+           }
+       }
+
+       function edit_lastname(event){
+           event.preventDefault();
+           let firstname = document.getElementById("last_name");
+           if (firstname.hasAttribute("readonly")) {
+                firstname.removeAttribute("readonly");
+                firstname.setAttribute("editable", "editable");
+                firstname.focus();
+           }
+           else {
+                firstname.setAttribute("readonly", "readonly");
+                firstname.removeAttribute("editable");
+           }
+       }
+
+       function edit_wpi_id(event){
+           event.preventDefault();
+           let firstname = document.getElementById("wpi_id");
+           if (firstname.hasAttribute("readonly")) {
+                firstname.removeAttribute("readonly");
+                firstname.setAttribute("editable", "editable");
+                firstname.focus();
+           }
+           else {
+                firstname.setAttribute("readonly", "readonly");
+                firstname.removeAttribute("editable");
+           }
+       }
+
+       function edit_phone(event){
+           event.preventDefault();
+           let firstname = document.getElementById("phone");
+           if (firstname.hasAttribute("readonly")) {
+                firstname.removeAttribute("readonly");
+                firstname.setAttribute("editable", "editable");
+                firstname.focus();
+           }
+           else {
+                firstname.setAttribute("readonly", "readonly");
+                firstname.removeAttribute("editable");
+           }
+       }
+
+       function edit_gpa(event){
+           event.preventDefault();
+           let firstname = document.getElementById("GPA");
+           if (firstname.hasAttribute("readonly")) {
+                firstname.removeAttribute("readonly");
+                firstname.setAttribute("editable", "editable");
+                firstname.focus();
+           }
+           else {
+                firstname.setAttribute("readonly", "readonly");
+                firstname.removeAttribute("editable");
+           }
+       }
+
+       function edit_graduation(event){
+           event.preventDefault();
+           let firstname = document.getElementById("graduation_date");
+           if (firstname.hasAttribute("readonly")) {
+                firstname.removeAttribute("readonly");
+                firstname.setAttribute("editable", "editable");
+                firstname.focus();
+           }
+           else {
+                firstname.setAttribute("readonly", "readonly");
+                firstname.removeAttribute("editable");
+           }
+       }
+
+   </script>
+{% endblock %}
+
 
 {% endblock %}

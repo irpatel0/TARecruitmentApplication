@@ -3,7 +3,7 @@
 
 {% block content %}
     <div style="min-height: 80vh;">
-              <h1>Welcome to Student Page</h1>
+              <h1>Welcome Student - {{current_user.firstname}}</h1>
             <!-- Display the number and title of every item in the Course table -->
             <h2 style="text-align: center">Open Positions</h2>
             <hr class="mb-4">
@@ -34,7 +34,7 @@
                             </td>
                             {% if position.id in applied %}
                             <td>
-                                <a class = "btn btn-outline-secondary">Pending</a>                            
+                                <a class = "btn btn-secondary">Pending</a>
                             {% else %}
                             <td>
                                 <a href="{{url_for('student.apply_course', position_id=position.id)}}" class="btn btn-outline-success">Apply</a>

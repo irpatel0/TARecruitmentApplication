@@ -9,14 +9,14 @@ from app.main.models import Student, User, Course
 from flask_login import current_user
 
 class StudentEditForm(FlaskForm):
-    first_name = StringField('First Name', validators=[DataRequired()])
-    last_name = StringField('Last Name', validators=[DataRequired()])
-    email = StringField('Email', validators=[DataRequired(), Email()])
-    wpi_id = StringField('WPI ID', validators=[DataRequired()])
-    phone = StringField('Phone Number', validators=[DataRequired()])
+    first_name = StringField('First Name', validators=[DataRequired()], render_kw={'readonly': True})
+    last_name = StringField('Last Name', validators=[DataRequired()], render_kw={'readonly': True})
+    email = StringField('Email', validators=[DataRequired(), Email()], render_kw={'readonly': True})
+    wpi_id = StringField('WPI ID', validators=[DataRequired()], render_kw={'readonly': True})
+    phone = StringField('Phone Number', validators=[DataRequired()], render_kw={'readonly': True})
     password = PasswordField('Password', validators=[DataRequired()])
     password2 = PasswordField('Confirm Password', validators=[DataRequired(), EqualTo('password')])
-    GPA = FloatField('GPA', validators=[DataRequired(message="Enter a valid GPA between 0 and 4.00"), NumberRange(0, 4)])
+    GPA = FloatField('GPA', validators=[DataRequired(message="Enter a valid GPA between 0 and 4.00"), NumberRange(0, 4)], render_kw={'readonly': True})
     courses_taught = QuerySelectMultipleField('Courses Taught',
                                               query_factory=lambda: db.session.scalars(
                                                   sqla.select(Course).order_by(Course.number)),
@@ -24,7 +24,7 @@ class StudentEditForm(FlaskForm):
                                               widget=ListWidget(prefix_label=False),
                                               option_widget=CheckboxInput()
                                               )
-    graduation_date = StringField('Graduation Date', validators=[DataRequired()])
+    graduation_date = StringField('Graduation Date', validators=[DataRequired()], render_kw={'readonly': True})
     submit = SubmitField('Update Profile')
 
     def validate_wpi_id(self, wpi_id):
@@ -65,11 +65,11 @@ class StudentEditForm(FlaskForm):
             raise ValidationError('Please enter valid graduation date with 4 digit year')
 
 class InstructorEditForm(FlaskForm):
-    first_name = StringField('First Name', validators=[DataRequired()])
-    last_name = StringField('Last Name', validators=[DataRequired()])
-    wpi_id = StringField('WPI ID', validators=[DataRequired()])
+    first_name = StringField('First Name', validators=[DataRequired()], render_kw={'readonly': True})
+    last_name = StringField('Last Name', validators=[DataRequired()], render_kw={'readonly': True})
+    wpi_id = StringField('WPI ID', validators=[DataRequired()], render_kw={'readonly': True})
     email = StringField('Email', validators=[DataRequired(), Email()])
-    phone = StringField('Phone Number', validators=[DataRequired()])
+    phone = StringField('Phone Number', validators=[DataRequired()], render_kw={'readonly': True})
     password = PasswordField('Password', validators=[DataRequired()])
     password2 = PasswordField('Confirm Password', validators=[DataRequired(), EqualTo('password')])
     submit = SubmitField('Update Profile')
