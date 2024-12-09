@@ -65,11 +65,11 @@ class StudentEditForm(FlaskForm):
             raise ValidationError('Please enter valid graduation date with 4 digit year')
 
 class InstructorEditForm(FlaskForm):
-    first_name = StringField('First Name', validators=[DataRequired()])
-    last_name = StringField('Last Name', validators=[DataRequired()])
-    wpi_id = StringField('WPI ID', validators=[DataRequired()])
+    first_name = StringField('First Name', validators=[DataRequired()], render_kw={'readonly': True})
+    last_name = StringField('Last Name', validators=[DataRequired()], render_kw={'readonly': True})
+    wpi_id = StringField('WPI ID', validators=[DataRequired()], render_kw={'readonly': True})
     email = StringField('Email', validators=[DataRequired(), Email()])
-    phone = StringField('Phone Number', validators=[DataRequired()])
+    phone = StringField('Phone Number', validators=[DataRequired()], render_kw={'readonly': True})
     password = PasswordField('Password', validators=[DataRequired()])
     password2 = PasswordField('Confirm Password', validators=[DataRequired(), EqualTo('password')])
     submit = SubmitField('Update Profile')

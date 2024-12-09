@@ -46,10 +46,10 @@
                 <ul class="dropdown-menu">
                     {% if current_user.user_type == 'Student' %}
                     <li><a href="{{url_for('main.student_index')}}" class="dropdown-item text-white">Dashboard</a></li>
-                    <li><a class="dropdown-item text-white" href="{{url_for('main.student_edit_profile')}}">Edit Profile</a></li>
+                    <li><a class="dropdown-item text-white" href="{{url_for('main.student_edit_profile')}}">View Profile</a></li>
                     {% else %}
                     <li><a href="{{url_for('main.instructor_index')}}" class="dropdown-item text-white">Dashboard</a></li>
-                    <li><a class="dropdown-item text-white" href="{{url_for('main.instructor_edit_profile')}}">Edit Profile</a></li>
+                    <li><a class="dropdown-item text-white" href="{{url_for('main.instructor_edit_profile')}}">View Profile</a></li>
                     <li><a href="{{url_for('instructor.create_course')}}" class="dropdown-item text-white">Create Course Section</a></li>
                     {% endif %}
                 </ul>
