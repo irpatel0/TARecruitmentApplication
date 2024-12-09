@@ -1,0 +1,220 @@
+{% extends "base.html" %}
+{% import 'bootstrap_wtf.html' as wtf %}
+
+
+{% block content %}
+
+   <!-- Display everything in courses -->
+   <div style="min-height: 80vh;">
+    <h1>Instructor Page</h1>
+    <div class="indexHeader">
+   <h4 style="text-align: center;">Closed Course Sections</h4>
+    
+        <hr class="mb-4">
+</div>
+
+<ul class = "courseSections">
+   {%if coursesections%}
+   {% for course in coursesections %}
+   {% if course.position is not none and course.position.num_Assigned == course.position.num_SAs %}
+       <li>
+           {{course}}
+           <!-- {{course.position.num_Assigned == course.position.num_SAs}} -->
+           <div>
+               <button class = "btn btn-outline-dark"  id = "button-{{course.id}}" onclick="showInfo({{course.id}})">View Details</button>
+               {%if course.hasPosition()%}
+                   {% if course.position.num_Assigned != course.position.num_SAs %} <!-- doesn't accept if just ==, wants == -1 once max applicants reached -->
+                        <button class="btn btn-outline-primary" id="view-applicants-{{course.position.id}}" onclick="get_applicants({{course.position.id}})">View Applicants</button>
+                   {%else%}
+                       <a href="#" class = "btn btn-outline-success">Filled</a>
+                   {%endif%}
+               {%else%}
+                   <a href="{{url_for('instructor.create_position', section_id = course.id)}}" class = "btn btn-outline-danger">Create Position</a>
+               {%endif%}
+           </div>
+       </li>
+       <div>
+        <div> Student Assistants: </div> 
+        {% for assignedStudent in course.get_assignedStudents() %}
+            &nbsp; {{ assignedStudent.firstname + assignedStudent.lastname }}
+            <br>
+        {% endfor %}
+       </div>
+       <div id = "{{course.id}}" style="display: none;">
+           <hr>
+           {%if course.hasPosition()%}
+               <h5>Position Details</h5>
+               <p>Course Section: {{course.position}}</p>
+               <p>Available: {{course.position.available}}</p>
+               <p>Number of SAs: {{course.position.num_SAs}}</p>
+               <p>Minimum GPA: {{course.position.min_GPA}}</p>
+               <p>Minimum Grade: {{course.position.min_grade}}</p>
+               <p>Date Posted: {{ moment(course.position.timestamp).format('LLL') }}</p>
+           {%else%}
+               <p>No Position Created</p>
+           {%endif%}
+
+       </div>
+       <hr>
+        <div id = "application-{{course.position.id}}" style="display: none;">
+           <hr>
+
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Student id</th>
+                        <th>Student Name</th>
+                        <th>Grade Acquired</th>
+                        <th>Term Taken</th>
+                        <th>Course Term</th>
+                        <th>Status</th>
+                        <th>Availability</th>
+                        <th>Approve/Reject</th>
+                    </tr>
+                </thead>
+                <tbody id="instructor-table-{{course.position.id}}" >
+
+                </tbody>
+            </table>
+
+        </div>
+
+
+   {% endif %}
+   {% endfor %}
+   {%else%}
+    <p style="text-align: center;">You have not created any course sections.</p>
+   {%endif%}
+
+</ul>
+
+</div>
+
+{% block script %}
+   <script>
+       function showInfo(id){
+           var x = document.getElementById(id);
+           if(x.style.display === "none"){
+               x.style.display = "block";
+               document.getElementById('button-' + id).textContent = "Hide Details";
+           }
+           else{
+               x.style.display = "none";
+               document.getElementById('button-' + id).textContent = "View Details";
+           }
+       }
+
+       async function get_applicants(position_id){
+           const url = "{{ url_for('instructor.view_allstudents', position_id = 'position_id') }}".replace("position_id", position_id);
+           try {
+            const response = await fetch(url)
+            if (!response.ok) {
+                throw new Error('Response status: $(response.status)');
+            }
+            const json = await response.json();
+            console.log(json);
+            fill_applications(position_id, json);
+            } catch (error) {
+                console.log(error.message);
+            }
+       }
+
+       function fill_applications(position_id, data){
+           let applications_div = document.getElementById(`application-${position_id}`);
+           let table = document.getElementById(`instructor-table-${position_id}`);
+
+           if (data.length === 0){
+               let p = document.createElement('p');
+               p.textContent = 'No Applicants Available';
+               table.appendChild(p);
+           }
+           else {
+               for (let i = 0; i<data.length; i++){
+                   let tr = document.createElement('tr');
+
+                   let td1 = document.createElement('td');
+                   td1.textContent = i+1;
+                   tr.appendChild(td1);
+
+                   let td2 = document.createElement('td');
+                   td2.textContent = data[i]['student_id'];
+                   tr.appendChild(td2);
+
+                   let td7 = document.createElement('td');
+                   let td7a = document.createElement('a');
+                   const url = "{{ url_for('instructor.student_profile', student_id = 'student_id') }}".replace("student_id", data[i]['student_id']);
+                   td7a.setAttribute('href', url);
+                   td7a.textContent = data[i]['student_name'];
+                   td7.appendChild(td7a);
+                   tr.appendChild(td7);
+
+                   let td3 = document.createElement('td');
+                   td3.textContent = data[i]['grade_acquired'];
+                   tr.appendChild(td3);
+
+                   let td4 = document.createElement('td');
+                   td4.textContent = data[i]['term_taken'];
+                   tr.appendChild(td4);
+
+                   let td5 = document.createElement('td');
+                   td5.textContent = data[i]['course_term'];
+                   tr.appendChild(td5);
+
+                   let td6 = document.createElement('td');
+                   td6.textContent = data[i]['status'];
+                   tr.appendChild(td6);
+
+                   let td8 = document.createElement('td');
+                   td8.textContent = data[i]['availability'];
+                   tr.appendChild(td8);
+
+                   let td9 = document.createElement('td');
+                   let td9a = document.createElement('button');
+                   let td9b= document.createElement('button');
+                   const assign_url = "{{ url_for('instructor.accept_student', student_id = 'student_id', position_id = 'position_id') }}".replace("student_id", data[i]['student_id']).replace("position_id", position_id);
+                   const reject_url = "{{ url_for('instructor.reject_student', student_id = 'student_id', position_id = 'position_id') }}".replace("student_id", data[i]['student_id']).replace("position_id", position_id);
+                   td9a.setAttribute('href', assign_url)    //SET HERE ROUTE FOR ASSIGNED_STUDENTS (IN INSTRUCTOR ROUTES)??
+                   td9b.setAttribute('href', reject_url)
+                   td9a.addEventListener('click', () => { window.location.href = assign_url; });
+                   td9b.addEventListener('click', () => { window.location.href = reject_url; });
+                   td9a.textContent = 'Assign'; 
+                   td9b.textContent = 'Reject';
+                   if (data[i]['status'] === 'Rejected'){
+                        td9a.setAttribute('disabled', 'disabled');
+                        td9b.setAttribute('disabled', 'disabled');
+                   } 
+                   if (data[i]['availability'] === 'Assigned'){
+                       td9a.setAttribute('disabled', 'disabled');
+                       td9b.setAttribute('disabled', 'disabled');
+                   }
+                   td9a.style.marginRight = '12px'; 
+                   td9.appendChild(td9a);
+                   td9.appendChild(td9b); 
+                   tr.appendChild(td9);
+
+                   table.appendChild(tr);
+
+               }
+           }
+
+           function assign_student(position_id, data) {
+
+           }
+
+           if (applications_div.style.display === 'block'){
+               document.getElementById(`view-applicants-${position_id}`).textContent = 'View Applicants';
+               table.textContent = '';
+               applications_div.style.display = 'none';
+           }
+           else{
+                document.getElementById(`view-applicants-${position_id}`).textContent = 'Hide Applicants';
+                applications_div.style.display = 'block';
+           }
+
+       }
+
+   </script>
+{% endblock %}
+
+{% endblock %}

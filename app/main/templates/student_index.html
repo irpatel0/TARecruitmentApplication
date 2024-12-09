@@ -3,9 +3,14 @@
 
 {% block content %}
     <div style="min-height: 80vh;">
+<<<<<<< HEAD
               <h1>Welcome Student - {{current_user.firstname}}</h1>
+=======
+              <h1>Welcome to Student Page</h1>
+              <br>
+>>>>>>> iteration3-instructor-assigns
             <!-- Display the number and title of every item in the Course table -->
-            <h2 style="text-align: center">Open Positions</h2>
+            <h2 style="text-align: center">Student Assistant Positions</h2>
             <hr class="mb-4">
             <table class="table table-hover">
                 <thead>
@@ -34,10 +39,17 @@
                             </td>
                             {% if position.id in applied %}
                             <td>
-                                <a class = "btn btn-secondary">Pending</a>
-                            {% else %}
+                                {% for application in position.get_applications() %}
+                                    <a class = "btn btn-outline-secondary">{{ application.status }}</a>  
+                                {% endfor %}
+                            </td>                          
+                            {% elif position.available%}
                             <td>
                                 <a href="{{url_for('student.apply_course', position_id=position.id)}}" class="btn btn-outline-success">Apply</a>
+                            </td>
+                            {% else %}
+                            <td>
+                                <button class="btn btn-outline-primary">Closed</button>
                             </td>
                             {% endif %}
                         </tr>
