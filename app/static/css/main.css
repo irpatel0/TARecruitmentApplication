@@ -115,9 +115,11 @@
   color: black;
 }
 
-.noHover{
-    pointer-events: none;
-}
+
+
+/*.noHover:hover{*/
+/*  all: unset;*/
+/*}*/
 
 .form-group-inline {
     display: inline-block;

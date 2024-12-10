@@ -15,7 +15,7 @@
 
         </div>
 
-   <table style="border-spacing: 0 5px; border-collapse: separate;" class="mt-3 table table-light table-hover table-bordered border-3 align-middle">
+   <table style="border-spacing: 0 5px; border-collapse: separate;" class="mt-3 table table-light table-bordered border-3 align-middle">
        {%if coursesections%}
            {% for course in coursesections %}
                 {% if course.position is none or course.position.num_Assigned != course.position.num_SAs %}
@@ -63,7 +63,7 @@
                         </div>
                     </td>
                </tr>
-                <tr class="noHover" id="tr-{{course.position.id}}" style="background-color: #fff !important;">
+                <tr id="tr-{{course.position.id}}" style="background-color: #fff !important;">
                     <td colspan="3" style="background-color: #fff !important; border: none;">
                         <div id = "application-{{course.position.id}}" style="display: none;">
                         <table class="table table-bordered">
