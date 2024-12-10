@@ -137,7 +137,8 @@
     top: 50%;
     transform: translateY(-30%);
     padding: 9px;
-    margin-left: 895px;
+    right: 0;
+    /*margin-left: 800px;*/
 }
 
 .form-group-inline label {

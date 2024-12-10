@@ -153,13 +153,14 @@ def update_coursesection(cs_id):
 def delete_coursesection(cs_id):
     cs = db.session.get(CourseSection, cs_id)
     if cs:
-        # for student in db.session.scalars(cs.assigned_students.select()):
-        #     cs.assigned_students.remove(student)
-        #     db.session.commit()
+        for student in db.session.scalars(cs.assigned_students.select()):
+            cs.assigned_students.remove(student)
+            db.session.commit()
         pos = db.session.scalars(sqla.select(Position).where(Position.section_id == cs_id)).first()
-        application = db.session.scalars(sqla.select(Application).where(Application.position_id == pos.id)).first()
-        db.session.delete(application)
-        db.session.commit()
+        applications = db.session.scalars(sqla.select(Application).where(Application.position_id == pos.id)).all()
+        for application in applications:
+            db.session.delete(application)
+            db.session.commit()
         db.session.delete(pos)
         db.session.commit()
         db.session.delete(cs)
