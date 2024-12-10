@@ -257,3 +257,13 @@ def test_applications(test_client, init_database):
 
     do_logout(test_client, path='/user/logout')
 
+
+def test_accept_student(test_client, init_database):
+    do_login(test_client, path='/user/login', username='test', passwd='1234')
+
+
+
+# def test_reject_student(test_client, init_database):
+
+# def test_view_closedpositions(test_client, init_database):
+
