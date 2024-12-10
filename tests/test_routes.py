@@ -259,3 +259,6 @@ def test_applications(test_client, init_database):
 
     do_logout(test_client, path='/user/logout')
 
+
+def test_accept_student(test_client)
+
