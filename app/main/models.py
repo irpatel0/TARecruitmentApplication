@@ -56,6 +56,7 @@ class Student(User):
             back_populates='taught_by',
         )
     student_applications : sqlo.WriteOnlyMapped['Application'] = sqlo.relationship(back_populates='applicant')
+    courses_taken : sqlo.WriteOnlyMapped['CourseTaken'] = sqlo.relationship(back_populates='student')
 
 
     def applied_to(self, position_id):
@@ -63,6 +64,9 @@ class Student(User):
 
     def get_taught(self):
         return db.session.scalars(self.taught.select()).all()
+    
+    def get_taken(self):
+        return db.session.scalars(self.courses_taken.select()).all()
 
 
 class Instructor(User):
@@ -85,6 +89,7 @@ class Course(db.Model):
             back_populates='taught',
     )
     sections : sqlo.WriteOnlyMapped['CourseSection'] = sqlo.relationship(back_populates='course')
+    students_taken : sqlo.WriteOnlyMapped['CourseTaken'] = sqlo.relationship(back_populates='course')
 
 
 class CourseSection(db.Model):
@@ -123,8 +128,15 @@ class Position(db.Model):
         score = 0
         if student.gpa > self.min_GPA:
             score += 1
-        
+        if self.course_section.course in student.get_taught():
+            score += 2
+        if self.course_section.course in student.get_taken():
+            score += 1
+        if self.min_grade == student.courses_taken in student.get_taken():
+            score += 1
+
         return float(score)
+
 
     def __repr__(self):
         course_number = self.course_section.course_number
@@ -150,3 +162,14 @@ class Application(db.Model):
 
     def get_only_student(self):
         return db.session.scalars(sqla.select(Student).where(Student.id == self.student_id)).first()
+    
+
+class CourseTaken(db.Model):
+    id : sqlo.Mapped[int] = sqlo.mapped_column(sqla.Integer, primary_key=True)
+    student_id : sqlo.Mapped[int] = sqlo.mapped_column(sqla.ForeignKey(Student.id))
+    course_id : sqlo.Mapped[int] = sqlo.mapped_column(sqla.ForeignKey(Course.id))
+    grade : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(2))
+
+    #relations
+    student : sqlo.Mapped[Student] = sqlo.relationship(back_populates='courses_taken')
+    course : sqlo.Mapped[Course] = sqlo.relationship(back_populates='students_taken')
