@@ -169,7 +169,6 @@
                                     {% endif %}
                                 {% endfor %}
                             </td>                          
-                            {% elif position.available%}
                             <td>
                                 <a href="{{url_for('student.withdraw_course', position_id=position.id)}}" class="btn btn-outline-danger" onclick="return confirm('Are you sure you want to withdraw your application?')">Withdraw</a>                          
                             </td>
