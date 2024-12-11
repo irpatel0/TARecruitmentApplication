@@ -21,7 +21,7 @@ def make_shell_context():
 def add_classes(*args, **kwargs):
     query = sqla.select(Course)
     if db.session.scalars(query).first() is None:
-        courses = ['CS1101', 'CS2102', 'CS2223', 'CS2303', 'CS3013', 'CS 3133', 'CS3431', 'CS3733', 'CS4341', 'CS4241', 'CS4342', 'CS4433']
+        courses = ['CS1101', 'CS2102', 'CS2223', 'CS2303', 'CS3013', 'CS3133', 'CS3431', 'CS3733', 'CS4341', 'CS4241', 'CS4342', 'CS4433']
         titles = ['Introduction To Program Design', 'Object-Oriented Design Concepts', 'Algorithms', 'Systems Programming Concepts', 'Operating Systems', 'Foundations Of Computer Science', 'Database Systems I', 'Software Engineering', 'Introduction To Artificial Intelligence', 'Webware: Computational Technology For Network Information Systems', 'Machine Learning', 'Big Data Management and Analytics']
         for i in range (len(courses)):
             db.session.add(Course(number=courses[i], title=titles[i]))
