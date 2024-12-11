@@ -17,7 +17,22 @@
                 {{wtf.form_field(form.phone)}}
                 {{wtf.form_field(form.GPA)}}
                 {{wtf.form_field(form.graduation_date)}}
-                {{wtf.form_field(form.courses_taught)}}
+
+                <h4>Courses</h4>
+                <div id="courses">
+                    {% for subfield in form.courses %}
+                    <div class="course-field">
+                        {{ wtf.form_field(subfield.course) }}
+                        {{ wtf.form_field(subfield.grade) }}
+                        {{ wtf.form_field(subfield.sa_experience) }}
+                        <button type="button" class="btn btn-danger" onclick="removeCourse(this)">Remove</button>
+                    </div>
+                    {% endfor %}
+                </div>
+                <br>
+                <button type="button" class="btn btn-primary" onclick="addCourse()">Add Course</button>
+                <br>
+                <br>
 
                 {{wtf.form_field(form.submit)}}
 

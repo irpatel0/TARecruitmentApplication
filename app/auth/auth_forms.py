@@ -15,7 +15,7 @@ class CourseForm(FlaskForm):
         allow_blank=False,  # Ensures a valid choice is always selected
         validators=[DataRequired()],
     )
-    grade = StringField("Grade", validators=[Optional()])
+    grade = SelectField('Grade earned in the course',choices = [('A', 'A'), ('B', 'B'), ('C', 'C'), ('D', 'D'), ('F', 'F'), ('NR', 'NR')], validators=[DataRequired()])
     sa_experience = BooleanField("Have you served as an SA for this course?")
     class Meta:
         csrf = False 
@@ -85,13 +85,14 @@ class SSO_StudentRegistrationForm(FlaskForm):
     phone = StringField('Phone Number', validators=[DataRequired()])
     GPA = FloatField('GPA',
                      validators=[DataRequired(message="Enter a valid GPA between 0 and 4.00"), NumberRange(0, 4)])
-    courses_taught = QuerySelectMultipleField('Courses Taught',
-                                              query_factory=lambda: db.session.scalars(
-                                                  sqla.select(Course).order_by(Course.number)),
-                                              get_label=lambda theCourse: f"{theCourse.number} - {theCourse.title}",
-                                              widget=ListWidget(prefix_label=False),
-                                              option_widget=CheckboxInput()
-                                              )
+    # courses_taught = QuerySelectMultipleField('Courses Taught',
+    #                                           query_factory=lambda: db.session.scalars(
+    #                                               sqla.select(Course).order_by(Course.number)),
+    #                                           get_label=lambda theCourse: f"{theCourse.number} - {theCourse.title}",
+    #                                           widget=ListWidget(prefix_label=False),
+    #                                           option_widget=CheckboxInput()
+    #                                           )
+    courses = FieldList(FormField(CourseForm), min_entries=1)
     graduation_date = StringField('Graduation Date', validators=[DataRequired()])
     submit = SubmitField('Proceed')
 

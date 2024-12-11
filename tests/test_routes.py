@@ -63,7 +63,7 @@ def init_courses():
         db.session.commit()
     return None
 
-@pytest.fixture
+@pytest.fixture(scope='module')
 def init_database():
     # Create the database and the database table
     db.create_all()
@@ -81,6 +81,8 @@ def init_database():
     db.session.add(instructor1)
     # Commit the changes for the users
     db.session.commit()
+    all_course = db.session.scalars(sqla.select(Course)).all()
+    print("******",all_course)
 
     yield  # this is where the testing happens!
 
@@ -150,7 +152,7 @@ def do_login(test_client, path , username, passwd):
                           follow_redirects = True)
     assert response.status_code == 200
     #Students should update this assertion condition according to their own page content
-    assert b"Welcome to CSAssist" in response.data
+    assert b"Welcome Instructor -" in response.data
 
 def do_logout(test_client, path):
     response = test_client.get(path,
@@ -169,67 +171,67 @@ def test_login_logout(request,test_client,init_database):
     THEN check that the response is valid and login is succesfull
     """
     assert test_client is not None
-    assert init_database is not None
+    # assert init_database is not None
     do_login(test_client, path = '/user/login', username = 'test', passwd = '1234')
 
     do_logout(test_client, path = '/user/logout')
 
-# def test_create_coursection(test_client,init_database):
-#     do_login(test_client, path='/user/login', username='test', passwd='1234')
-#
-#     response = test_client.get('/instructor/create_course')
-#     assert response.status_code == 200
-#     assert b"Create a course section" in response.data
-#
-#     all_courses = db.session.scalars(sqla.select(Course)).all()
-#     course = list( map(lambda t: t.id, all_courses[:1]))
-#     faculty = db.session.scalars(sqla.select(User).where(User.username == 'test')).first()
-#
-#     response = test_client.post('/instructor/create_course',
-#                                 data=dict(course_number=course, section='BL02', instructor_id=faculty.id,
-#                                           term='2024B'),
-#                                 follow_redirects=True)
-#
-#
-#     assert response.status_code == 200
-#     #assert b"Welcome to CSAssist" in response.data
-#     course = db.session.scalars(sqla.select(CourseSection).where(CourseSection.course_number == 'CS1101').where(CourseSection.instructor_id == faculty.id)).first()
-#     assert course is not None
-#     assert course.course_number == 'CS1101'
-#     assert course.section == 'BL02'
-#     assert course.term == '2024B'
-#     assert len(course) == 1
-#     assert b"The new course has successfully posted!" in response.data
-#
-#     do_logout(test_client, path='/user/logout')
-#
-# def test_create_position(test_client,init_database):
-#     do_login(test_client, path='/user/login', username='test', passwd='1234')
-#     # create course section
-#     all_courses = db.session.scalars(sqla.select(Course)).all()
-#     course = list(map(lambda t: t.id, all_courses[:1]))
-#     faculty = db.session.scalars(sqla.select(User).where(User.username == 'test')).first()
-#
-#     response = test_client.post('/instructor/create_course',
-#                                 data=dict(course_number=course, section='BL02', instructor_id=faculty.id,
-#                                           term='2024B'),
-#                                 follow_redirects=True)
-#
-#     assert response.status_code == 200
-#
-#     # create position
-#     course = db.session.scalars(sqla.select(CourseSection).where(CourseSection.course_number == 'CS1101')).first()
-#     assert course is not None
-#     response = test_client.post('/instructor/'+str(course.id)+'/create_position',
-#                                 data=dict(num_SAs=5, min_GPA=3.2,
-#                                           min_grade='B'),
-#                                 follow_redirects=True)
-#     assert response.status_code == 200
-#     assert b"The new position has been successfully added!" in response.data
-#
-#     do_logout(test_client, path='/user/logout')
-#
-#
+def test_create_coursection(test_client,init_database):
+    do_login(test_client, path='/user/login', username='test', passwd='1234')
+
+    response = test_client.get('/instructor/create_course')
+    assert response.status_code == 200
+    assert b"Create a course section" in response.data
+
+    all_courses = db.session.scalars(sqla.select(Course)).all()
+    course = list( map(lambda t: t.id, all_courses[:1]))
+    faculty = db.session.scalars(sqla.select(User).where(User.username == 'test')).first()
+
+    response = test_client.post('/instructor/create_course',
+                                data=dict(course_number=course, section='BL02', instructor_id=faculty.id,
+                                          term='2024B'),
+                                follow_redirects=True)
+
+
+    assert response.status_code == 200
+    #assert b"Welcome to CSAssist" in response.data
+    course = db.session.scalars(sqla.select(CourseSection).where(CourseSection.course_number == 'CS1101').where(CourseSection.instructor_id == faculty.id)).all()
+    assert course is not None
+    assert course[0].course_number == 'CS1101'
+    assert course[0].section == 'BL02'
+    assert course[0].term == '2024B'
+    assert len(course) == 1
+    assert b"The new course has successfully posted!" in response.data
+
+    do_logout(test_client, path='/user/logout')
+
+def test_create_position(test_client,init_database):
+    do_login(test_client, path='/user/login', username='test', passwd='1234')
+    # create course section
+    all_courses = db.session.scalars(sqla.select(Course)).all()
+    course = list(map(lambda t: t.id, all_courses[:1]))
+    faculty = db.session.scalars(sqla.select(User).where(User.username == 'test')).first()
+
+    response = test_client.post('/instructor/create_course',
+                                data=dict(course_number=course, section='BL02', instructor_id=faculty.id,
+                                          term='2024B'),
+                                follow_redirects=True)
+
+    assert response.status_code == 200
+
+    # create position
+    course = db.session.scalars(sqla.select(CourseSection).where(CourseSection.course_number == 'CS1101')).first()
+    assert course is not None
+    response = test_client.post('/instructor/'+str(course.id)+'/create_position',
+                                data=dict(num_SAs=5, min_GPA=3.2,
+                                          min_grade='B'),
+                                follow_redirects=True)
+    assert response.status_code == 200
+    assert b"The new position has been successfully added!" in response.data
+
+    do_logout(test_client, path='/user/logout')
+
+
 # def test_apply_course(test_client, init_database):
 #     do_login(test_client, path='/user/login', username='gatorade', passwd='1234')
 #
