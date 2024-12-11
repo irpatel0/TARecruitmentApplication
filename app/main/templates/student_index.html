@@ -36,7 +36,13 @@
                             {% if position.id in applied %}
                             <td>
                                 {% for application in position.get_applications() %}
-                                    <a class = "btn btn-outline-secondary">{{ application.status }}</a>  
+                                    {% if application.student_id == current_user.id %}
+                                        {% if position.num_SAs != position.num_Assigned %}
+                                            <a class = "btn btn-outline-secondary">{{ application.status }}</a> 
+                                        {% else %} 
+                                            <a class = "btn btn-outline-secondary">Rejected</a>
+                                        {% endif %} 
+                                    {% endif %}
                                 {% endfor %}
                             </td>                          
                             {% elif position.available%}
