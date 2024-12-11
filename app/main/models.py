@@ -125,15 +125,29 @@ class Position(db.Model):
         return db.session.scalars(self.applications.select()).all()
     
     def recommendation_score(self, student):
+        course_section = db.session.get(CourseSection, self.section_id)
+        course = db.session.scalars(sqla.select(Course).where(Course.number == course_section.course_number)).first()
+        enrollment = db.session.scalars(sqla.select(CourseTaken).where(CourseTaken.student_id == student.id)
+                                                                .where(CourseTaken.course_id == course.id)).first()
+        
         score = 0
+        grade_map = {'A': 5, 'B': 4, 'C': 3, 'D': 2, 'F': 1, 'NR': 0}
+
         if student.gpa > self.min_GPA:
-            score += 1
-        if self.course_section.course in student.get_taught():
             score += 2
-        if self.course_section.course in student.get_taken():
-            score += 1
-        if self.min_grade == student.courses_taken in student.get_taken():
-            score += 1
+        if course in student.get_taught():
+            score += 3
+
+        for course_taken in student.get_taken():
+            enrolled_course = db.session.scalars(sqla.select(Course).where(Course.id == course_taken.id)).first()
+            if (enrolled_course == course):
+                score += 2
+
+                if grade_map.get(enrollment.grade, 0) >= grade_map.get(self.min_grade, 0):
+                    score += 2
+
+                if grade_map.get(enrollment.grade, 0) == 5:
+                    score += 2
 
         return float(score)
 
