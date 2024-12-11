@@ -203,6 +203,9 @@ def accept_student(position_id, student_id):
         student.assigned_terms.add(course_section)
         if position.num_Assigned == position.num_SAs - 1:
             position.available == False; 
+        #### ADDING TO PAST ENROLLMENTS
+        student.taught.add(course_section.course)
+        ######
         db.session.commit()
         flash('Student successfully assigned to SA position')
         return(redirect(url_for('main.instructor_index')))
