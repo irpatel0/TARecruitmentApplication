@@ -41,7 +41,8 @@ def student_register():
             course_taken = CourseTaken(student_id=student.id, course_id=course_obj.id, grade=course['grade'])
             db.session.add(course_taken)
             db.session.commit()
-            student.taught.add(course_obj)
+            if(course['sa_experience'] == True):
+                student.taught.add(course_obj)
         flash('Congratulations, you are now a registered student user!')
         return redirect(url_for('main.index'))
     return render_template('student_register.html', form=srform)
