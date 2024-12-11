@@ -4,7 +4,7 @@ warnings.filterwarnings("ignore")
 from datetime import datetime, timedelta
 import unittest
 from app import create_app, db
-from app.main.models import User, Student, Instructor, Course, CourseSection, Position, Application
+from app.main.models import User, Student, Instructor, Course, CourseSection, Position, Application, CourseTaken
 from config import Config
 
 class TestConfig(Config):
@@ -144,6 +144,29 @@ class TestModels(unittest.TestCase):
         self.assertEqual(application.status, 'Pending')
         self.assertEqual(application.applicant.id, student.id)
         self.assertEqual(application.applied_to.id, position.id)
+
+    def test_course_taken(self):
+
+        #create course 
+        course = Course(number='CS1010', title='Introduction to Programming')
+        db.session.add(course)
+        db.session.commit()
+
+        #create student
+        student = Student(username='student1', firstname='John', lastname='Doe', wpi_id='123456789', email='john.doe@example.com', phone='1234567890', graduation_date='2026')
+        student.set_password('password')
+        db.session.add(student)
+        db.session.commit()
+
+        #create a course taken by a student
+        course_taken = CourseTaken(student_id=student.id, course_id=course.id, grade='A')
+        db.session.add(course_taken)
+        db.session.commit()
+
+        self.assertEqual(course_taken.course_id, course.id)
+        self.assertEqual(course_taken.student_id, student.id)
+        self.assertEqual(course_taken.grade, 'A')
+
 
 #python -m unittest -v tests//test_models.py
 #pytest -v tests//test_routes.py
