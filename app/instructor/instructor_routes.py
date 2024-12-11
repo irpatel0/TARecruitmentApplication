@@ -119,7 +119,8 @@ def view_allstudents(position_id):
                      'grade_acquired': applicant.grade_aquired,
                      'term_taken': applicant.term_taken,
                      'status': applicant.status,
-                     'availability': availability})
+                     'availability': availability,
+                     'grade_point_average': student.gpa})
 
     return jsonify(data)
 

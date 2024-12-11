@@ -237,6 +237,10 @@
                    td4.textContent = data[i]['term_taken'];
                    tr.appendChild(td4);
 
+                   let td10 = document.createElement('td');
+                   td10.textContent = data[i]['grade_point_average'];
+                   tr.appendChild(td10);
+
                    let td6 = document.createElement('td');
                    td6.textContent = data[i]['status'];
                    tr.appendChild(td6);
