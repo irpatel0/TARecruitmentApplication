@@ -47,6 +47,7 @@ def apply_course(position_id):
                                 student_id = current_user.id,
                                 course_id = course.id,
                                 grade = aform.grade.data)
+            db.session.add(new_course_taken)
         else:
             check_taken.grade = aform.grade.data
         
