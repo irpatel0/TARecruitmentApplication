@@ -22,11 +22,11 @@ def instructor1():
 @pytest.fixture
 def student1():
     return {'username': 'sam', 'email': 'sam@wpi.edu', 'firstname': 'sam', 'lastname': 'sam', 'wpi_id': '345345678',
-            'phone': '1231231890', 'password': 'alsostrongpassword', 'gpa': 4.0, 'graduation_date': '2026'}
+            'phone': '1231231890', 'password': 'alsostrongpassword', 'gpa': 4.0, 'graduation_date': '2026', 'course': 'CS 3733', 'grade': 'A'}
 
 @pytest.fixture
 def coursection():
-    return {'course_number': 'CS3733', 'section': 'BL01', 'term': '2025C'}
+    return {'course_number': 'CS3733', 'section': 'BL01', 'year': '2025', 'term': 'C'}
 
 @pytest.fixture
 def position():
@@ -34,7 +34,7 @@ def position():
 
 @pytest.fixture
 def apply():
-    return {'grade_aquired': 'A', 'term_taken': '2024A', 'course_term': '2025C'}
+    return {'grade': 'A', 'year_taken': '2024', 'term_taken': 'A'}
 
 @pytest.fixture
 def browser():
@@ -106,7 +106,11 @@ def test_register_student(browser,student1):
     sleep(2)
     browser.find_element(By.NAME, "graduation_date").send_keys(student1['graduation_date'])
     sleep(2)
-    browser.find_element(By.NAME, "courses_taught").click()
+    browser.find_element(By.NAME, "course").send_keys(student1['course'])
+    sleep(2)
+    browser.find_element(By.NAME, "grade").send_keys(student1['grade'])
+    sleep(2)
+    browser.find_element(By.NAME, "sa_experience").click()
     sleep(2)
     browser.find_element(By.NAME, "submit").click()
     sleep(2)
@@ -129,7 +133,7 @@ def test_login_form(browser,instructor1):
     #verification
     content = browser.page_source
     assert 'Welcome Instructor' in content
-    assert instructor1['username'] in content
+    assert instructor1['firstname'] in content
 
 def test_create_coursection(browser, instructor1, coursection):
     browser.get('http://localhost:5000/user/login')
@@ -140,14 +144,16 @@ def test_create_coursection(browser, instructor1, coursection):
     browser.find_element(By.NAME, "submit").click()
 
     #browser.get('http://localhost:5000/instructor/create_course')
-    sleep(5)
+    sleep(2)
     browser.find_element(By.NAME, "create-course-section").click()
-    sleep(3)
+    sleep(2)
     browser.find_element(By.NAME, "course_number").send_keys(coursection['course_number'])
     sleep(2)
     browser.find_element(By.NAME, "section").send_keys(coursection['section'])
     sleep(2)
-    browser.find_element(By.NAME, "term").send_keys(coursection['term'])
+    browser.find_element(By.NAME, "year").send_keys(coursection['year'])
+    sleep(2)
+    Select(browser.find_element(By.NAME, "term")).select_by_visible_text(coursection['term'])
     sleep(2)
     browser.find_element(By.NAME, "submit").click()
     sleep(2)
@@ -155,6 +161,7 @@ def test_create_coursection(browser, instructor1, coursection):
     content = browser.page_source
     assert coursection['course_number'] in content
     assert coursection['section'] in content
+    assert coursection['year'] in content
     assert coursection['term'] in content
     assert 'The new course has successfully posted!' in content
 
@@ -166,26 +173,23 @@ def test_create_position(browser, instructor1, coursection, position):
     browser.find_element(By.NAME, "remember_me").click()
     browser.find_element(By.NAME, "submit").click()
 
-    # browser.get('http://localhost:5000/instructor/create_course')
-    # browser.find_element(By.NAME, "course_number").send_keys(coursection['course_number'])
-    # browser.find_element(By.NAME, "section").send_keys(coursection['section'])
-    # browser.find_element(By.NAME, "term").send_keys(coursection['term'])
-    # browser.find_element(By.NAME, "submit").click()
-    # verification
-    # content = browser.page_source
-    # assert coursection['course_number'] in content
-    # assert coursection['section'] in content
-    # assert coursection['term'] in content
-    # assert 'The new course has successfully posted!' in content
-
     cs = db.session.scalars(sqla.select(CourseSection).where(CourseSection.course_number == coursection['course_number']).where(CourseSection.section == coursection['section']).where(CourseSection.term == coursection['term'])).first()
-
-    browser.get('http://localhost:5000/instructor/'+str(cs.id)+'/create_position')
+    sleep(2)
+    browser.find_element(By.ID, f"pos-btn-{cs.id}").click()
+    sleep(2)
+    #browser.get('http://localhost:5000/instructor/'+str(cs.id)+'/create_position')
     browser.find_element(By.NAME, "num_SAs").send_keys(position['num_SAs'])
+    sleep(2)
     browser.find_element(By.NAME, "min_GPA").send_keys(position['min_GPA'])
+    sleep(2)
     browser.find_element(By.NAME, "min_grade").send_keys(position['min_grade'])
+    sleep(2)
     browser.find_element(By.NAME, "submit").click()
+    sleep(2)
     content = browser.page_source
+    assert position['num_SAs'] in content
+    assert position['min_GPA'] in content
+    assert position['min_grade'] in content
     assert 'The new position has been successfully added!' in content
 
 def test_apply(browser, student1, coursection, apply):
@@ -199,12 +203,19 @@ def test_apply(browser, student1, coursection, apply):
     cs = db.session.scalars(
         sqla.select(CourseSection).where(CourseSection.course_number == coursection['course_number']).where(
             CourseSection.section == coursection['section']).where(CourseSection.term == coursection['term'])).first()
+    sleep(2)
+    browser.find_element(By.ID, f"apply-btn-{cs.position.id}").click()
+    sleep(2)
 
-    browser.get('http://localhost:5000/positions/'+str(cs.position.id)+'/apply')
-    browser.find_element(By.NAME, "grade_aquired").send_keys(apply['grade_aquired'])
+    #browser.get('http://localhost:5000/positions/'+str(cs.position.id)+'/apply')
+    browser.find_element(By.NAME, "grade").send_keys(apply['grade'])
+    sleep(2)
+    browser.find_element(By.NAME, "year_taken").send_keys(apply['year_taken'])
+    sleep(2)
     browser.find_element(By.NAME, "term_taken").send_keys(apply['term_taken'])
-    browser.find_element(By.NAME, "course_term").send_keys(apply['course_term'])
+    sleep(2)
     browser.find_element(By.NAME, "submit").click()
+    sleep(2)
     content = browser.page_source
     assert 'You have successfully applied for the course!' in content
 
@@ -222,10 +233,34 @@ def test_assign(browser, instructor1, coursection, position, student1):
             CourseSection.section == coursection['section']).where(CourseSection.term == coursection['term'])).first()
 
     std = db.session.scalars(sqla.select(Student).where(Student.username == student1['username']).where(Student.email == student1['email'])).first()
+    sleep(2)
+    browser.find_element(By.ID, f"view-applicants-{cs.position.id}").click()
+    sleep(2)
+    browser.find_element(By.ID, f"accept-btn-${std.id}-${cs.position.id}").click()
+    sleep(2)
 
-    browser.get('http://localhost:5000/position/'+str(cs.position.id)+'/'+str(std.id)+'/accept')
+    #browser.get('http://localhost:5000/position/'+str(cs.position.id)+'/'+str(std.id)+'/accept')
     content = browser.page_source
     assert 'Student successfully assigned to SA position' in content
+
+def test_view_profile(browser, student1):
+    browser.get('http://localhost:5000/user/login')
+    browser.maximize_window()
+    browser.find_element(By.NAME, "username").send_keys(student1['username'])
+    browser.find_element(By.NAME, "password").send_keys(student1['password'])
+    browser.find_element(By.NAME, "remember_me").click()
+    browser.find_element(By.NAME, "submit").click()
+
+    sleep(2)
+    browser.find_element(By.NAME, "actions").click()
+    sleep(2)
+    browser.find_element(By.NAME, "std-prof").click()
+    sleep(2)
+    browser.find_element(By.NAME, "go-back").click()
+    sleep(2)
+    content = browser.page_source
+    assert 'Welcome Student -' in content
+    assert student1['firstname'] in content
 
 
 if __name__ == "__main__":
