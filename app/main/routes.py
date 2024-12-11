@@ -18,9 +18,15 @@ def index():
 @login_required
 @role_required('Student')
 def student_index():
-    positions = db.session.scalars(sqla.select(Position)).all()
+    positions = db.session.scalars(sqla.select(Position).order_by(Position.timestamp.desc())).all()
     applied_positions = {position.id for position in positions if current_user.applied_to(position.id)}
-    return render_template('student_index.html', positions = positions, applied=applied_positions)
+    recommended_positions = sorted(
+        [position for position in positions if position.recommendation_score(current_user) > 7],
+        key=lambda position: position.recommendation_score(current_user),
+        reverse=True
+    )
+
+    return render_template('student_index.html', positions = positions, applied=applied_positions, recommended = recommended_positions)
 
 @bp_main.route('/instructor_index', methods=['GET'])
 @login_required
@@ -93,3 +99,14 @@ def instructor_edit_profile():
     else:
         pass
     return render_template('instructor_edit_profile.html', eform=eform)
+
+@bp_main.route('/courses', methods=['GET'])
+def get_courses():
+    # Fetch courses from the database
+    try:
+        courses = db.session.scalars(sqla.select(Course).order_by(Course.number)).all()
+        return jsonify([
+            {"id": course.id, "number": course.number, "title": course.title} for course in courses
+        ])
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500  # Return error as JSON for easier debugging
