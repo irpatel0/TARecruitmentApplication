@@ -95,3 +95,14 @@ def instructor_edit_profile():
     else:
         pass
     return render_template('instructor_edit_profile.html', eform=eform)
+
+@bp_main.route('/courses', methods=['GET'])
+def get_courses():
+    # Fetch courses from the database
+    try:
+        courses = db.session.scalars(sqla.select(Course).order_by(Course.number)).all()
+        return jsonify([
+            {"id": course.id, "number": course.number, "title": course.title} for course in courses
+        ])
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500  # Return error as JSON for easier debugging

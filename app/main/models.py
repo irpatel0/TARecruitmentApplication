@@ -17,6 +17,8 @@ pastEnrollments = db.Table(
     db.metadata,
     sqla.Column('student_id', sqla.Integer, sqla.ForeignKey('student.id'), primary_key=True),
     sqla.Column('course_id', sqla.Integer, sqla.ForeignKey('course.id'), primary_key=True)
+    # sqla.Column('taught', sqla.Boolean, default=False),
+    # sqla.Column('grade', sqla.String(2), default='A')
 )
 
 class User(db.Model, UserMixin):

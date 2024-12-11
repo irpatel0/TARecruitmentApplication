@@ -1,12 +1,24 @@
 from flask_wtf import FlaskForm
-from wtforms.validators import Length, DataRequired, Email, EqualTo, ValidationError, Regexp, NumberRange
-from wtforms import StringField, SubmitField, TextAreaField, PasswordField, BooleanField, IntegerField, FloatField, SelectMultipleField
+from wtforms.validators import Length, DataRequired, Email, EqualTo, ValidationError, Regexp, NumberRange, Optional
+from wtforms import StringField, SubmitField, TextAreaField, PasswordField, BooleanField, IntegerField, FloatField, SelectMultipleField, SelectField, FieldList, FormField
 from wtforms_sqlalchemy.fields import QuerySelectField, QuerySelectMultipleField
 from wtforms.widgets import ListWidget, CheckboxInput
 from app import db
 import sqlalchemy as sqla
 from app.main.models import Student, User, Course
 
+class CourseForm(FlaskForm):
+    course = QuerySelectField(
+        "Course",
+        query_factory=lambda: db.session.scalars(sqla.select(Course).order_by(Course.number)),
+        get_label=lambda course: f"{course.number} - {course.title}",
+        allow_blank=False,  # Ensures a valid choice is always selected
+        validators=[DataRequired()],
+    )
+    grade = StringField("Grade", validators=[Optional()])
+    sa_experience = BooleanField("Have you served as an SA for this course?")
+    class Meta:
+        csrf = False 
 class StudentRegistrationForm(FlaskForm):
     first_name = StringField('First Name', validators=[DataRequired()])
     last_name = StringField('Last Name', validators=[DataRequired()])
@@ -17,12 +29,13 @@ class StudentRegistrationForm(FlaskForm):
     password = PasswordField('Password', validators=[DataRequired()])
     password2 = PasswordField('Confirm Password', validators=[DataRequired(), EqualTo('password')])
     GPA = FloatField('GPA', validators=[DataRequired(message="Enter a valid GPA between 0 and 4.00"), NumberRange(0, 4)])
-    courses_taught = QuerySelectMultipleField('Courses Taught',
-                query_factory = lambda: db.session.scalars(sqla.select(Course).order_by(Course.number)),
-                get_label = lambda theCourse : f"{theCourse.number} - {theCourse.title}",
-                widget=ListWidget(prefix_label=False),
-                option_widget=CheckboxInput()
-    )
+    # courses_taught = QuerySelectMultipleField('Courses Taught',
+    #             query_factory = lambda: db.session.scalars(sqla.select(Course).order_by(Course.number)),
+    #             get_label = lambda theCourse : f"{theCourse.number} - {theCourse.title}",
+    #             widget=ListWidget(prefix_label=False),
+    #             option_widget=CheckboxInput()
+    # )
+    courses = FieldList(FormField(CourseForm), min_entries=1)
     graduation_date = StringField('Graduation Date', validators=[DataRequired()])
     submit = SubmitField('Register')
 
