@@ -6,7 +6,23 @@
               <h1>Welcome to Student Page</h1>
 
             <!-- Display the number and title of every item in the Course table -->
-            <h2 style="text-align: center">Recommended Positions</h2>
+            <h2 style="text-align: center; margin-top: 50px">Recommended Positions</h2>
+            {% set ns = namespace(hasPositions=false) %}
+                    {% for position in recommended %}
+                        {% if position.id not in applied and position in recommended %}
+                            {% set ns.hasPositions = true %}
+                        {% endif %}
+                    {% endfor %}
+            {% if not ns.hasPositions %}
+            <hr class="mb-1">
+            <table class="table table-hover">
+                <tbody>
+                    <tr>
+                        <td colspan="5" style="text-align: center">No recommendations available</td>
+                    </tr>
+                </tbody>
+            </table>
+            {% else %}
             <hr class="mb-4">
             <table class="table table-hover">
                 <thead>
@@ -18,10 +34,8 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% set ns = namespace(hasRecommendations=false) %}
                     {% for position in recommended %}
-                        {% if position.id not in applied %}
-                        {% set ns.hasRecommendations = true %}
+                        {% if position.id not in applied and position in recommended %}
                             <tr>
                                 <td>
                                     {{ loop.index }}
@@ -40,15 +54,27 @@
                             </tr>
                         {% endif %}
                     {% endfor %}
-                    {% if not ns.hasRecommendations %}
-                        <tr>
-                            <td colspan="4" style="text-align: center">No recommendations available</td>
-                        </tr>
-                    {% endif %}
                 </tbody>
             </table>
+            {% endif %}
 
-            <h2 style="text-align: center">Other Open Positions</h2>
+            <h2 style="text-align: center; margin-top: 50px">Other Open Positions</h2>
+            {% set ns = namespace(hasPositions=false) %}
+                    {% for position in positions %}
+                        {% if position.id not in applied and position not in recommended %}
+                            {% set ns.hasPositions = true %}
+                        {% endif %}
+                    {% endfor %}
+            {% if not ns.hasPositions %}
+            <hr class="mb-1">
+            <table class="table table-hover">
+                <tbody>
+                    <tr>
+                        <td colspan="5" style="text-align: center">No open positions available</td>
+                    </tr>
+                </tbody>
+            </table>
+            {% else %}
             <hr class="mb-4">
             <table class="table table-hover">
                 <thead>
@@ -60,13 +86,12 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% set ns = namespace(hasPositions=false) %}
                     {% for position in positions %}
                         {% if position.id not in applied and position not in recommended %}
-                        {% set ns.hasPositions = true %}
                         <tr>
                             <td>
                                 {{loop.index}}
+                                {{ position.recommendation_score(current_user) }}
                             </td>
                             <td>
                                 {{position}}
@@ -84,17 +109,28 @@
                         </tr>
                         {% endif %}
                     {% endfor %}
-                    {% if not ns.hasPositions %}
-                        <tr>
-                            <td colspan="4" style="text-align: center">No open positions available</td>
-                        </tr>
-                    {% endif %}
                 </tbody>
             </table>
-
+            {% endif %}
             
 
-            <h2 style="text-align: center">My Applications</h2>
+            <h2 style="text-align: center; margin-top: 50px">My Applications</h2>
+            {% set ns = namespace(hasPositions=false) %}
+                    {% for position in positions %}
+                        {% if position.id in applied %}
+                            {% set ns.hasPositions = true %}
+                        {% endif %}
+                    {% endfor %}
+            {% if not ns.hasPositions %}
+            <hr class="mb-1">
+            <table class="table table-hover">
+                <tbody>
+                    <tr>
+                        <td colspan="5" style="text-align: center">You have not applied for any positions yet!</td>
+                    </tr>
+                </tbody>
+            </table>
+            {% else %}
             <hr class="mb-4">
             <table class="table table-hover">
                 <thead>
@@ -132,6 +168,7 @@
                     {% endfor %}
                 </tbody>
             </table>
+            {% endif %}
         </div>
 
 

@@ -58,6 +58,7 @@ class Student(User):
             back_populates='taught_by',
         )
     student_applications : sqlo.WriteOnlyMapped['Application'] = sqlo.relationship(back_populates='applicant')
+    courses_taken : sqlo.WriteOnlyMapped['CourseTaken'] = sqlo.relationship(back_populates='student')
 
 
     def applied_to(self, position_id):
@@ -65,6 +66,9 @@ class Student(User):
 
     def get_taught(self):
         return db.session.scalars(self.taught.select()).all()
+    
+    def get_taken(self):
+        return db.session.scalars(self.courses_taken.select()).all()
 
 
 class Instructor(User):
@@ -87,6 +91,7 @@ class Course(db.Model):
             back_populates='taught',
     )
     sections : sqlo.WriteOnlyMapped['CourseSection'] = sqlo.relationship(back_populates='course')
+    students_taken : sqlo.WriteOnlyMapped['CourseTaken'] = sqlo.relationship(back_populates='course')
 
 
 class CourseSection(db.Model):
@@ -122,11 +127,32 @@ class Position(db.Model):
         return db.session.scalars(self.applications.select()).all()
     
     def recommendation_score(self, student):
-        score = 0
-        if student.gpa > self.min_GPA:
-            score += 1
+        course_section = db.session.get(CourseSection, self.section_id)
+        course = db.session.scalars(sqla.select(Course).where(Course.number == course_section.course_number)).first()
+        enrollment = db.session.scalars(sqla.select(CourseTaken).where(CourseTaken.student_id == student.id)
+                                                                .where(CourseTaken.course_id == course.id)).first()
         
+        score = 0
+        grade_map = {'A': 5, 'B': 4, 'C': 3, 'D': 2, 'F': 1, 'NR': 0}
+
+        if student.gpa > self.min_GPA:
+            score += 2
+        if course in student.get_taught():
+            score += 3
+
+        for course_taken in student.get_taken():
+            enrolled_course = db.session.scalars(sqla.select(Course).where(Course.id == course_taken.id)).first()
+            if (enrolled_course == course):
+                score += 2
+
+                if grade_map.get(enrollment.grade, 0) >= grade_map.get(self.min_grade, 0):
+                    score += 2
+
+                if grade_map.get(enrollment.grade, 0) == 5:
+                    score += 2
+
         return float(score)
+
 
     def __repr__(self):
         course_number = self.course_section.course_number
@@ -152,3 +178,14 @@ class Application(db.Model):
 
     def get_only_student(self):
         return db.session.scalars(sqla.select(Student).where(Student.id == self.student_id)).first()
+    
+
+class CourseTaken(db.Model):
+    id : sqlo.Mapped[int] = sqlo.mapped_column(sqla.Integer, primary_key=True)
+    student_id : sqlo.Mapped[int] = sqlo.mapped_column(sqla.ForeignKey(Student.id))
+    course_id : sqlo.Mapped[int] = sqlo.mapped_column(sqla.ForeignKey(Course.id))
+    grade : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(2))
+
+    #relations
+    student : sqlo.Mapped[Student] = sqlo.relationship(back_populates='courses_taken')
+    course : sqlo.Mapped[Course] = sqlo.relationship(back_populates='students_taken')
