@@ -253,6 +253,8 @@
                    let td9a = document.createElement('button');
                    td9a.setAttribute('id', `accept-btn-${data[i]['student_id']}-${position_id}`)
                    let td9b= document.createElement('button');
+                   td9a.setAttribute('class', 'btn btn-outline-success')
+                   td9b.setAttribute('class', 'btn btn-outline-danger')
                    const assign_url = "{{ url_for('instructor.accept_student', student_id = 'student_id', position_id = 'position_id') }}".replace("student_id", data[i]['student_id']).replace("position_id", position_id);
                    const reject_url = "{{ url_for('instructor.reject_student', student_id = 'student_id', position_id = 'position_id') }}".replace("student_id", data[i]['student_id']).replace("position_id", position_id);
                    td9a.setAttribute('href', assign_url)    //SET HERE ROUTE FOR ASSIGNED_STUDENTS (IN INSTRUCTOR ROUTES)??
