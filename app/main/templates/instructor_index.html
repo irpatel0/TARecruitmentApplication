@@ -42,7 +42,7 @@
                    </td>
                     <td width=20%" style="border: 1px solid #c6c7c8;">
                         <a href="{{url_for('instructor.update_coursesection', cs_id = course.id)}}" class="btn btn-outline-info">Update</a>
-                        <a href="{{url_for('instructor.delete_coursesection', cs_id = course.id)}}" class = "btn btn-outline-danger">Delete</a>
+                        <a href="{{url_for('instructor.delete_coursesection', cs_id = course.id)}}" class = "btn btn-outline-danger" onclick="return confirm('Are you sure you want to delete the course section')">Delete</a>
                     </td>
                </tr>
                <tr id="tr-{{course.id}}" hidden="true">

@@ -178,11 +178,26 @@ def student_register_sso():
                               gpa=srform.GPA.data,
                               graduation_date=srform.graduation_date.data,
                               )
-            for c in srform.courses_taught.data:
-                student.taught.add(c)
+            courses = [
+                {
+                    "course_name": course_form.course.data.title,
+                    "grade": course_form.grade.data,
+                    "sa_experience": course_form.sa_experience.data,
+                }
+                for course_form in srform.courses
+            ]
 
             db.session.add(student)
             db.session.commit()
+
+            for course in courses:
+                course_obj = db.session.scalars(
+                    sqla.select(Course).where(Course.title == course['course_name'])).first()
+                course_taken = CourseTaken(student_id=student.id, course_id=course_obj.id, grade=course['grade'])
+                db.session.add(course_taken)
+                db.session.commit()
+                if (course['sa_experience'] == True):
+                    student.taught.add(course_obj)
 
             user = db.session.scalars(sqla.select(User).where(User.username == session['email'].split('@')[0])).first()
             login_user(user, remember=False)
