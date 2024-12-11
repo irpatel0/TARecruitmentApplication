@@ -24,7 +24,8 @@
                         {{course}}
                         <div> Student Assistants: </div> 
                         {% for assignedStudent in course.get_assignedStudents() %}
-                            &nbsp; {{ assignedStudent.firstname + assignedStudent.lastname }}
+                            &nbsp; <a href="{{url_for('instructor.student_profile', student_id = assignedStudent.id)}}" class="btn-info">{{ assignedStudent.firstname + assignedStudent.lastname }}</a> 
+                            
                             <br>
                         {% endfor %}
                     </td>
@@ -235,10 +236,6 @@
                    let td4 = document.createElement('td');
                    td4.textContent = data[i]['term_taken'];
                    tr.appendChild(td4);
-
-                   let td5 = document.createElement('td');
-                   td5.textContent = data[i]['course_term'];
-                   tr.appendChild(td5);
 
                    let td6 = document.createElement('td');
                    td6.textContent = data[i]['status'];

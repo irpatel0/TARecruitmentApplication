@@ -5,7 +5,7 @@ from app.student import student_blueprint as bp_student
 from flask_login import current_user, login_required
 from app.decorators import role_required
 from app.student.student_forms import ApplyForm
-from app.main.models import Course, Position, Instructor, CourseSection, Application
+from app.main.models import Course, Position, Instructor, CourseSection, Application, CourseTaken
 
 @bp_student.route("/positions/<position_id>/details", methods=["GET", "POST"])
 @login_required
@@ -23,7 +23,10 @@ def view_SA_details(position_id):
 @role_required('Student')
 def apply_course(position_id):
     aform = ApplyForm()
-    course_position = sqla.select(Position).where(Position.id == position_id)
+    course_position = db.session.get(Position, position_id)
+    course_section_ID = course_position.section_id
+    course_section = db.session.get(CourseSection, course_section_ID)
+    course = db.session.scalars(sqla.select(Course).where(Course.number == course_section.course_number)).first()
     check_applied = db.session.scalars(sqla.select(Application).where(Application.student_id == current_user.id, Application.position_id == position_id)).first()
     print(check_applied)
     if (check_applied is not None):
@@ -34,11 +37,33 @@ def apply_course(position_id):
                             student_id = current_user.id,
                             position_id = position_id,
                             grade_aquired = aform.grade.data,
-                            term_taken = aform.taken_term.data,
-                            course_term = aform.course_term.data)
+                            term_taken = aform.year_taken.data + aform.term_taken.data)
+
+
+        check_taken = db.session.scalars(sqla.select(CourseTaken).where(CourseTaken.student_id == current_user.id)
+                                                                .where(CourseTaken.course_id == course.id)).first()
+        if (check_taken is None):
+            new_course_taken = CourseTaken(
+                                student_id = current_user.id,
+                                course_id = course.id,
+                                grade = aform.grade.data)
+        else:
+            check_taken.grade = aform.grade.data
+        
         db.session.add(new_application)
         db.session.commit()
         flash('You have successfully applied for the course!')
         return redirect(url_for('main.index'))
     return render_template('applycourse.html', form=aform, position=course_position)
+
+@bp_student.route('/positions/<position_id>/withdraw', methods=['GET', 'POST'])
+@login_required
+@role_required('Student')
+def withdraw_course(position_id):
+    application = db.session.scalars(sqla.select(Application).where(Application.student_id == current_user.id, Application.position_id == position_id)).first()
+    db.session.delete(application)
+    db.session.commit()
+    flash('You have successfully withdrawn your application.')
+    return redirect(url_for('main.index'))
+
 

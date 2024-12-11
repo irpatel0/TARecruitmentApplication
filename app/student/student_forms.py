@@ -15,6 +15,6 @@ from app.main.models import Course, CourseSection
 
 class ApplyForm(FlaskForm):
     grade = SelectField('Grade earned in the course',choices = [('A', 'A'), ('B', 'B'), ('C', 'C'), ('D', 'D'), ('F', 'F'), ('NR', 'NR')], validators=[DataRequired()])
-    taken_term = StringField('Term you took the course', validators=[Length(min=1, max=5), Regexp('^\d{4}[ABCDFS]$', message='Term should be a year followed by a term letter (Ex. 2024B).')])
-    course_term = StringField('Term you are applying for', validators=[Length(min=1, max=5), Regexp('^\d{4}[ABCDFS]$', message='Term should be a year followed by a term letter (Ex. 2024B).')])
+    year_taken = StringField('Year you took the course', validators=[Length(min=1, max=4), Regexp('^\d{4}$', message='Please enter a valid 4-digit year')])
+    term_taken = SelectField('Term you took the course',choices = [('A', 'A-Term'), ('B', 'B-Term'), ('C', 'C-Term'), ('D', 'D-Term'), ('F', 'Fall Semester'), ('S', 'Spring Semester')], validators=[DataRequired()])
     submit = SubmitField('Apply')
