@@ -2,7 +2,7 @@ from flask import render_template, flash, redirect, url_for, request, Flask, ses
 from app import db
 from app.auth import auth_blueprint as bp_auth
 import sqlalchemy as sqla
-from app.main.models import User, Student, Instructor
+from app.main.models import User, Student, Instructor, Course, CourseTaken
 from app.auth.auth_forms import LoginForm, StudentRegistrationForm, InstructorRegistrationForm, SSO_StudentRegistrationForm, SSO_InstructorRegistrationForm
 from flask_login import login_user, current_user, logout_user, login_required
 import identity.web
@@ -34,14 +34,28 @@ def student_register():
                           gpa=srform.GPA.data,
                           graduation_date=srform.graduation_date.data,
                           )
-        for c in srform.courses_taught.data:
-            student.taught.add(c)
+        print("Submitted")
+        courses = [
+            {
+                "course_name": course_form.course.data.title,
+                "grade": course_form.grade.data,
+                "sa_experience": course_form.sa_experience.data,
+            }
+            for course_form in srform.courses
+        ]
+
         student.set_password(srform.password.data)
         db.session.add(student)
         db.session.commit()
+        for course in courses:
+            course_obj = db.session.scalars(sqla.select(Course).where(Course.title == course['course_name'])).first()
+            course_taken = CourseTaken(student_id=student.id, course_id=course_obj.id, grade=course['grade'])
+            db.session.add(course_taken)
+            db.session.commit()
+            if(course['sa_experience'] == True):
+                student.taught.add(course_obj)
         flash('Congratulations, you are now a registered student user!')
         return redirect(url_for('main.index'))
-
     return render_template('student_register.html', form=srform)
 
 

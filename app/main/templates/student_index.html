@@ -5,8 +5,78 @@
     <div style="min-height: 80vh;">
               <h1>Welcome Student - {{current_user.firstname}}</h1>
               <br>
+              <h1>Welcome to Student Page</h1>
+
             <!-- Display the number and title of every item in the Course table -->
-            <h2 style="text-align: center">Student Assistant Positions</h2>
+            <h2 style="text-align: center; margin-top: 50px">Recommended Positions</h2>
+            {% set ns = namespace(hasPositions=false) %}
+                    {% for position in recommended %}
+                        {% if position.id not in applied and position in recommended %}
+                            {% set ns.hasPositions = true %}
+                        {% endif %}
+                    {% endfor %}
+            {% if not ns.hasPositions %}
+            <hr class="mb-1">
+            <table class="table table-hover">
+                <tbody>
+                    <tr>
+                        <td colspan="5" style="text-align: center">No recommendations available</td>
+                    </tr>
+                </tbody>
+            </table>
+            {% else %}
+            <hr class="mb-4">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Course Section</th>
+                        <th>Details</th>
+                        <th>Apply</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for position in recommended %}
+                        {% if position.id not in applied and position in recommended %}
+                            <tr>
+                                <td>
+                                    {{ loop.index }}
+                                    {{ position.recommendation_score(current_user) }}
+                                </td>
+                                <td>
+                                    {{ position }}
+                                    <div class="card text-bg-light mb-3" style="display: none" id="position-{{ position.id }}"></div>
+                                </td>
+                                <td>
+                                    <button class="btn btn-outline-primary" onclick="show_position_details({{ position.id }})" id="show-details-{{ position.id }}">Show Details</button>
+                                </td>
+                                <td>
+                                    <a href="{{ url_for('student.apply_course', position_id=position.id) }}" class="btn btn-outline-success">Apply</a>
+                                </td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% endif %}
+
+            <h2 style="text-align: center; margin-top: 50px">Other Open Positions</h2>
+            {% set ns = namespace(hasPositions=false) %}
+                    {% for position in positions %}
+                        {% if position.id not in applied and position not in recommended %}
+                            {% set ns.hasPositions = true %}
+                        {% endif %}
+                    {% endfor %}
+            {% if not ns.hasPositions %}
+            <hr class="mb-1">
+            <table class="table table-hover">
+                <tbody>
+                    <tr>
+                        <td colspan="5" style="text-align: center">No open positions available</td>
+                    </tr>
+                </tbody>
+            </table>
+            {% else %}
             <hr class="mb-4">
             <table class="table table-hover">
                 <thead>
@@ -19,9 +89,11 @@
                 </thead>
                 <tbody>
                     {% for position in positions %}
+                        {% if position.id not in applied and position not in recommended %}
                         <tr>
                             <td>
                                 {{loop.index}}
+                                {{ position.recommendation_score(current_user) }}
                             </td>
                             <td>
                                 {{position}}
@@ -33,7 +105,60 @@
                             <td>
                                 <button class="btn btn-outline-primary" onclick="show_position_details({{ position.id }})" id="show-details-{{position.id}}">Show Details</button>
                             </td>
-                            {% if position.id in applied %}
+                            <td>
+                                <a href="{{url_for('student.apply_course', position_id=position.id)}}" class="btn btn-outline-success">Apply</a>
+                            </td>
+                        </tr>
+                        {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% endif %}
+            
+
+            <h2 style="text-align: center; margin-top: 50px">My Applications</h2>
+            {% set ns = namespace(hasPositions=false) %}
+                    {% for position in positions %}
+                        {% if position.id in applied %}
+                            {% set ns.hasPositions = true %}
+                        {% endif %}
+                    {% endfor %}
+            {% if not ns.hasPositions %}
+            <hr class="mb-1">
+            <table class="table table-hover">
+                <tbody>
+                    <tr>
+                        <td colspan="5" style="text-align: center">You have not applied for any positions yet!</td>
+                    </tr>
+                </tbody>
+            </table>
+            {% else %}
+            <hr class="mb-4">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Course Section</th>
+                        <th>Details</th>
+                        <th>Status</th>
+                        <th>Withdraw</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for position in positions %}
+                        {% if position.id in applied %}
+                        <tr>
+                            <td>
+                                {{loop.index}}
+                            </td>
+                            <td>
+                                {{position}}
+                                <div class="card text-bg-light mb-3" style="display: none" id="position-{{position.id}}">
+                                </div>
+                            </td>
+                            <td>
+                                <button class="btn btn-outline-primary" onclick="show_position_details({{ position.id }})" id="show-details-{{position.id}}">Show Details</button>
+                            </td>
                             <td>
                                 {% for application in position.get_applications() %}
                                     <a class = "btn btn-outline-secondary">{{ application.status }}</a>  
@@ -41,7 +166,7 @@
                             </td>                          
                             {% elif position.available%}
                             <td>
-                                <a href="{{url_for('student.apply_course', position_id=position.id)}}" class="btn btn-outline-success">Apply</a>
+                                <a href="{{url_for('student.withdraw_course', position_id=position.id)}}" class="btn btn-outline-danger" onclick="return confirm('Are you sure you want to withdraw your application?')">Withdraw</a>                          
                             </td>
                             {% else %}
                             <td>
@@ -49,14 +174,12 @@
                             </td>
                             {% endif %}
                         </tr>
+                        {% endif %}
                     {% endfor %}
                 </tbody>
             </table>
-
-            {% for position in positions %}
-
-        {% endfor %}
-            </div>
+            {% endif %}
+        </div>
 
 
 {% block script %}
