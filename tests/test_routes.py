@@ -272,4 +272,174 @@ def test_create_position(test_client,init_database):
 #     do_logout(test_client, path='/user/logout')
 
 
+def test_accept_student(test_client, init_database):
+
+    #instructor creates position for course
+    do_login(test_client, path = '/user/login', username = 'test', passwd = '1234')
+
+    #create course section
+    all_courses = db.session.scalars(sqla.select(Course)).all()
+    course = list(map(lambda t: t.id, all_courses[:1]))
+    faculty = db.session.scalars(sqla.select(User).where(User.username == 'test')).first()
+
+    response = test_client.post('/instructor/create_course',
+                                data=dict(course_number=course, section='BL02', instructor_id=faculty.id,
+                                          term='2024B'),
+                                follow_redirects=True)
+
+    # create position
+    course = db.session.scalars(sqla.select(CourseSection).where(CourseSection.course_number == 'CS1101')).first()
+
+    response = test_client.post('/instructor/'+str(course.id)+'/create_position',
+                                data=dict(num_SAs=5, min_GPA=3.2,
+                                          min_grade='B'),
+                                follow_redirects=True)
+
+    position = db.session.scalars(sqla.select(Position).where(Position.section_id == course.id)).first()
+
+    do_logout(test_client, path='/user/logout')
+
+    do_login(test_client, path='/user/login', username='gatorade', passwd='1234')
+
+    response = test_client.post('/positions/'+str(position.id)+'/apply',
+                            data=dict(grade_aquired='A', term_taken='A23',
+                                        course_term='A24'),
+                            follow_redirects=True)
+
+    do_logout(test_client, path='/user/logout')
+
+    do_login(test_client, path = '/user/login', username = 'test', passwd = '1234')
+
+    student = db.session.get(Student, 1)
+    response = test_client.post('/position/'+str(position.id)+'/student/'+str(student.id)+'/accept')
+
+    assert response.status_code == 200
+    assert b"gatorade gatorade" in response.data
+    assert position.num_Assigned != 0 
+
+    student_assignedTerms = db.session.scalars(student.assigned_terms.select()).all()
+    student_assignedTerm = 0
+    for assignedTerm in student_assignedTerms:
+        if assignedTerm == '2024B':
+            student_assignedTerm = assignedTerm
+
+    assert student_assignedTerm == '2024B' 
+
+    student_applications = db.session.scalars(student.student_applications.select()).all()
+    student_application = 0
+    for application in student_applications:
+        if application.position_id == position.id:
+            student_application = application
+
+    assert student_application.status == 'Approved'
+
+    student_enrollments = db.session.scalars(student.taught.select()).all()
+    assert course.id in student_enrollments
+
+
+def test_reject_student(test_client, init_database):
+
+        #instructor creates position for course
+    do_login(test_client, path = '/user/login', username = 'test', passwd = '1234')
+
+    #create course section
+    all_courses = db.session.scalars(sqla.select(Course)).all()
+    course = list(map(lambda t: t.id, all_courses[:1]))
+    faculty = db.session.scalars(sqla.select(User).where(User.username == 'test')).first()
+
+    response = test_client.post('/instructor/create_course',
+                                data=dict(course_number=course, section='BL02', instructor_id=faculty.id,
+                                          term='2024B'),
+                                follow_redirects=True)
+
+    # create position
+    course = db.session.scalars(sqla.select(CourseSection).where(CourseSection.course_number == 'CS1101')).first()
+
+    response = test_client.post('/instructor/'+str(course.id)+'/create_position',
+                                data=dict(num_SAs=5, min_GPA=3.2,
+                                          min_grade='B'),
+                                follow_redirects=True)
+
+    position = db.session.scalars(sqla.select(Position).where(Position.section_id == course.id))
+
+    do_logout(test_client, path='/user/logout')
+
+    do_login(test_client, path='/user/login', username='gatorade', passwd='1234')
+
+    response = test_client.post('/positions/'+str(position.id)+'/apply',
+                            data=dict(grade_aquired='A', term_taken='A23',
+                                        course_term='A24'),
+                            follow_redirects=True)
+
+    do_logout(test_client, path='/user/logout')
+
+    do_login(test_client, path = '/user/login', username = 'test', passwd = '1234')
+
+    student = db.session.get(Student, 1)
+    response = test_client.post('/position/'+str(position.id)+'/student/'+str(student.id)+'/reject')
+
+    assert response.status_code == 200
+    
+    student_applications = db.session.scalars(student.student_applications.select()).all()
+    student_application = 0
+    for application in student_applications:
+        if application.position_id == position.id:
+            student_application = application
+
+    assert student_application.status == 'Rejected'
+
+
+
+
+
+def test_view_closedpositions(test_client, init_database):
+    do_login(test_client, path = '/user/login', username = 'test', passwd = '1234')
+
+        #create course section
+    all_courses = db.session.scalars(sqla.select(Course)).all()
+    course = list(map(lambda t: t.id, all_courses[:1]))
+    faculty = db.session.scalars(sqla.select(User).where(User.username == 'test')).first()
+
+    response = test_client.post('/instructor/create_course',
+                                data=dict(course_number=course, section='BL03', instructor_id=faculty.id,
+                                          term='2024B'),
+                                follow_redirects=True)
+
+    # create position
+    course = db.session.scalars(sqla.select(CourseSection).where(CourseSection.course_number == 'CS1101')).first()
+
+    response = test_client.post('/instructor/'+str(course.id)+'/create_position',
+                                data=dict(num_SAs=1, min_GPA=3.2,
+                                          min_grade='B'),
+                                follow_redirects=True)
+
+    position = db.session.scalars(sqla.select(Position).where(Position.section_id == course.id)).first()
+
+    do_logout(test_client, path='/user/logout')
+
+    do_login(test_client, path='/user/login', username='gatorade', passwd='1234')
+
+    response = test_client.post('/positions/'+str(position.id)+'/apply',
+                            data=dict(grade_aquired='A', term_taken='A23',
+                                        course_term='A24'),
+                            follow_redirects=True)
+
+    do_logout(test_client, path='/user/logout')
+
+    do_login(test_client, path = '/user/login', username = 'test', passwd = '1234')
+
+    student = db.session.get(Student, 1)
+    response = test_client.post('/position/'+str(position.id)+'/student/'+str(student.id)+'/accept')
+
+    response = test_client.get('/instructor/closedpositions')
+
+    assert response.status_code == 200
+    assert b"Closed Course Sections" in response.data
+    assert b"CS 1101" in response.data
+    assert b"gatorade gatorade" in response.data
+    
+
+# def test_view_allstudents(test_client, init_database): 
+
+
 

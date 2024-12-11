@@ -22,7 +22,7 @@ def create_course():
         print('inside validate')
         check_created = db.session.scalars(sqla.select(CourseSection).where(CourseSection.course_number == cform.course_number.data.number)
                                                                 .where(CourseSection.section == cform.section.data)
-                                                                .where(CourseSection.term == cform.term.data)
+                                                                .where(CourseSection.term == cform.year.data + cform.term.data)
                                                                 ).first()
         if (check_created is not None):
             flash('This course has already been created!')
@@ -30,7 +30,7 @@ def create_course():
         new_course = CourseSection(course_number = cform.course_number.data.number,
                             section = cform.section.data,
                             instructor_id = current_user.id,
-                            term = cform.term.data)
+                            term = cform.year.data + cform.term.data)
         db.session.add(new_course)
         print('new course added')
         db.session.commit()
@@ -118,9 +118,9 @@ def view_allstudents(position_id):
                      'student_name': student_name,
                      'grade_acquired': applicant.grade_aquired,
                      'term_taken': applicant.term_taken,
-                     'course_term': applicant.course_term,
                      'status': applicant.status,
-                     'availability': availability})
+                     'availability': availability,
+                     'grade_point_average': student.gpa})
 
     return jsonify(data)
 
@@ -204,6 +204,9 @@ def accept_student(position_id, student_id):
         student.assigned_terms.add(course_section)
         if position.num_Assigned == position.num_SAs - 1:
             position.available == False; 
+        #### ADDING TO PAST ENROLLMENTS
+        student.taught.add(course_section.course)
+        ######
         db.session.commit()
         flash('Student successfully assigned to SA position')
         return(redirect(url_for('main.instructor_index')))
