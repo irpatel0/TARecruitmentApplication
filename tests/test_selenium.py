@@ -139,7 +139,10 @@ def test_create_coursection(browser, instructor1, coursection):
     browser.find_element(By.NAME, "remember_me").click()
     browser.find_element(By.NAME, "submit").click()
 
-    browser.get('http://localhost:5000/instructor/create_course')
+    #browser.get('http://localhost:5000/instructor/create_course')
+    sleep(5)
+    browser.find_element(By.NAME, "create-course-section").click()
+    sleep(3)
     browser.find_element(By.NAME, "course_number").send_keys(coursection['course_number'])
     sleep(2)
     browser.find_element(By.NAME, "section").send_keys(coursection['section'])
