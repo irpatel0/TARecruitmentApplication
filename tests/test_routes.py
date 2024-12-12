@@ -437,9 +437,5 @@ def test_view_closedpositions(test_client, init_database):
     assert b"Closed Course Sections" in response.data
     assert b"CS 1101" in response.data
     assert b"gatorade gatorade" in response.data
-    
-
-# def test_view_allstudents(test_client, init_database): 
-
 
 
