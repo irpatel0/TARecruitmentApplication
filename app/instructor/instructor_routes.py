@@ -17,6 +17,7 @@ def index():
 @login_required
 @role_required('Instructor')
 def create_course():
+    print('route called')
     cform = CourseForm()
     if cform.validate_on_submit():
         print('inside validate')
