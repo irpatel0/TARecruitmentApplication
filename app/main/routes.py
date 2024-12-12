@@ -18,7 +18,11 @@ def index():
 @login_required
 @role_required('Student')
 def student_index():
-    positions = db.session.scalars(sqla.select(Position).order_by(Position.timestamp.desc())).all()
+    positions = db.session.scalars(
+        sqla.select(Position)
+        .where(Position.num_Assigned < Position.num_SAs)
+        .order_by(Position.timestamp.desc())
+    ).all()
     applied_positions = {position.id for position in positions if current_user.applied_to(position.id)}
     recommended_positions = sorted(
         [position for position in positions if position.recommendation_score(current_user) > 7],
