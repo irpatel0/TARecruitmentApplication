@@ -49,10 +49,18 @@
                 const newCourseDiv = document.createElement("div");
                 newCourseDiv.classList.add("course-field");
 
-                const courseOptions = data.map(
-                    course => `<option value="${course.id}">${course.number} - ${course.title}</option>`
-                ).join("");
+                const selectedCourses = new Set([...document.querySelectorAll('select[name^="courses-"]')].map(select => select.value));
 
+                const courseOptions = data
+                    .filter(course => !selectedCourses.has(course.id.toString())) // Filter out already selected courses
+                    .map(course => `<option value="${course.id}">${course.number} - ${course.title}</option>`)
+                    .join("");
+
+                if (!courseOptions) {
+                    alert("No more courses available to add.");
+                    return;
+                }
+                
                 newCourseDiv.innerHTML = `
                     <hr>
                     <label for="courses-${index}-course">Course</label>
@@ -61,7 +69,14 @@
                     </select>
 
                     <label for="courses-${index}-grade">Grade</label>
-                    <input type="text" name="courses-${index}-grade" id="courses-${index}-grade" class="form-control">
+                    <select name="text" name="courses-${index}-grade" id="courses-${index}-grade" class="form-control">
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                        <option value="C">C</option>
+                        <option value="D">D</option>
+                        <option value="F">F</option>
+                        <option value="NR">NR</option>
+                    </select>
 
                     <label for="courses-${index}-sa_experience">
                         <input type="checkbox" name="courses-${index}-sa_experience" id="courses-${index}-sa_experience">

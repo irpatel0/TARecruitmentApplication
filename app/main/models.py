@@ -172,8 +172,10 @@ class Position(db.Model):
         if course in student.get_taught():
             score += 3
 
+        print(student.get_taken())
         for course_taken in student.get_taken():
-            enrolled_course = db.session.scalars(sqla.select(Course).where(Course.id == course_taken.id)).first()
+            print(course_taken)
+            enrolled_course = db.session.scalars(sqla.select(Course).where(Course.id == course_taken.course_id)).first()
             if (enrolled_course == course):
                 score += 2
 
