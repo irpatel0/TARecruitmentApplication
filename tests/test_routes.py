@@ -1,7 +1,7 @@
 import os
 import pytest
 from app import create_app, db
-from app.main.models import User, Student, Instructor, CourseSection, Course, Position, CourseTaken
+from app.main.models import User, Student, Instructor, CourseSection, Course, Position, CourseTaken, Application
 from config import Config
 import sqlalchemy as sqla
 
@@ -543,3 +543,99 @@ def test_view_closedpositions(test_client, init_database):
     assert b"gatorade gatorade" in response.data
 
 
+def test_view_SA_details(test_client, init_database):
+    instructor_do_login(test_client, path='/user/login', username='test', passwd='1234')
+    # create course section
+    all_courses = db.session.scalars(sqla.select(Course)).all()
+    course = list(map(lambda t: t.id, all_courses[:1]))
+    faculty = db.session.scalars(sqla.select(User).where(User.username == 'test')).first()
+
+    response = test_client.post('/instructor/create_course',
+                                data=dict(course_number=course, section='BL02', instructor_id=faculty.id,
+                                          year='2024', term='B'),
+                                follow_redirects=True)
+
+    assert response.status_code == 200
+
+    # create position
+    course = db.session.scalars(sqla.select(CourseSection).where(CourseSection.course_number == 'CS1101')).first()
+    assert course is not None
+    response = test_client.post('/instructor/' + str(course.id) + '/create_position',
+                                data=dict(num_SAs=1, min_GPA=3.2,
+                                          min_grade='B'),
+                                follow_redirects=True)
+    assert response.status_code == 200
+    assert b"The new position has been successfully added!" in response.data
+
+    do_logout(test_client, path='/user/logout')
+
+    student_do_login(test_client, path='/user/login', username='gatorade', passwd='1234')
+
+    course = db.session.scalars(sqla.select(CourseSection).where(CourseSection.course_number == 'CS1101')).first()
+    position = course.position
+    assert position is not None
+
+    response = test_client.get('/positions/' + str(position.id) + '/details')
+    assert response.status_code == 200
+    #assert details are in json
+    assert b"num_SAs" in response.data
+    assert b"available" in response.data
+    assert b"min_GPA" in response.data
+    assert b"min_grade" in response.data
+    assert b"date_posted" in response.data
+    do_logout(test_client, path='/user/logout')
+    
+
+def test_withdraw_application(test_client, init_database):
+    instructor_do_login(test_client, path='/user/login', username='test', passwd='1234')
+    # create course section
+    all_courses = db.session.scalars(sqla.select(Course)).all()
+    course = list(map(lambda t: t.id, all_courses[:1]))
+    faculty = db.session.scalars(sqla.select(User).where(User.username == 'test')).first()
+
+    response = test_client.post('/instructor/create_course',
+                                data=dict(course_number=course, section='BL02', instructor_id=faculty.id,
+                                          year='2024', term='B'),
+                                follow_redirects=True)
+
+    assert response.status_code == 200
+
+    # create position
+    course = db.session.scalars(sqla.select(CourseSection).where(CourseSection.course_number == 'CS1101')).first()
+    assert course is not None
+    response = test_client.post('/instructor/' + str(course.id) + '/create_position',
+                                data=dict(num_SAs=1, min_GPA=3.2,
+                                          min_grade='B'),
+                                follow_redirects=True)
+    assert response.status_code == 200
+    assert b"The new position has been successfully added!" in response.data
+
+    do_logout(test_client, path='/user/logout')
+
+    student_do_login(test_client, path='/user/login', username='gatorade', passwd='1234')
+
+    course = db.session.scalars(sqla.select(CourseSection).where(CourseSection.course_number == 'CS1101')).first()
+    position = course.position
+    assert position is not None
+
+    response = test_client.post('/positions/' + str(position.id) + '/apply',
+                                data=dict(grade='A', year_taken='2023', term_taken='A'),
+                                follow_redirects=True)
+
+    assert response.status_code == 200
+    assert b"Welcome Student -" in response.data
+    application = db.session.scalars(sqla.select(Application).where(Application.student_id == 2)).first()
+    assert application is not None
+    do_logout(test_client, path='/user/logout')
+    student_do_login(test_client, path='/user/login', username='gatorade', passwd='1234')
+    #withdraw application
+
+    response = test_client.post('/positions/' + str(position.id) + '/withdraw',
+                                data={},
+                                follow_redirects=True)
+
+    assert response.status_code == 200
+    assert b"You have successfully withdrawn your application" in response.data
+    application = db.session.scalars(sqla.select(Application).where(Application.student_id == 2)).first()
+    assert application is None
+    do_logout(test_client, path='/user/logout')
