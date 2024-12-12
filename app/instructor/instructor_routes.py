@@ -205,15 +205,20 @@ def accept_student(position_id, student_id):
             if course_section.term == student_coursesection.term:
                 flash("Student has already been assigned an SA position in this term")
                 return(redirect(url_for('main.instructor_index')))
-        position.num_Assigned = position.num_Assigned + 1
+        #position.num_Assigned = position.num_Assigned + 1
         approved_application.status = 'Approved'
         student.assigned_terms.add(course_section)
         if position.num_Assigned == position.num_SAs - 1:
             position.available == False; 
+            for application in applications:
+                if (application.position_id == position.id):      #if application matches the position, set that status to rejected
+                    if application.status != 'Approved':
+                        application.status = 'Rejected'
         #### ADDING TO PAST ENROLLMENTS
         if course_section.course not in student.get_taught(): 
             student.taught.add(course_section.course)
         ######
+        position.num_Assigned = position.num_Assigned + 1
         db.session.commit()
         flash('Student successfully assigned to SA position')
         return(redirect(url_for('main.instructor_index')))
