@@ -48,12 +48,13 @@ def student_register():
         db.session.add(student)
         db.session.commit()
         for course in courses:
+            print(course['sa_experience'])
             course_obj = db.session.scalars(sqla.select(Course).where(Course.title == course['course_name'])).first()
             course_taken = CourseTaken(student_id=student.id, course_id=course_obj.id, grade=course['grade'])
             db.session.add(course_taken)
-            db.session.commit()
             if(course['sa_experience'] == True):
                 student.taught.add(course_obj)
+            db.session.commit()
         flash('Congratulations, you are now a registered student user!')
         return redirect(url_for('main.index'))
     return render_template('student_register.html', form=srform)
