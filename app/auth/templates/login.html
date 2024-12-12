@@ -58,9 +58,9 @@
                         {{ form.submit(class='btn btn-outline-success w-100') }}
 
                         <hr class="hr-text" style="color: #1a1a1a" data-content="OR">
-
-                        <a href="{{ url_for('auth.login_sso') }}" class="btn btn-outline-primary">Login With SSO</a>
-
+                        <div class="text-center">
+                            <a href="{{ url_for('auth.login_sso') }}" class="btn btn-outline-primary">Login With SSO</a>
+                        </div>
                     </form>
                     {% endif %}
                     <p class="mb-0 text-center">New Student? &nbsp;<a href="{{ url_for('auth.student_register') }}">Click to Student Register!</a></p>
