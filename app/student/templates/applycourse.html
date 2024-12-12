@@ -14,6 +14,11 @@
             {% else %}
                 <li>You have taken this course before and earned a/an <b>{{taken.grade}}</b></li>
             {% endif %}
+
+            {% if taught %}
+                <li>You have previously been an SA for this course</li>
+            {% endif %}
+            
         </ul>
         <hr>
             </div>
