@@ -3,7 +3,7 @@ from config import Config
 from app import create_app, db
 import sqlalchemy as sqla
 import sqlalchemy.orm as sqlo
-from app.main.models import User, Student, Instructor, Course, Application, Position, CourseSection
+from app.main.models import User, Student, Instructor, Course, Application, Position, CourseSection, CourseTaken
 from werkzeug.middleware.proxy_fix import ProxyFix
 import identity.web
 
@@ -16,7 +16,7 @@ app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1)
 @app.shell_context_processor
 def make_shell_context():
     return {'sqla': sqla, 'sqlo': sqlo, 'db': db, 'User': User, 'Student': Student, 'Instructor': Instructor,
-            'Course': Course, 'Application': Application, 'Position': Position, 'CourseSection': CourseSection}
+            'Course': Course, 'Application': Application, 'Position': Position, 'CourseSection': CourseSection, 'CourseTaken': CourseTaken}
 
 def add_classes(*args, **kwargs):
     query = sqla.select(Course)

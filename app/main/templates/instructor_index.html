@@ -25,12 +25,16 @@
                <tr>
                     <td style="padding: 30px 0 30px 10px; border: 1px solid #c6c7c8;" width="50%">
                         {{course}}
-                        <div> Student Assistants: </div> 
+                        <div> Student Assistants: </div>
+                        {% if course.get_assignedStudents() %}
                         {% for assignedStudent in course.get_assignedStudents() %}
                             &nbsp; <a href="{{url_for('instructor.student_profile', student_id = assignedStudent.id)}}" class="btn-info">{{ assignedStudent.firstname + assignedStudent.lastname }}</a> 
                             
                             <br>
                         {% endfor %}
+                        {% else %}
+                            <p>No Assistants Approved Yet</p>
+                        {% endif %}
                     </td>
                    <td width=30%" style="border: 1px solid #c6c7c8;">
                        <button class = "btn btn-outline-dark"  id = "button-{{course.id}}" style="margin-right: 15px; margin-left: 15px;" onclick="showInfo({{course.id}})">View Details</button>
