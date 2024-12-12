@@ -38,6 +38,9 @@ def apply_course(position_id):
     if (check_accepted is not None):
         flash('You have already been accepted to a course!')
         return redirect(url_for('main.index'))
+    if (course_position.num_Assigned >= course_position.num_SAs):
+        flash('This course is already full!')
+        return redirect(url_for('main.index'))
     taught_course = False
     if course in current_user.get_taught():
         taught_course = True
