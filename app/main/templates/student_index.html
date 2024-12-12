@@ -10,7 +10,7 @@
             <h2 style="text-align: center; margin-top: 50px">Recommended Positions</h2>
             {% set ns = namespace(hasPositions=false) %}
                     {% for position in recommended %}
-                        {% if position.id not in applied and position in recommended %}
+                        {% if position.id not in applied and position in recommended and position.num_Assigned < position.num_SAs %}
                             {% set ns.hasPositions = true %}
                         {% endif %}
                     {% endfor %}
@@ -36,7 +36,7 @@
                 </thead>
                 <tbody>
                     {% for position in recommended %}
-                        {% if position.id not in applied and position in recommended %}
+                        {% if position.id not in applied and position in recommended and position.num_Assigned < position.num_SAs%}
                             <tr>
                                 <td>
                                     {{ loop.index }}
@@ -61,7 +61,7 @@
             <h2 style="text-align: center; margin-top: 50px">Other Open Positions</h2>
             {% set ns = namespace(hasPositions=false) %}
                     {% for position in positions %}
-                        {% if position.id not in applied and position not in recommended %}
+                        {% if position.id not in applied and position not in recommended and position.num_Assigned < position.num_SAs %}
                             {% set ns.hasPositions = true %}
                         {% endif %}
                     {% endfor %}
@@ -87,7 +87,7 @@
                 </thead>
                 <tbody>
                     {% for position in positions %}
-                        {% if position.id not in applied and position not in recommended %}
+                        {% if position.id not in applied and position not in recommended and position.num_Assigned < position.num_SAs%}
                         <tr>
                             <td>
                                 {{loop.index}}
@@ -161,7 +161,7 @@
                                     {% if application.student_id == current_user.id %}
                                         {% if application.status == 'Approved' %}
                                             <a class = "btn btn-success">Approved</a>
-                                        {% elif application.status == 'Rejected' %}
+                                        {% elif application.status == 'Rejected' or position.num_Assigned >= position.num_SAs%}
                                             <a class = "btn btn-danger">Rejected</a>
                                         {% else %}
                                             <a class = "btn btn-secondary">Pending</a>
@@ -172,7 +172,7 @@
                             <td>
                                 {% for application in position.get_applications() %}
                                     {% if application.student_id == current_user.id %}
-                                        {% if application.status == 'Approved' or application.status == 'Rejected' %}
+                                        {% if application.status == 'Approved' or application.status == 'Rejected' or position.num_Assigned >= position.num_SAs %}
                                             <button type="button" class="btn btn-outline-secondary" disabled>Withdraw</a>
                                         {% else %}
                                             <a href="{{url_for('student.withdraw_course', position_id=position.id)}}" class="btn btn-outline-danger" onclick="return confirm('Are you sure you want to withdraw your application?')">Withdraw</a>
