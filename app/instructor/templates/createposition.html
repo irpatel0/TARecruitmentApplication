@@ -3,7 +3,15 @@
 
 {% block content %}
     <div style="min-height: 80vh;">
-        <h1>Create Position for {{section}}</h1>
+        <h3 class="form-title">Create Position</h3>
+        <div style="width: 80% !important; margin: auto; font-size: 20px;" class="text-center">
+        <hr>
+        <ul>
+            <p>Course Section: <b>{{section}}</b></p>
+        </ul>
+        <hr>
+            </div>
+        <div class="register-form" style="min-height: 0% !important;">
 
         {% if form %}
         <form action="" method="post">
@@ -15,6 +23,7 @@
 
         </form>
         {% endif %}
+        </div>
     </div>
 
 

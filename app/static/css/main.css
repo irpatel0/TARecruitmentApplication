@@ -7,7 +7,7 @@
   text-align: center;
   margin: 0;
   padding: 10px 20px;
-  font-size: 26px;
+  font-size: 32px;
   position: relative;
 }
 
@@ -15,10 +15,10 @@
 .form-title:before{
   content: '';
   position: absolute;
-  height: 3px;
-  width: 150px;
+  height: 4px;
+  width: 190px;
   bottom: 0;
-  background: #696969;
+  background: linear-gradient(45deg, #708090 50%, #696969 50%);
   left: 0;
   right: 0;
   margin: 0 auto;
@@ -30,7 +30,7 @@
   min-height: 100%;
   box-sizing: border-box;
   margin: 20px auto 95px auto;
-  width: 70%;
+  width: 80%;
   padding: 20px;
 
 }
@@ -161,6 +161,7 @@
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;
+    height: 100%;
 }
 
 .left-flex::before {

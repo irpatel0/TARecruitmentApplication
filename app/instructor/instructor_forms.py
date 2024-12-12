@@ -40,4 +40,4 @@ class UpdateCourseForm(FlaskForm):
     )
     section =  StringField('Section', validators=[Length(min=1, max=5)])
     term = StringField('Term', validators=[Length(min=1, max=5), Regexp('^\d{4}[ABCDFS]$', message='Term should be a year followed by a term letter (Ex. 2024B).')])
-    submit = SubmitField('Update Course Section')
+    submit = SubmitField('Update')

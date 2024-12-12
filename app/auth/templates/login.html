@@ -17,6 +17,7 @@
     </head>
 
     <body>
+
     <div class="flex-head">
 
         <div class="left-flex">
@@ -33,6 +34,16 @@
             <div class="row align-items-center justify-content-center" >
                 <div class="col-sm-11 col-md-11 col-lg-9 bg-white rounded p-4 shadow">
                     <div class="row justify-content-center mb-4">
+                        <div class="container-fluid ">
+                          {% with messages = get_flashed_messages() %}
+                          {% if messages %}
+                            {% for message in messages %}
+                            <div class="alert alert-info" role="alert">{{ message }}</div>
+                            {% endfor %}
+                          {% endif %}
+                          {% endwith %}
+                          {% block content %}{% endblock %}
+                        </div>
                         <h2 class="text-center">Sign In</h2>
                     </div>
                     {% if form %}

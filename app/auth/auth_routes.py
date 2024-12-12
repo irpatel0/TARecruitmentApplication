@@ -34,7 +34,7 @@ def student_register():
                           gpa=srform.GPA.data,
                           graduation_date=srform.graduation_date.data,
                           )
-        print("Submitted")
+
         courses = [
             {
                 "course_name": course_form.course.data.title,
