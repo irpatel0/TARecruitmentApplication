@@ -77,10 +77,10 @@ class TestModels(unittest.TestCase):
         instructor = Instructor(username='professor', firstname='John', lastname='Doe', wpi_id='123456789', email='john.doe@wpi.edu', phone='1234567890')
         db.session.add(instructor)
         db.session.commit()
-        course_section = CourseSection(course_number=course.id, section='A01', instructor_id=instructor.id, term='2023A')
+        course_section = CourseSection(course_number=course.number, section='A01', instructor_id=instructor.id, term='2023A')
         db.session.add(course_section)
         db.session.commit()
-        self.assertEqual(course_section.course_number, course.id)
+        self.assertEqual(course_section.course_number, course.number)
         self.assertEqual(course_section.section, 'A01')
         self.assertEqual(course_section.instructor_id, instructor.id)
         self.assertEqual(course_section.term, '2023A')
@@ -104,7 +104,7 @@ class TestModels(unittest.TestCase):
         self.assertEqual(position.min_GPA, 3.0)
         self.assertEqual(position.min_grade, 'B')
 
-    def test_application_model(self):
+    def test_applications(self):
         # Create a student
         student = Student(username='student1', firstname='John', lastname='Doe', wpi_id='123456789', email='john.doe@example.com', phone='1234567890', graduation_date='2026')
         student.set_password('password')
@@ -133,17 +133,24 @@ class TestModels(unittest.TestCase):
         db.session.commit()
 
         # Create an application
-        application = Application(grade_aquired='A', term_taken='2022A', course_term='2023A', status='Pending', applicant=student, applied_to=position)
+        application = Application(grade_aquired='A', term_taken='2022A', status='Pending', position_id=position.id, student_id=student.id, applicant=student, applied_to=position)
         db.session.add(application)
         db.session.commit()
 
+        position.applications.add(application)
+
         # Verify the application attributes
+        self.assertEqual(student.applied_to(position.id), True)
         self.assertEqual(application.grade_aquired, 'A')
         self.assertEqual(application.term_taken, '2022A')
-        self.assertEqual(application.course_term, '2023A')
         self.assertEqual(application.status, 'Pending')
         self.assertEqual(application.applicant.id, student.id)
         self.assertEqual(application.applied_to.id, position.id)
+        self.assertEqual(len(position.get_applications()), 1)
+        self.assertEqual(position.get_applications()[0].student_id, application.student_id)
+        self.assertEqual(position.get_applications()[0].position_id, application.position_id)
+        self.assertEqual(application.get_only_student().id, student.id)
+        self.assertEqual(application.get_only_student().username, student.username)
 
     def test_course_taken(self):
 
@@ -166,6 +173,62 @@ class TestModels(unittest.TestCase):
         self.assertEqual(course_taken.course_id, course.id)
         self.assertEqual(course_taken.student_id, student.id)
         self.assertEqual(course_taken.grade, 'A')
+
+
+    def test_past_enrollments(self):
+        student = Student(username='student1', firstname='John', lastname='Doe', wpi_id='123456789', email='john.doe@example.com', phone='1234567890', graduation_date='2026')
+        student.set_password('password')
+        db.session.add(student)
+        db.session.commit()
+
+        course = Course(number='CS1010', title='Introduction to Programming')
+        db.session.add(course)
+        db.session.commit()
+
+        student.taught.add(course)
+        db.session.commit()
+
+        course_taken = CourseTaken(student_id=student.id, course_id=course.id, grade='A')
+        db.session.add(course_taken)
+        db.session.commit()
+
+        student.courses_taken.add(course_taken)
+
+        self.assertEqual(len(student.get_taught()), 1)
+        self.assertEqual(student.get_taught()[0].number, 'CS1010')
+        self.assertEqual(student.get_taught()[0].title, 'Introduction to Programming')
+        self.assertEqual(len(student.get_taken()), 1)
+        self.assertEqual(student.get_taken()[0].course_id, course.id)
+
+
+    def test_get_assigned_students(self):
+                # Create a student
+        student = Student(username='student1', firstname='John', lastname='Doe', wpi_id='123456789', email='john.doe@example.com', phone='1234567890', graduation_date='2026')
+        student.set_password('password')
+        db.session.add(student)
+        db.session.commit()
+
+        # Create an instructor
+        instructor = Instructor(username='instructor1', firstname='Jane', lastname='Smith', wpi_id='987654321', email='jane.smith@example.com', phone='0987654321')
+        instructor.set_password('password')
+        db.session.add(instructor)
+        db.session.commit()
+
+        # Create a course
+        course = Course(number='CS101', title='Introduction to Computer Science')
+        db.session.add(course)
+        db.session.commit()
+
+        # Create a course section
+        course_section = CourseSection(course_number=course.id, section='A01', instructor_id=instructor.id, term='2023A')
+        db.session.add(course_section)
+        db.session.commit()
+
+        course_section.assigned_students.add(student)
+        
+        self.assertEqual(len(course_section.get_assignedStudents()), 1)
+        self.assertEqual(course_section.get_assignedStudents()[0].username, 'student1')
+        self.assertEqual(course_section.get_assignedStudents()[0].email, 'john.doe@example.com')
 
 
 #python -m unittest -v tests//test_models.py
