@@ -105,7 +105,7 @@
                                 <button class="btn btn-outline-primary" onclick="show_position_details({{ position.id }})" id="show-details-{{position.id}}">Show Details</button>
                             </td>
                             <td>
-                                <a href="{{url_for('student.apply_course', position_id=position.id)}}" class="btn btn-outline-success">Apply</a>
+                                <a href="{{url_for('student.apply_course', position_id=position.id)}}" id="apply-btn-{{position.id}}" class="btn btn-outline-success">Apply</a>
                             </td>
                         </tr>
                         {% endif %}

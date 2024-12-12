@@ -42,11 +42,11 @@
                   <span class="nav-link text-white">Current user is: <span class="useritem">{{ current_user.username }}</span></span>
               </li>
               <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Actions</a>
+                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false" name="actions">Actions</a>
                 <ul class="dropdown-menu">
                     {% if current_user.user_type == 'Student' %}
                     <li><a href="{{url_for('main.student_index')}}" class="dropdown-item text-white">Dashboard</a></li>
-                    <li><a class="dropdown-item text-white" href="{{url_for('main.student_edit_profile')}}">View Profile</a></li>
+                    <li><a class="dropdown-item text-white" href="{{url_for('main.student_edit_profile')}}" name="std-prof">View Profile</a></li>
                     {% else %}
                     <li><a href="{{url_for('main.instructor_index')}}" class="dropdown-item text-white">Dashboard</a></li>
                     <li><a class="dropdown-item text-white" href="{{url_for('main.instructor_edit_profile')}}">View Profile</a></li>

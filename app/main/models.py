@@ -139,7 +139,7 @@ class CourseSection(db.Model):
         return self.position is not None
     
     def __repr__(self):
-        return f'{self.course_number} - {self.section} - {self.term} - {self.instructor_id}'
+        return f'{self.course_number} - {self.section} - {self.term}'
 
 class Position(db.Model):
     id : sqlo.Mapped[int] = sqlo.mapped_column(sqla.Integer, primary_key=True)
