@@ -28,9 +28,12 @@ def apply_course(position_id):
     course_section = db.session.get(CourseSection, course_section_ID)
     course = db.session.scalars(sqla.select(Course).where(Course.number == course_section.course_number)).first()
     check_applied = db.session.scalars(sqla.select(Application).where(Application.student_id == current_user.id, Application.position_id == position_id)).first()
-    print(check_applied)
+    check_accepted = db.session.scalars(sqla.select(Application).where(Application.student_id == current_user.id, Application.status == 'Approved')).first()
     if (check_applied is not None):
         flash('You have already applied for this course!')
+        return redirect(url_for('main.index'))
+    if (check_accepted is not None):
+        flash('You have already been accepted to a course!')
         return redirect(url_for('main.index'))
     if aform.validate_on_submit():
         new_application = Application(
