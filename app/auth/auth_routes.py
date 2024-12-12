@@ -48,7 +48,6 @@ def student_register():
         db.session.add(student)
         db.session.commit()
         for course in courses:
-            print(course['sa_experience'])
             course_obj = db.session.scalars(sqla.select(Course).where(Course.title == course['course_name'])).first()
             course_taken = CourseTaken(student_id=student.id, course_id=course_obj.id, grade=course['grade'])
             db.session.add(course_taken)
