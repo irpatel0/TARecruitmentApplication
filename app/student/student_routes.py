@@ -38,6 +38,11 @@ def apply_course(position_id):
     if (check_accepted is not None):
         flash('You have already been accepted to a course!')
         return redirect(url_for('main.index'))
+    taught_course = False
+    if course in current_user.get_taught():
+        taught_course = True
+    else:
+        taught_course = False
     if (check_taken is not None):
         aform = ApplyForm(grade = check_taken.grade)
     else:
@@ -57,15 +62,15 @@ def apply_course(position_id):
             db.session.add(new_course_taken)
         else:
             check_taken.grade = aform.grade.data
-        
+    
         db.session.add(new_application)
         db.session.commit()
         flash('You have successfully applied for the course!')
         return redirect(url_for('main.index'))
     if check_taken is None:
-        return render_template('applycourse.html', form=aform, position=course_position, section = course_section, taken = False)
+        return render_template('applycourse.html', form=aform, position=course_position, section = course_section, taken = False, taught = taught_course)
     else:
-        return render_template('applycourse.html', form=aform, position=course_position, section = course_section, taken = check_taken)
+        return render_template('applycourse.html', form=aform, position=course_position, section = course_section, taken = check_taken, taught = taught_course)
 
 @bp_student.route('/positions/<position_id>/withdraw', methods=['GET', 'POST'])
 @login_required
