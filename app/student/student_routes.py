@@ -29,6 +29,8 @@ def apply_course(position_id):
     course = db.session.scalars(sqla.select(Course).where(Course.number == course_section.course_number)).first()
     check_applied = db.session.scalars(sqla.select(Application).where(Application.student_id == current_user.id, Application.position_id == position_id)).first()
     check_accepted = db.session.scalars(sqla.select(Application).where(Application.student_id == current_user.id, Application.status == 'Approved')).first()
+    check_taken = db.session.scalars(sqla.select(CourseTaken).where(CourseTaken.student_id == current_user.id)
+                                                                .where(CourseTaken.course_id == course.id)).first()
     if (check_applied is not None):
         flash('You have already applied for this course!')
         return redirect(url_for('main.index'))
@@ -42,9 +44,6 @@ def apply_course(position_id):
                             grade_aquired = aform.grade.data,
                             term_taken = aform.year_taken.data + aform.term_taken.data)
 
-
-        check_taken = db.session.scalars(sqla.select(CourseTaken).where(CourseTaken.student_id == current_user.id)
-                                                                .where(CourseTaken.course_id == course.id)).first()
         if (check_taken is None):
             new_course_taken = CourseTaken(
                                 student_id = current_user.id,
@@ -58,7 +57,10 @@ def apply_course(position_id):
         db.session.commit()
         flash('You have successfully applied for the course!')
         return redirect(url_for('main.index'))
-    return render_template('applycourse.html', form=aform, position=course_position)
+    if check_taken is None:
+        return render_template('applycourse.html', form=aform, position=course_position, section = course_section, taken = False)
+    else:
+        return render_template('applycourse.html', form=aform, position=course_position, section = course_section, taken = check_taken)
 
 @bp_student.route('/positions/<position_id>/withdraw', methods=['GET', 'POST'])
 @login_required

@@ -4,6 +4,17 @@
 {% block content %}
     <div style="min-height: 80vh;">
         <h1>Applying for position</h1>
+        <hr>
+        <ul>
+            <li>Applying for the course section: <b>{{section.course_number}}-{{section.section}}</b></li>
+            <li>This course will run in <b>{{section.term}}</b></li>
+            {% if not taken %}
+                <li>You have not taken this course before</li>
+            {% else %}
+                <li>You have taken this course before and earned a/an <b>{{taken.grade}}</b></li>
+            {% endif %}
+        </ul>
+        <hr>
 
         {% if form %}
             <form action="" method="post">

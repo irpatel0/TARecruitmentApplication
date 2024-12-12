@@ -167,7 +167,7 @@ class Position(db.Model):
         score = 0
         grade_map = {'A': 5, 'B': 4, 'C': 3, 'D': 2, 'F': 1, 'NR': 0}
 
-        if student.gpa > self.min_GPA:
+        if student.gpa >= self.min_GPA:
             score += 2
         if course in student.get_taught():
             score += 3
