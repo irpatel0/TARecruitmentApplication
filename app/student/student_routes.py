@@ -22,7 +22,8 @@ def view_SA_details(position_id):
 @login_required
 @role_required('Student')
 def apply_course(position_id):
-    aform = ApplyForm()
+
+    
     course_position = db.session.get(Position, position_id)
     course_section_ID = course_position.section_id
     course_section = db.session.get(CourseSection, course_section_ID)
@@ -37,6 +38,10 @@ def apply_course(position_id):
     if (check_accepted is not None):
         flash('You have already been accepted to a course!')
         return redirect(url_for('main.index'))
+    if (check_taken is not None):
+        aform = ApplyForm(grade = check_taken.grade)
+    else:
+        aform = ApplyForm()
     if aform.validate_on_submit():
         new_application = Application(
                             student_id = current_user.id,
