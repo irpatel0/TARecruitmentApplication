@@ -136,14 +136,17 @@ def update_coursesection(cs_id):
         if ucf.validate_on_submit():
             cs.course_number = ucf.course_number.data.number
             cs.section = ucf.section.data
-            cs.term = ucf.term.data
+            cs.term = ucf.year_taken.data + ucf.term_taken.data
             db.session.commit()
             flash('Your course section has been updated')
             return redirect(url_for('main.instructor_index'))
     elif request.method == 'GET':
         ucf.course_number.data = cs.course
         ucf.section.data = cs.section
-        ucf.term.data = cs.term
+        year = cs.term[:-1]
+        term = cs.term[-1]
+        ucf.year_taken.data = year
+        ucf.term_taken.data = term
     else:
         pass
     return render_template('update_course_section.html', form=ucf)

@@ -4,14 +4,15 @@
 {% block content %}
     <div style="min-height: 80vh;">
         <h3 class="form-title">Update Course Section</h3>
-        <div class="register-form" style="min-height: 0% !important;>
+        <div class="register-form" style="min-height: 0% !important;">
         {% if form %}
             <form action="" method="post">
                 {{ form.hidden_tag() }}
 
                 {{wtf.form_field(form.course_number)}}
                 {{wtf.form_field(form.section)}}
-                {{wtf.form_field(form.term)}}
+                {{wtf.form_field(form.year_taken)}}
+                {{wtf.form_field(form.term_taken)}}
                 {{wtf.form_field(form.submit)}}
 
             </form>
