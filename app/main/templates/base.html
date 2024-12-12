@@ -16,7 +16,7 @@
 
     <body>
 
-    <nav class="navbar bg-dark border-bottom border-body navbar-expand-lg" data-bs-theme="dark" style=" width: 100%;">
+    <nav class="custom-navbar navbar bg-dark border-bottom border-body navbar-expand-lg" data-bs-theme="dark" style=" width: 100%;">
         <div class="container">
           <a class="navbar-brand text-white" href="{{ url_for('main.index') }}">CSAssist</a>
           <button class="navbar-toggler" type="button" >
@@ -44,7 +44,7 @@
               </li>
               {% else %}
                 <li class="nav-item px-2 ms-2">
-                  <span class="nav-link text-white">Current user is: <span class="useritem">{{ current_user.username }}</span></span>
+                  <span class="nav-link text-white">Current Username: <span class="useritem">{{ current_user.username }}</span></span>
               </li>
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false" name="actions">
