@@ -158,12 +158,14 @@ def delete_coursesection(cs_id):
             cs.assigned_students.remove(student)
             db.session.commit()
         pos = db.session.scalars(sqla.select(Position).where(Position.section_id == cs_id)).first()
-        applications = db.session.scalars(sqla.select(Application).where(Application.position_id == pos.id)).all()
-        for application in applications:
-            db.session.delete(application)
+        if pos:
+            applications = db.session.scalars(sqla.select(Application).where(Application.position_id == pos.id)).all()
+            if applications:
+                for application in applications:
+                    db.session.delete(application)
+                    db.session.commit()
+            db.session.delete(pos)
             db.session.commit()
-        db.session.delete(pos)
-        db.session.commit()
         db.session.delete(cs)
         db.session.commit()
         flash('Your course section has been deleted')
