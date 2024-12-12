@@ -29,15 +29,16 @@ def apply_course(position_id):
     course_section = db.session.get(CourseSection, course_section_ID)
     course = db.session.scalars(sqla.select(Course).where(Course.number == course_section.course_number)).first()
     check_applied = db.session.scalars(sqla.select(Application).where(Application.student_id == current_user.id, Application.position_id == position_id)).first()
-    check_accepted = db.session.scalars(sqla.select(Application).where(Application.student_id == current_user.id, Application.status == 'Approved')).first()
+
     check_taken = db.session.scalars(sqla.select(CourseTaken).where(CourseTaken.student_id == current_user.id)
                                                                 .where(CourseTaken.course_id == course.id)).first()
     if (check_applied is not None):
         flash('You have already applied for this course!')
         return redirect(url_for('main.index'))
-    if (check_accepted is not None):
-        flash('You have already been accepted to a course!')
-        return redirect(url_for('main.index'))
+    for cs in current_user.get_assigned():
+        if (course_section.term == cs.term):
+            flash('You have already been accepted to a course during this term!')
+            return redirect(url_for('main.index'))
     if (course_position.num_Assigned >= course_position.num_SAs):
         flash('This course is already full!')
         return redirect(url_for('main.index'))

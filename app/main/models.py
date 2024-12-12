@@ -84,6 +84,9 @@ class Student(User):
     
     def get_taken(self):
         return db.session.scalars(self.courses_taken.select()).all()
+    
+    def get_assigned(self):
+        return db.session.scalars(self.assigned_terms.select()).all()
 
 
 class Instructor(User):
