@@ -1,7 +1,7 @@
 import os
 import pytest
 from app import create_app, db
-from app.main.models import User, Student, Instructor, CourseSection, Course, Position
+from app.main.models import User, Student, Instructor, CourseSection, Course, Position, CourseTaken
 from config import Config
 import sqlalchemy as sqla
 
@@ -541,6 +541,5 @@ def test_view_closedpositions(test_client, init_database):
     assert b"Closed Course Sections" in response.data
     assert b"CS1101 - BL02 - 2024B" in response.data
     assert b"gatorade gatorade" in response.data
-
 
 

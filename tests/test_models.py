@@ -230,6 +230,53 @@ class TestModels(unittest.TestCase):
         self.assertEqual(course_section.get_assignedStudents()[0].username, 'student1')
         self.assertEqual(course_section.get_assignedStudents()[0].email, 'john.doe@example.com')
 
+    def test_recommendation_score(self):
+        # Create a student
+        student = Student(username='student1', firstname='John', lastname='Doe', wpi_id='123456789', email='john.doe@example.com', phone='1234567890', graduation_date='2026')
+        student.set_password('password')
+        db.session.add(student)
+        db.session.commit()
+
+        # Create an instructor
+        instructor = Instructor(username='instructor1', firstname='Jane', lastname='Smith', wpi_id='987654321', email='jane.smith@example.com', phone='0987654321')
+        instructor.set_password('password')
+        db.session.add(instructor)
+        db.session.commit()
+
+        # Create a course
+        course = Course(number='CS101', title='Introduction to Computer Science')
+        db.session.add(course)
+        db.session.commit()
+
+        # Create a course section
+        course_section = CourseSection(course_number=course.number, section='A01', instructor_id=instructor.id, term='2023A')
+        db.session.add(course_section)
+        db.session.commit()
+
+        # Create a position
+        position = Position(section_id=course_section.id, num_SAs=2, available=True, min_GPA=3.0, min_grade='B')
+        db.session.add(position)
+        db.session.commit()
+
+        # test if recommendation score is zero when student has not taken the course
+        self.assertEqual(position.recommendation_score(student), 0)
+
+        #Add course taken by student
+        course_taken = CourseTaken(student_id=student.id, course_id=course.id, grade='A')
+        db.session.add(course_taken)
+        db.session.commit()
+
+        # test if recommendation score when student has taken the course and scored A, but has not taught it or meet gpa
+        self.assertEqual(position.recommendation_score(student), 6)
+        #test is recomendation score when student has taken and taught class but does not meet gpa
+        student.taught.add(course)
+        db.session.commit()
+        self.assertEqual(position.recommendation_score(student), 9)
+        #test if recommendation score when student has taken and taught class and meets gpa
+        student.gpa = 3.5
+        db.session.commit()
+        self.assertEqual(position.recommendation_score(student), 11)
+
 
 #python -m unittest -v tests//test_models.py
 #pytest -v tests//test_routes.py
