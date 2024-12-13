@@ -1,0 +1,276 @@
+.body{
+  font-family: 'Nunito', sans-serif
+}
+
+
+.form-title{
+  text-align: center;
+  margin: 0;
+  padding: 10px 20px;
+  font-size: 32px;
+  position: relative;
+}
+
+
+.form-title:before{
+  content: '';
+  position: absolute;
+  height: 4px;
+  width: 190px;
+  bottom: 0;
+  background: linear-gradient(45deg, #708090 50%, #696969 50%);
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+}
+
+
+.register-form{
+  border: 1px solid #ced4da;
+  min-height: 100%;
+  box-sizing: border-box;
+  margin: 20px auto 95px auto;
+  width: 80%;
+  padding: 20px;
+
+}
+
+
+.useritem{
+  color: crimson;
+  text-transform: uppercase;
+}
+
+
+.nav-text:hover{
+  color: #fff;
+}
+
+
+.footback{
+  background-color: #808080;
+  padding: 1px !important;
+  margin: 25px 0 0 0 !important;
+}
+
+
+.footer-features{
+  text-decoration: none;
+}
+
+
+.courseSections{
+  margin-top: 20px;
+  margin-bottom: 20px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  list-style-type: none;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.courseSections li{
+  display: flex;
+  justify-content: space-between;
+}
+
+.indexHeader{
+  display: flex;
+  justify-content: space-between;
+  margin-left: 40vw;
+  margin-right: 10px;
+}
+
+.button{
+  border: 1px solid black;
+  padding: 2px 5px;
+  text-decoration: none;
+  color: black;
+  border-radius: 5px;
+}
+.createButton{
+  margin-left: auto;
+}
+.button:hover{
+  background-color: #CCC;
+  cursor: pointer;
+}
+
+.view{
+  background-color: white;
+}
+
+.view:hover{
+  background-color: #CCC;
+}
+
+.create{
+  background-color: #f0aeae;
+  color: black;
+}
+
+.filled{
+  background-color: #b9ffb9;
+  color: black;
+}
+
+
+
+/*.noHover:hover{*/
+/*  all: unset;*/
+/*}*/
+
+.form-group-inline {
+    display: inline-block;
+    position: relative;
+    width: 100%;
+}
+
+.form-group-inline input {
+    display: inline-block;
+    width: calc(100% - 40px);
+}
+
+.form-group-inline button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-30%);
+    padding: 9px;
+    right: 0;
+    /*margin-left: 800px;*/
+}
+
+.form-group-inline label {
+    display: block;
+}
+
+.flex-head {
+    display: flex;
+    height: 100vh;
+}
+
+.left-flex {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    background-image: url("../img/wpi-back.png");
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    height: 100%;
+}
+
+.left-flex::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6));
+    z-index: 1;
+}
+
+.left-flex .animated-text {
+    position: relative;
+    z-index: 2;
+    color: white;
+    text-align: center;
+    transform: translateY(-50%);
+}
+
+.left-flex .animated-text h1 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    white-space: normal !important;
+}
+
+.left-flex .animated-text p {
+    margin-top: 1rem;
+    font-size: 1.2rem;
+    white-space: nowrap;
+    overflow: hidden;
+    display: inline-block;
+    border-right: 2px solid white;
+    max-width: 100%;
+    animation: typewriter 3s steps(10, end) infinite, blink 0.5s step-end infinite;
+}
+
+
+@keyframes typewriter {
+    0% {
+        width: 0;
+    }
+    100% {
+        width: 100%;
+    }
+}
+
+
+@keyframes blink {
+    0% {
+        border-right-color: white;
+    }
+    100% {
+        border-right-color: transparent;
+    }
+}
+
+.right-flex {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #fff;
+}
+
+.overlay-div {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+}
+
+.custom-navbar {
+    background: url("../img/top-nav.gif") no-repeat center center;
+    background-size: cover;
+    position: relative;
+}
+
+.custom-navbar .container {
+    position: relative;
+    z-index: 1;
+}
+
+
+.custom-navbar::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 0;
+}
+
+
+/*.hr-text {*/
+/*  border: 0;*/
+/*  font-size: 14px;*/
+/*  height: 1.5em;*/
+/*  line-height: 1em;*/
+/*  position: relative;*/
+/*  text-align: center;*/
+/*}*/
+
+/*.hr-text::after {*/
+/*    color: #000;*/
+/*    content: attr(data-content);*/
+/*}*/

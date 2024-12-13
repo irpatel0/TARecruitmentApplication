@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% import 'bootstrap_wtf.html' as wtf %}
+
+{% block content %}
+    <div style="min-height: 80vh;">
+        <h3 class="form-title">Applying for position</h3>
+        <div style="width: 80% !important; margin: auto">
+        <hr>
+        <ul>
+            <li>Applying for the course section: <b>{{section.course_number}}-{{section.section}}</b></li>
+            <li>This course will run in <b>{{section.term}}</b></li>
+            {% if not taken %}
+                <li>You have not taken this course before</li>
+            {% else %}
+                <li>You have taken this course before and earned a/an <b>{{taken.grade}}</b></li>
+            {% endif %}
+
+            {% if taught %}
+                <li>You have previously been an SA for this course</li>
+            {% endif %}
+            
+        </ul>
+        <hr>
+            </div>
+        <div class="register-form" style="min-height: 0% !important;">
+        {% if form %}
+            <form action="" method="post">
+                {{ form.hidden_tag() }}
+
+                {{wtf.form_field(form.grade)}}
+                {{wtf.form_field(form.year_taken)}}
+                {{wtf.form_field(form.term_taken)}}
+                {{wtf.form_field(form.submit)}}
+
+            </form>
+        {% endif %}
+            </div>
+    </div>
+
+{% endblock %}

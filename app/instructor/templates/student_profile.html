@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% import 'bootstrap_wtf.html' as wtf %}
+
+{% block content %}
+    <h1>Viewing Student Profile {{student.firstname}} {{student.lastname}}</h1>
+    <hr>
+    <div class="card text-bg-light mb-3">
+    <div class="card-header"></div>
+    <div class="card-body">
+        <h5 class="card-title">Student ID: {{student.id}}</h5>
+        <p class="card-text">Student WPI ID: {{student.wpi_id}}</p>
+        <p class="card-text">Student Email: {{student.email}}</p>
+        <p class="card-text">Student Phone: {{student.phone}}</p>
+        <p class="card-text">Student GPA: {{student.gpa}}</p>
+        <p class="card-text">Student Graduation Date: {{student.graduation_date}}</p>
+
+        <div class="card-text" style="display: flex; gap: 35px;">
+            <div>
+                <p>Courses Taken by Student:</p>
+                {% for course_taken in student.get_taken() %}
+                    {{course_taken.course.number}}: {{course_taken.course.title}}
+                    <br>
+                {% endfor %}
+            </div>
+            <div>
+                <p>Grade Received: </p>
+                {% for course_taken in student.get_taken() %}
+                    {{course_taken.grade}}
+                    <br>
+                {% endfor %}
+            </div>
+            <div>
+                <p>Is/Has Been an SA for this course?</p>
+                {% for course_taken in student.get_taken() %}
+                    {% if course_taken.course in student.get_taught() %}
+                            Yes
+                        {% else %}
+                            No
+                    {% endif %}
+                    <br>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

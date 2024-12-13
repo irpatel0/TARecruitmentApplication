@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% import 'bootstrap_wtf.html' as wtf %}
+
+{% block content %}
+    <div style="min-height: 80vh;">
+        <h3 class="form-title">Create Position</h3>
+        <div style="width: 80% !important; margin: auto; font-size: 20px;" class="text-center">
+        <hr>
+        <ul>
+            <p>Course Section: <b>{{section}}</b></p>
+        </ul>
+        <hr>
+            </div>
+        <div class="register-form" style="min-height: 0% !important;">
+
+        {% if form %}
+        <form action="" method="post">
+            {{ form.hidden_tag() }}
+            {{wtf.form_field(form.num_SAs)}}
+            {{wtf.form_field(form.min_GPA)}}
+            {{wtf.form_field(form.min_grade)}}
+            {{wtf.form_field(form.submit)}}
+
+        </form>
+        {% endif %}
+        </div>
+    </div>
+
+
+
+{% endblock %}

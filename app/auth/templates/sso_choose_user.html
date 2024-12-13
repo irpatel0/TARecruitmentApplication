@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% import 'bootstrap_wtf.html' as wtf %}
+
+{% block content %}
+
+    <h2 class="text-center mb-4">Welcome to CSAssist, {{name}}!</h2>
+    <h3 class="text-center mb-3">Please continue...</h3>
+
+    <div class="card text-bg-light mb-3 mx-auto" style="max-width: 50rem;">
+      <div class="card-header text-center">Logging With WPI SSO</div>
+      <div class="card-body">
+        <h5 class="card-title">Choose Your Role</h5>
+        <p class="card-text">Use Student option if you're a student using WPI SSO to Sign In. Use Instructor option if you're a WPI faculty using WPI SSO to Sign In.</p>
+        <div style="display: flex; gap: 40px;">
+            <a href="{{url_for('auth.student_register_sso')}}" class='btn btn-outline-primary btn-lg w-100'>Student</a>
+            <a href="{{url_for('auth.instructor_register_sso')}}" class='btn btn-outline-primary btn-lg w-100'>Instructor</a>
+        </div>
+      </div>
+    </div>
+
+
+{% endblock %}

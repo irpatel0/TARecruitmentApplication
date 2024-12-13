@@ -1,0 +1,261 @@
+{% extends "base.html" %}
+{% import 'bootstrap_wtf.html' as wtf %}
+
+{% block content %}
+    <div style="min-height: 80vh;">
+              <h1>Welcome Student - {{current_user.firstname}} {{current_user.lastname}}</h1>
+              <br>
+
+            <!-- Display the number and title of every item in the Course table -->
+            <h2 style="text-align: center; margin-top: 50px">Recommended Positions</h2>
+            {% set ns = namespace(hasPositions=false) %}
+                    {% for position in recommended %}
+                        {% if position.id not in applied and position in recommended and position.num_Assigned < position.num_SAs %}
+                            {% set ns.hasPositions = true %}
+                        {% endif %}
+                    {% endfor %}
+            {% if not ns.hasPositions %}
+            <hr class="mb-1">
+            <table class="table table-hover">
+                <tbody>
+                    <tr>
+                        <td colspan="5" style="text-align: center">No recommendations available</td>
+                    </tr>
+                </tbody>
+            </table>
+            {% else %}
+            <hr class="mb-4">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Course Section</th>
+                        <th>Details</th>
+                        <th>Apply</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for position in recommended %}
+                        {% if position.id not in applied and position in recommended and position.num_Assigned < position.num_SAs%}
+                            <tr>
+                                <td>
+                                    {{ loop.index }}
+                                </td>
+                                <td>
+                                    {{ position }}
+                                    <div class="card text-bg-light mb-3" style="display: none" id="position-{{ position.id }}"></div>
+                                </td>
+                                <td>
+                                    <button class="btn btn-outline-primary" onclick="show_position_details({{ position.id }})" id="show-details-{{ position.id }}">Show Details</button>
+                                </td>
+                                <td>
+                                    <a href="{{ url_for('student.apply_course', position_id=position.id) }}" class="btn btn-outline-success">Apply</a>
+                                </td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% endif %}
+
+            <h2 style="text-align: center; margin-top: 50px">Other Open Positions</h2>
+            {% set ns = namespace(hasPositions=false) %}
+                    {% for position in positions %}
+                        {% if position.id not in applied and position not in recommended and position.num_Assigned < position.num_SAs %}
+                            {% set ns.hasPositions = true %}
+                        {% endif %}
+                    {% endfor %}
+            {% if not ns.hasPositions %}
+            <hr class="mb-1">
+            <table class="table table-hover">
+                <tbody>
+                    <tr>
+                        <td colspan="5" style="text-align: center">No open positions available</td>
+                    </tr>
+                </tbody>
+            </table>
+            {% else %}
+            <hr class="mb-4">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Course Section</th>
+                        <th>Details</th>
+                        <th>Apply</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for position in positions %}
+                        {% if position.id not in applied and position not in recommended and position.num_Assigned < position.num_SAs%}
+                        <tr>
+                            <td>
+                                {{loop.index}}
+                            </td>
+                            <td>
+                                {{position}}
+                                <div class="card text-bg-light mb-3" style="display: none" id="position-{{position.id}}">
+
+
+                                </div>
+                            </td>
+                            <td>
+                                <button class="btn btn-outline-primary" onclick="show_position_details({{ position.id }})" id="show-details-{{position.id}}">Show Details</button>
+                            </td>
+                            <td>
+                                <a href="{{url_for('student.apply_course', position_id=position.id)}}" id="apply-btn-{{position.id}}" class="btn btn-outline-success">Apply</a>
+                            </td>
+                        </tr>
+                        {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% endif %}
+            
+
+            <h2 style="text-align: center; margin-top: 50px">My Applications</h2>
+            {% set ns = namespace(hasPositions=false) %}
+                    {% for position in positions %}
+                        {% if position.id in applied %}
+                            {% set ns.hasPositions = true %}
+                        {% endif %}
+                    {% endfor %}
+            {% if not ns.hasPositions %}
+            <hr class="mb-1">
+            <table class="table table-hover">
+                <tbody>
+                    <tr>
+                        <td colspan="5" style="text-align: center">You have not applied for any positions yet!</td>
+                    </tr>
+                </tbody>
+            </table>
+            {% else %}
+            <hr class="mb-4">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Course Section</th>
+                        <th>Details</th>
+                        <th>Status</th>
+                        <th>Withdraw</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for position in positions %}
+                        {% if position.id in applied %}
+                        <tr>
+                            <td>
+                                {{loop.index}}
+                            </td>
+                            <td>
+                                {{position}}
+                                <div class="card text-bg-light mb-3" style="display: none" id="position-{{position.id}}">
+                                </div>
+                            </td>
+                            <td>
+                                <button class="btn btn-outline-primary" onclick="show_position_details({{ position.id }})" id="show-details-{{position.id}}">Show Details</button>
+                            </td>
+                            <td>
+                                {% for application in position.get_applications() %}
+                                    {% if application.student_id == current_user.id %}
+                                        {% if application.status == 'Approved' %}
+                                            <a class = "btn btn-success">Approved</a>
+                                        {% elif application.status == 'Rejected' or position.num_Assigned >= position.num_SAs%}
+                                            <a class = "btn btn-danger">Rejected</a>
+                                        {% else %}
+                                            <a class = "btn btn-secondary">Pending</a>
+                                        {% endif %}
+                                    {% endif %}
+                                {% endfor %}                         
+                            </td>
+                            <td>
+                                {% for application in position.get_applications() %}
+                                    {% if application.student_id == current_user.id %}
+                                        {% if application.status == 'Approved' or application.status == 'Rejected' or position.num_Assigned >= position.num_SAs %}
+                                            <button type="button" class="btn btn-outline-secondary" disabled>Withdraw</a>
+                                        {% else %}
+                                            <a href="{{url_for('student.withdraw_course', position_id=position.id)}}" class="btn btn-outline-danger" onclick="return confirm('Are you sure you want to withdraw your application?')">Withdraw</a>
+                                        {% endif %}
+                                    {% endif %}
+                                {% endfor %}                                 
+                            </td>
+                        </tr>
+                        {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% endif %}
+        </div>
+
+
+{% block script %}
+<script>
+
+    async function show_position_details(position_id) {
+        const url = "{{ url_for('student.view_SA_details', position_id = 'position_id') }}".replace("position_id", position_id);
+        try {
+            const response = await fetch(url)
+            if (!response.ok) {
+                throw new Error('Response status: $(response.status)');
+            }
+            const json = await response.json();
+            console.log(json);
+            fill_details(position_id, json);
+        } catch (error) {
+            console.log(error.message);
+        }
+    }
+
+    function fill_details(position_id, data){
+        let position_div = document.getElementById(`position-${position_id}`);
+        console.log(data);
+        const new_list = document.createElement("ul");
+        const li1 = document.createElement("li");
+        li1.textContent = `Number of SAs needed: ${data['num_SAs']}`
+        new_list.appendChild(li1);
+
+        const li2 = document.createElement("li");
+        li2.textContent = `Availability: ${data['available']}`
+        new_list.appendChild(li2);
+
+        const li3 = document.createElement("li");
+        li3.textContent = `Minimum GPA required: ${data['min_GPA']}`
+        new_list.appendChild(li3);
+
+        const li4 = document.createElement("li");
+        li4.textContent = `Minimum grade required: ${data['min_grade']}`
+        new_list.appendChild(li4);
+
+        const li5 = document.createElement("li");
+        // li5.textContent = `Date posted: ${data['date_posted']}`
+        li5.textContent = `Date posted: ${utc_to_local(data['date_posted'])}`
+        new_list.appendChild(li5);
+
+        const li6 = document.createElement("li");
+        // li5.textContent = `Date posted: ${data['date_posted']}`
+        li6.textContent = `Instructor: ${data['instructor']}`
+        new_list.appendChild(li6);
+
+        position_div.appendChild(new_list);
+        console.log(position_div);
+        if (position_div.style.display === 'block'){
+            document.getElementById(`show-details-${position_id}`).textContent = 'Show Details';
+            position_div.textContent = '';
+            position_div.style.display = 'none';
+        }
+        else{
+            document.getElementById(`show-details-${position_id}`).textContent = 'Hide Details';
+            position_div.style.display = 'block';
+        }
+    }
+
+    function utc_to_local(utcdate) {
+    var d = new Date(utcdate);
+    return d.toLocaleString();
+}
+
+</script>
+{% endblock %}
+
+{% endblock %}

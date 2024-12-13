@@ -3,10 +3,19 @@ from config import Config
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_login import LoginManager
+from flask_moment import Moment
+from flask_session import Session
 
 db = SQLAlchemy()
 
 migrate = Migrate()
+
+login = LoginManager()
+login.login_view = 'auth.login'
+
+moment = Moment()
+
+app_session = Session()
 
 def create_app(config_class=Config):
     app = Flask(__name__)
@@ -16,6 +25,10 @@ def create_app(config_class=Config):
 
     db.init_app(app)
     migrate.init_app(app, db)
+
+    login.init_app(app)
+    moment.init_app(app)
+    app_session.init_app(app)
 
     # blueprint registration
     from app.main import main_blueprint as main

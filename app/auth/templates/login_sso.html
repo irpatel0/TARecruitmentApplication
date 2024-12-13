@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% import 'bootstrap_wtf.html' as wtf %}
+
+{% block content %}
+    <h1 class="text-center">Welcome to CSAssist!</h1>
+
+    <div class="card align-items-center mx-auto" style="width: 25rem;">
+      <img src="{{ url_for('static', filename = 'img//wpi_sso.png' )}}" class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title">Login With WPI SSO</h5>
+        <p class="card-text">Using WPI Azure SSO</p>
+        <a href='{{ auth_uri }}' class='btn btn-outline-success w-100'>SSO Sign In</a>
+      </div>
+      <div class="card-body">
+        <a href="{{ url_for('auth.login') }}" class="card-link">Go Back</a>
+      </div>
+    </div>
+
+{% endblock %}
