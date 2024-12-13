@@ -8,4 +8,5 @@
 * Ishaan Patel
 * Jake Grier
 
-Website Link (AWS Deployment): http://ec2-13-58-118-99.us-east-2.compute.amazonaws.com
+Website Link (AWS Deployment): 
+https://ec2-13-58-118-99.us-east-2.compute.amazonaws.com
